@@ -21,12 +21,16 @@ Color tertoryColor = Color(0xffE3D7FF);
 
 class HomeView extends GetView<HomeController> {
   HomeView({super.key});
+  NutritionInfo? proteinInfo;
+  NutritionInfo? fatInfo;
+  NutritionInfo? carbsInfo;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xffFFD1DC),
-        body: Container(
-            child: Column(
+      backgroundColor: primaryColor,
+      body: Container(
+        child: Column(
           children: [
             Logo_Text(),
             Text(
@@ -34,9 +38,7 @@ class HomeView extends GetView<HomeController> {
               style: TextStyle(
                   fontSize: size.height * 0.15, color: onPrimaryColor),
             ),
-            SizedBox(
-              height: size.height * 0.15,
-            ),
+            SizedBox(height: size.height * 0.15),
             Container(
               padding: EdgeInsets.symmetric(vertical: size.height * 0.1),
               child: Column(
@@ -49,13 +51,13 @@ class HomeView extends GetView<HomeController> {
                           pickImageFromGallery();
                         },
                         child: Icon_Method(
-                            ("Choose from"), ("Gallery"), Icons.image),
+                            "Choose from", "Gallery", Icons.image),
                       ),
                       InkWell(
                         onTap: () {
                           pickImageFromCamera();
                         },
-                        child: Icon_Method(("Capture from"), ("Camera"),
+                        child: Icon_Method("Capture from", "Camera",
                             Icons.camera_alt_rounded),
                       )
                     ],
@@ -83,21 +85,48 @@ class HomeView extends GetView<HomeController> {
                               fontSize: size.height * 0.16,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(),
-                        SizedBox(),
-                        SizedBox(),
                       ],
                     ),
                   ),
-                  
+                  verticalSpace(size.height * 0.1),
+                  Container(
+                    height: size.height * 1,
+                    width: size.width * 1,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(size.height * 0.15),
+                        color: Colors.deepOrange),
+                    child: Column(
+                      children: [
+                        if (proteinInfo != null)
+                          Text(
+                            'Protein: ${proteinInfo!.grams} grams (${proteinInfo!.calories} calories)',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        SizedBox(height: 10),
+                        if (fatInfo != null)
+                          Text(
+                            'Fat: ${fatInfo!.grams} grams (${fatInfo!.calories} calories)',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        SizedBox(height: 10),
+                        if (carbsInfo != null)
+                          Text(
+                            'Carbs: ${carbsInfo!.grams} grams (${carbsInfo!.calories} calories)',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            )
+            ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 
-  Container Icon_Method(String smallTexted, LargeTexted, IconData this_icon) {
+  Container Icon_Method(String smallTexted, String largeTexted, IconData icon) {
     return Container(
       height: size.height * 0.9,
       width: size.width * 0.45,
@@ -110,24 +139,22 @@ class HomeView extends GetView<HomeController> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Icon(
-              this_icon,
+              icon,
               size: size.height * 0.4,
               color: onSecondaryColor,
             ),
-            SizedBox(),
-            SizedBox(),
             Text(
               smallTexted,
-              style:
-                  TextStyle(fontSize: size.height * 0.08, color: tertoryColor),
+              style: TextStyle(
+                  fontSize: size.height * 0.08, color: tertoryColor),
             ),
             Text(
-              LargeTexted,
+              largeTexted,
               style: TextStyle(
                   fontSize: size.height * 0.16,
                   color: onSecondaryColor,
                   fontWeight: FontWeight.w900),
-            )
+            ),
           ],
         ),
       ),
@@ -136,13 +163,12 @@ class HomeView extends GetView<HomeController> {
 
   final ImagePicker _picker = ImagePicker();
 
-// Function to capture image from camera
+  // Function to capture image from camera
   Future<void> pickImageFromCamera() async {
     try {
       final XFile? image = await _picker.pickImage(source: ImageSource.camera);
       if (image != null) {
         print('Image Path: ${image.path}');
-        // You can now use the image file from the camera
       }
     } catch (e) {
       print('Failed to pick image: $e');
@@ -205,20 +231,19 @@ class HomeView extends GetView<HomeController> {
       Content.multi([prompt, ...imageParts])
     ]);
 
-    // Assuming the response is in a simple text format
     final responseText = response.text;
     final jsonResponse = jsonDecode(responseText!);
 
-// Create NutritionInfo objects from the JSON data
-    final proteinInfo = NutritionInfo.fromJson(jsonResponse['protein']);
-    final fatInfo = NutritionInfo.fromJson(jsonResponse['fat']);
-    final carbsInfo = NutritionInfo.fromJson(jsonResponse['carbs']);
+    // Create NutritionInfo objects from the JSON data
+    proteinInfo = NutritionInfo.fromJson(jsonResponse['protein']);
+    fatInfo = NutritionInfo.fromJson(jsonResponse['fat']);
+    carbsInfo = NutritionInfo.fromJson(jsonResponse['carbs']);
 
-// Print the extracted information using the data classes
+    // Print the extracted information
     print(
-        'Protein: ${proteinInfo.grams} grams (${proteinInfo.calories} calories)');
-    print('Fat: ${fatInfo.grams} grams (${fatInfo.calories} calories)');
-    print('Carbs: ${carbsInfo.grams} grams (${carbsInfo.calories} calories)');
+        'Protein: ${proteinInfo!.grams} grams (${proteinInfo!.calories} calories)');
+    print('Fat: ${fatInfo!.grams} grams (${fatInfo!.calories} calories)');
+    print('Carbs: ${carbsInfo!.grams} grams (${carbsInfo!.calories} calories)');
 
     // Print the raw response
     print(responseText);
@@ -247,20 +272,18 @@ class HomeView extends GetView<HomeController> {
                   fontSize: size.height * 0.23,
                   color: onPrimaryColor,
                   fontWeight: FontWeight.w900,
-                  // letterSpacing: 1,
                   height: size.height * 0.004),
             ),
             Text(
               'culator',
               style: TextStyle(
-                  // letterSpacing: 1,
                   fontSize: size.height * 0.19,
                   color: onPrimaryColor,
                   fontWeight: FontWeight.w900,
                   height: size.height * 0.005),
             )
           ],
-        )
+        ),
       ],
     );
   }

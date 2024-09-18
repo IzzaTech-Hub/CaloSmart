@@ -1,4 +1,6 @@
+import 'package:calories_detector/app/modules/home/bindings/history_binding.dart';
 import 'package:calories_detector/app/modules/home/bindings/splash_binding.dart';
+import 'package:calories_detector/app/modules/home/views/history_show.dart';
 import 'package:calories_detector/app/modules/home/views/splash_view.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +15,7 @@ class AppPages {
   AppPages._();
 
   static const INITIAL = Routes.SPLASH_SCREEN;
+  static const HISTORY_VIEW = Routes.HISTORY_VIEW_SCREEN;
   // static const Home = Routes.HOME;
 
   static final routes = [
@@ -30,6 +33,11 @@ class AppPages {
       name: _Paths.SPLASH_SCREEN,
       page: () => const SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.HISTORY_VIEW_SCREEN,
+      page: () =>  HistoryShow(),
+      binding: HistoryshowBinding(),
     ),
   ];
 }
