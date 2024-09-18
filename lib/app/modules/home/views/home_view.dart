@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, avoid_print
 
 import 'dart:io';
+import 'package:calories_detector/app/modules/ResponseScreen/views/response_screen_view.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -9,6 +10,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../controllers/home_controller.dart';
+import 'package:flutter/services.dart';
+import '../../../routes/app_pages.dart';
+
+List<FoodData> foodItemsList = [];
 
 Size size = Size(
     SizeConfig.blockSizeHorizontal * 90, SizeConfig.blockSizeHorizontal * 50);
@@ -28,7 +33,7 @@ class HomeView extends GetView<HomeController> {
         body: Container(
             child: Column(
           children: [
-            Logo_Text(),
+            // Logo_Text(),
             Text(
               "Analyze your image now",
               style: TextStyle(
@@ -89,7 +94,6 @@ class HomeView extends GetView<HomeController> {
                       ],
                     ),
                   ),
-                  
                 ],
               ),
             )
@@ -141,8 +145,9 @@ class HomeView extends GetView<HomeController> {
     try {
       final XFile? image = await _picker.pickImage(source: ImageSource.camera);
       if (image != null) {
+        File imageFile = File(image.path);
         print('Image Path: ${image.path}');
-        // You can now use the image file from the camera
+        sendImageToGoogleAI(imageFile); // Send image to Gemini
       }
     } catch (e) {
       print('Failed to pick image: $e');
@@ -162,125 +167,225 @@ class HomeView extends GetView<HomeController> {
     }
   }
 
-  void sendImageToGoogleAI(File imageFile) async {
-    final apiKey =
-        'AIzaSyBNwVLoxY4jj1IZOZbUjqrO10SEL3db060'; // Ensure you provide your actual API key
+  Future<void> sendImageToGoogleAI(File imgFile) async {
+    Get.dialog(
+      Center(child: CircularProgressIndicator()), // Loading screen
+      barrierDismissible:
+          false, // Prevents dismissing the dialog by tapping outside
+    );
 
     final model = GenerativeModel(
       model: 'gemini-1.5-flash',
-      apiKey: apiKey,
-      generationConfig: GenerationConfig(
-        temperature: 1,
-        topK: 64,
-        topP: 0.95,
-        maxOutputTokens: 8192,
-        responseMimeType: 'text/plain',
-      ),
-      systemInstruction: Content.system(
-          'you are an expert dietician. You will be given an image of some food item/items. Analyze the nutritional content and provide a response in JSON format with the following structure:\n'
-          '{\n'
-          '  "protein": {\n'
-          '    "grams": <int>,\n'
-          '    "calories": <int>\n'
-          '  },\n'
-          '  "fat": {\n'
-          '    "grams": <int>,\n'
-          '    "calories": <int>\n'
-          '  },\n'
-          '  "carbs": {\n'
-          '    "grams": <int>,\n'
-          '    "calories": <int>\n'
-          '  }\n'
-          '}'),
+      apiKey: 'AIzaSyD4cCpD7lP-Q9raPF59L8npR8H5NF3pLIo',
     );
 
-    final imageBytes = await imageFile.readAsBytes();
+    // final prompt ='Give me json response according to map given in instructions';
+    final prompt =
+        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items, mass in kg no. of scoops, no. of litres or anything else suitable for that food. then tell 3 best and healthy alternates for them to consume instead of them. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours). provide a response in JSON format with the following structure:\n'
+        '''
+{
+  "item": {
+    "name": "<string>",\n
+    "quantity": "<string>",\n
+    "fat": <int>,\n
+    "carbs": <int>,\n
+    "protein": <int>,\n
+    "waterquantity": <float>,\n
+    "exercise": <float>\n
+  },\n
+  "alternate1": {
+    "name": "<string>",\n
+    "quantity": "<string>",\n
+    "fat": <int>,\n
+    "carbs": <int>,\n
+    "protein": <int>,\n
+    "waterquantity": <float>,\n
+    "exercise": <float>\n
+  },\n
+  "alternate2": {
+    "name": "<string>",\n
+    "quantity": "<string>",\n
+    "fat": <int>,\n
+    "carbs": <int>,\n
+    "protein": <int>,\n
+    "waterquantity": <float>,\n
+    "exercise": <float>\n
+  },\n
+  "alternate3": {
+    "name": "<string>",\n
+    "quantity": "<string>",\n
+    "fat": <int>,\n
+    "carbs": <int>,\n
+    "protein": <int>,\n
+    "waterquantity": <float>,\n
+    "exercise": <float>\n
+  }\n
+}
+'''
+        'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
+    Uint8List imageBytes = await imgFile.readAsBytes();
 
-    final prompt = TextPart("");
-    final imageParts = [
-      DataPart('image/jpeg', imageBytes),
+    final content = [
+      Content.multi([TextPart(prompt), DataPart('image/jpeg', imageBytes)]),
     ];
+    //   final response = await model.generateContent(content);
+    // print(response.text);
+    //     Map<String, dynamic> jsonMap = jsonDecode(response.text?? '');
 
-    final response = await model.generateContent([
-      Content.multi([prompt, ...imageParts])
-    ]);
+    // FoodData foodData = FoodData.fromJson(jsonMap);
+    try {
+      final response = await model.generateContent(content);
+      // Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
+      // FoodData foodData = FoodData.fromJson(jsonMap);
 
-    // Assuming the response is in a simple text format
-    final responseText = response.text;
-    final jsonResponse = jsonDecode(responseText!);
+      // FoodData foodData = await parseFoodData();
+      // Close the loading dialog
+      print(response.text);
+      // print(foodData.item.name);
+      Get.back();
 
-// Create NutritionInfo objects from the JSON data
-    final proteinInfo = NutritionInfo.fromJson(jsonResponse['protein']);
-    final fatInfo = NutritionInfo.fromJson(jsonResponse['fat']);
-    final carbsInfo = NutritionInfo.fromJson(jsonResponse['carbs']);
+      Get.toNamed(
+        Routes.RESPONSE_SCREEN,
+        // arguments: {
+        //   'response': response.text ?? '',
+        //   'imageFile': Image.file(imgFile),
+        // },
+        arguments: [response.text ?? '',Image.file(imgFile)]
+         
+      );
+    } catch (e) {
+      // Close the loading dialog
+      Get.back();
 
-// Print the extracted information using the data classes
-    print(
-        'Protein: ${proteinInfo.grams} grams (${proteinInfo.calories} calories)');
-    print('Fat: ${fatInfo.grams} grams (${fatInfo.calories} calories)');
-    print('Carbs: ${carbsInfo.grams} grams (${carbsInfo.calories} calories)');
-
-    // Print the raw response
-    print(responseText);
-  }
-
-  Row Logo_Text() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'Cal',
-          style: TextStyle(
-              fontSize: size.height * 0.45,
-              color: onPrimaryColor,
-              fontWeight: FontWeight.w900,
-              height: size.height * 0.015),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'ories',
-              style: TextStyle(
-                  fontSize: size.height * 0.23,
-                  color: onPrimaryColor,
-                  fontWeight: FontWeight.w900,
-                  // letterSpacing: 1,
-                  height: size.height * 0.004),
-            ),
-            Text(
-              'culator',
-              style: TextStyle(
-                  // letterSpacing: 1,
-                  fontSize: size.height * 0.19,
-                  color: onPrimaryColor,
-                  fontWeight: FontWeight.w900,
-                  height: size.height * 0.005),
-            )
-          ],
-        )
-      ],
-    );
+      // Handle the error
+      Get.snackbar(
+        'Error',
+        'Failed to get response: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 }
+//   void sendImageToGoogleAI(File imageFile) async {
+//     final apiKey =
+//         'AIzaSyBNwVLoxY4jj1IZOZbUjqrO10SEL3db060'; // Ensure you provide your actual API key
 
-class NutritionInfo {
-  final int grams;
-  final int calories;
+//     final model = GenerativeModel(
+//       // model: 'gemini-1.5-flash',
+//       model: 'gemini-1.5-pro',
+//       apiKey: apiKey,
+//       generationConfig: GenerationConfig(
+//         temperature: 1,
+//         topK: 64,
+//         topP: 0.95,
+//         maxOutputTokens: 8192,
+//         responseMimeType: 'text/plain',
+//       ),
+//       systemInstruction: Content.system(
+//           'you are an expert dietician. You will be given an image of some food item/items. Analyze the nutritional content and provide a response in JSON format with the following structure:\n'
+//           '{\n'
+//           '  "protein": {\n'
+//           '    "grams": <int>,\n'
+//           '    "calories": <int>\n'
+//           '  },\n'
+//           '  "fat": {\n'
+//           '    "grams": <int>,\n'
+//           '    "calories": <int>\n'
+//           '  },\n'
+//           '  "carbs": {\n'
+//           '    "grams": <int>,\n'
+//           '    "calories": <int>\n'
+//           '  }\n'
+//           '}'),
+//     );
 
-  NutritionInfo({required this.grams, required this.calories});
+//     final imageBytes = await imageFile.readAsBytes();
 
-  factory NutritionInfo.fromJson(Map<String, dynamic> json) {
-    return NutritionInfo(
-      grams: json['grams'] as int,
-      calories: json['calories'] as int,
-    );
-  }
+//     final prompt = TextPart("");
+//     final imageParts = [
+//       DataPart('image/jpeg', imageBytes),
+//     ];
 
-  Map<String, dynamic> toJson() => {
-        'grams': grams,
-        'calories': calories,
-      };
+//     final response = await model.generateContent([
+//       Content.multi([prompt, ...imageParts])
+//     ]);
+
+//     // Assuming the response is in a simple text format
+//     final responseText = response.text;
+//     final jsonResponse = jsonDecode(responseText!);
+//     print(responseText);
+
+// // Create NutritionInfo objects from the JSON data
+//     final proteinInfo = NutritionInfo.fromJson(jsonResponse['protein']);
+//     final fatInfo = NutritionInfo.fromJson(jsonResponse['fat']);
+//     final carbsInfo = NutritionInfo.fromJson(jsonResponse['carbs']);
+
+// // Print the extracted information using the data classes
+//     print(
+//         'Protein: ${proteinInfo.grams} grams (${proteinInfo.calories} calories)');
+//     print('Fat: ${fatInfo.grams} grams (${fatInfo.calories} calories)');
+//     print('Carbs: ${carbsInfo.grams} grams (${carbsInfo.calories} calories)');
+
+//     // Print the raw response
+//     print(responseText);
+//   }
+
+// class NutritionInfo {
+//   final int grams;
+//   final int calories;
+
+//   NutritionInfo({required this.grams, required this.calories});
+
+//   factory NutritionInfo.fromJson(Map<String, dynamic> json) {
+//     return NutritionInfo(
+//       grams: json['grams'] as int,
+//       calories: json['calories'] as int,
+//     );
+//   }
+
+//   Map<String, dynamic> toJson() => {
+//         'grams': grams,
+//         'calories': calories,
+//       };
+// }
+
+Row Logo_Text() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Text(
+        'Cal',
+        style: TextStyle(
+            fontSize: size.height * 0.45,
+            color: onPrimaryColor,
+            fontWeight: FontWeight.w900,
+            height: size.height * 0.015),
+      ),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'ories',
+            style: TextStyle(
+                fontSize: size.height * 0.23,
+                color: onPrimaryColor,
+                fontWeight: FontWeight.w900,
+                // letterSpacing: 1,
+                height: size.height * 0.004),
+          ),
+          Text(
+            'culator',
+            style: TextStyle(
+                // letterSpacing: 1,
+                fontSize: size.height * 0.19,
+                color: onPrimaryColor,
+                fontWeight: FontWeight.w900,
+                height: size.height * 0.005),
+          )
+        ],
+      )
+    ],
+  );
 }

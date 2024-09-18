@@ -1,6 +1,3 @@
-import 'package:get/get.dart';
-
-
 class FoodItem {
   String name;
   String quantity;
@@ -9,6 +6,15 @@ class FoodItem {
   int protein;
   double waterquantity;
   double exercise;
+  
+  // New fields for calculated values
+  int caloriesFromCarbs;
+  int caloriesFromProtein;
+  int caloriesFromFat;
+  int totalCalories;
+  int percentageCaloriesFromCarbs;
+  int percentageCaloriesFromProtein;
+  int percentageCaloriesFromFat;
 
   FoodItem({
     required this.name,
@@ -18,16 +24,26 @@ class FoodItem {
     required this.protein,
     required this.waterquantity,
     required this.exercise,
-  });
+  })  : caloriesFromCarbs = carbs * 4,
+        caloriesFromProtein = protein * 4,
+        caloriesFromFat = fat * 9,
+        totalCalories = (carbs * 4) + (protein * 4) + (fat * 9),
+        percentageCaloriesFromCarbs = ((carbs * 4) * 100 / ((carbs * 4) + (protein * 4) + (fat * 9))).round(),
+        percentageCaloriesFromProtein = ((protein * 4) * 100 / ((carbs * 4) + (protein * 4) + (fat * 9))).round(),
+        percentageCaloriesFromFat = 100 - (((carbs * 4) * 100 / ((carbs * 4) + (protein * 4) + (fat * 9))).round() + 
+                                           ((protein * 4) * 100 / ((carbs * 4) + (protein * 4) + (fat * 9))).round());
 
   // Factory constructor for creating an instance from JSON
   factory FoodItem.fromJson(Map<String, dynamic> json) {
+    int fat = json['fat'];
+    int carbs = json['carbs'];
+    int protein = json['protein'];
     return FoodItem(
       name: json['name'],
       quantity: json['quantity'],
-      fat: json['fat'],
-      carbs: json['carbs'],
-      protein: json['protein'],
+      fat: fat,
+      carbs: carbs,
+      protein: protein,
       waterquantity: json['waterquantity'].toDouble(),
       exercise: json['exercise'].toDouble(),
     );
@@ -43,10 +59,17 @@ class FoodItem {
       'protein': protein,
       'waterquantity': waterquantity,
       'exercise': exercise,
+      // Include the calculated fields in the JSON output as well
+      'caloriesFromCarbs': caloriesFromCarbs,
+      'caloriesFromProtein': caloriesFromProtein,
+      'caloriesFromFat': caloriesFromFat,
+      'totalCalories': totalCalories,
+      'percentageCaloriesFromCarbs': percentageCaloriesFromCarbs,
+      'percentageCaloriesFromProtein': percentageCaloriesFromProtein,
+      'percentageCaloriesFromFat': percentageCaloriesFromFat,
     };
   }
 }
-
 class FoodData {
   FoodItem item;
   FoodItem alternate1;
@@ -81,18 +104,3 @@ class FoodData {
   }
 }
 
-
-
-
-
-
-
-class HomeController extends GetxController {
-  //TODO: Implement HomeController
-
-  final count = 0.obs;
-
-
-
-  void increment() => count.value++;
-}

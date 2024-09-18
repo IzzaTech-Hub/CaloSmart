@@ -19,10 +19,57 @@ class SplashView extends GetView<SplashController> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-        body: Container(
-            color: tertoryColor,
-            child: Center(
-                child: Row(
+      body: Container(
+        color: tertoryColor,
+        child: Stack(children: [
+          Positioned(
+            top: 0,
+            child: ShaderMask(
+              shaderCallback: (Rect bounds) {
+                return LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white, // Fully visible
+                    Colors.transparent // Fully transparent
+                  ],
+                ).createShader(bounds);
+              },
+              blendMode:
+                  BlendMode.dstIn, // This blends the gradient with the image
+              child: Image.asset(
+                // color: Color(0xffD5C4FF),
+                'assets/bg_img.png',
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: ShaderMask(
+              shaderCallback: (Rect bounds) {
+                return LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.transparent, // Fully visible
+                    Colors.white // Fully transparent
+                  ],
+                ).createShader(bounds);
+              },
+              blendMode:
+                  BlendMode.dstIn, // This blends the gradient with the image
+              child: Image.asset(
+                // color: Color(0xffD5C4FF),
+                'assets/bg_img.png',
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Center(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -59,6 +106,10 @@ class SplashView extends GetView<SplashController> {
                   ],
                 )
               ],
-            ))));
+            ),
+          ),
+        ]),
+      ),
+    );
   }
 }
