@@ -11,7 +11,8 @@ void main() {
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Application",
-      initialRoute: AppPages.INITIAL,
+      // initialRoute: AppPages.INITIAL,
+      initialRoute: AppPages.HISTORY_VIEW,
       getPages: AppPages.routes,
     ),
 
