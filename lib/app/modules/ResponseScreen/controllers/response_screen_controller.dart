@@ -12,6 +12,7 @@ Color onPrimaryColor = Color(0xff1E3A5F);
 class ResponseScreenController extends GetxController {
   void logFeed(FoodData foodData) async {
     final dbHelper = DatabaseHelper(); // Create an instance of DatabaseHelper
+    // dbHelper.deleteDatabaseFile();
 
     try {
       await dbHelper.insertFoodData(foodData);

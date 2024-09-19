@@ -38,7 +38,7 @@ class HomeView extends GetView<HomeController> {
       body: Container(
         child: Column(
           children: [
-            // Logo_Text(),
+            Logo_Text(),
             Text(
               "Analyze your image now",
               style: TextStyle(
