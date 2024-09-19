@@ -425,7 +425,12 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
             children: [
               // SizedBox(width: screenWidth * 0.05),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.Comparefunction(context);
+                  print('now going');
+                  // controller.goToCompare(controller.compairFood1.value!,
+                  //     controller.compairFood2.value!);
+                },
                 style: TextButton.styleFrom(
                   backgroundColor: secondaryColor,
                 ),
