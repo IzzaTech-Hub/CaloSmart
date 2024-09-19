@@ -1,9 +1,17 @@
+import 'package:calories_detector/app/modules/home/bindings/age_binding.dart';
 import 'package:calories_detector/app/modules/home/bindings/comparison_binding.dart';
+import 'package:calories_detector/app/modules/home/bindings/gender_binding.dart';
+import 'package:calories_detector/app/modules/home/bindings/goal_binding.dart';
 import 'package:calories_detector/app/modules/home/bindings/history_binding.dart';
 import 'package:calories_detector/app/modules/home/bindings/splash_binding.dart';
+import 'package:calories_detector/app/modules/home/controllers/age_controller.dart';
+import 'package:calories_detector/app/modules/home/views/age_view.dart';
 import 'package:calories_detector/app/modules/home/views/comparison_view.dart';
+import 'package:calories_detector/app/modules/home/views/gender_view.dart';
+import 'package:calories_detector/app/modules/home/views/goal_view.dart';
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
 import 'package:calories_detector/app/modules/home/views/splash_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../modules/ResponseScreen/bindings/response_screen_binding.dart';
@@ -19,7 +27,7 @@ class AppPages {
   AppPages._();
 
   static const INITIAL = Routes.SPLASH_SCREEN;
-  static const HISTORY_VIEW = Routes.HISTORY_VIEW_SCREEN;
+  static const GOAL_SCREEN = Routes.GOAL_SCREEN;
   // static const Home = Routes.HOME;
 
   static final routes = [
@@ -27,6 +35,21 @@ class AppPages {
       name: _Paths.HOME,
       page: () => HomeView(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.AGE_SCREEN,
+      page: () => AgeView(),
+      binding: AgeBinding(),
+    ),
+    GetPage(
+      name: _Paths.GENDER_SCREEN,
+      page: () => gender_view(),
+      binding: GenderBinding(),
+    ),
+    GetPage(
+      name: _Paths.GOAL_SCREEN,
+      page: () => goalView(),
+      binding: GoalBinding(),
     ),
     GetPage(
       name: _Paths.INTRO_SCREENS,
@@ -45,12 +68,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HISTORY_VIEW_SCREEN,
-      page: () =>  HistoryShow(),
+      page: () => HistoryShow(),
       binding: HistoryshowBinding(),
     ),
     GetPage(
       name: _Paths.COMPARISON_VIEW_SCREEN,
-      page: () =>  ComparisonView(),
+      page: () => ComparisonView(),
       binding: ComparisonBinding(),
     ),
   ];

@@ -1,15 +1,12 @@
 import 'package:calories_detector/app/modules/home/controllers/history_show_controller.dart';
 import 'package:calories_detector/app/modules/home/views/comparison_view.dart';
 import 'package:calories_detector/app/modules/home/views/home_view.dart';
+import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:calories_detector/sizeConfig.dart';
 
-Color onSecondaryColor = const Color(0xffFFffff);
-Color secondaryColor = Color(0xffFF4D6D);
-Color primaryColor = Color(0xffFFD1DC);
-Color onPrimaryColor = Color(0xff1E3A5F);
-Color tertoryColor = Color(0xffE3D7FF);
+
 Size size = Size(
     SizeConfig.blockSizeHorizontal * 90, SizeConfig.blockSizeHorizontal * 50);
 
@@ -21,7 +18,7 @@ class HistoryShow extends GetView<HistoryShowController> {
     // final controller = Get.put(HistoryViewController());
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: secondaryColor,
+          backgroundColor: AppColors.secondaryColor,
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
@@ -37,14 +34,14 @@ class HistoryShow extends GetView<HistoryShowController> {
               Text(
                 "History",
                 style: TextStyle(
-                  color: primaryColor,
+                  color: AppColors.primaryColor,
                   fontSize: size.height * 0.15,
                 ),
               ),
               SizedBox(width: 8),
               Icon(
                 Icons.calendar_today,
-                color: primaryColor,
+                color: AppColors.primaryColor,
                 size: size.height * 0.15,
               ),
             ],

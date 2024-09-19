@@ -15,7 +15,7 @@ void main() async {
       debugShowCheckedModeBanner: false,
       title: "Application",
       initialRoute: AppPages.INITIAL,
-      // initialRoute: AppPages.HISTORY_VIEW,
+      // initialRoute: AppPages.AGE_SCREEN,
       getPages: AppPages.routes,
     ),
 
