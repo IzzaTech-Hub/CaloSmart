@@ -82,11 +82,6 @@ class FoodData {
 }
 
 
-
-
-
-
-
 class HomeController extends GetxController {
   //TODO: Implement HomeController
 

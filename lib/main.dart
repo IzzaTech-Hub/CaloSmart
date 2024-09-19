@@ -1,5 +1,3 @@
-import 'package:calories_detector/app/modules/home/views/home_view.dart';
-import 'package:calories_detector/app/modules/home/views/splash_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,11 +9,13 @@ void main() {
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Application",
+      
       // initialRoute: AppPages.INITIAL,
-      initialRoute: AppPages.HISTORY_VIEW,
+      initialRoute: Routes.COMPARISON_VIEW_SCREEN,
       getPages: AppPages.routes,
     ),
 
     // const MaterialApp(home: SplashView()),
   );
 }
+

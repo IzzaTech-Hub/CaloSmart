@@ -1,14 +1,11 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, avoid_print
 
 import 'dart:io';
-import 'package:calories_detector/app/modules/ResponseScreen/views/response_screen_view.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../controllers/home_controller.dart';
 import 'package:flutter/services.dart';
 import '../../../routes/app_pages.dart';
@@ -37,7 +34,7 @@ class HomeView extends GetView<HomeController> {
       body: Container(
         child: Column(
           children: [
-            // Logo_Text(),
+            Logo_Text(),
             Text(
               "Analyze your image now",
               style: TextStyle(
@@ -55,44 +52,52 @@ class HomeView extends GetView<HomeController> {
                         onTap: () {
                           pickImageFromGallery();
                         },
-                        child: Icon_Method(
-                            "Choose from", "Gallery", Icons.image),
+                        child:
+                            Icon_Method("Choose from", "Gallery", Icons.image),
                       ),
                       InkWell(
                         onTap: () {
                           pickImageFromCamera();
                         },
-                        child: Icon_Method("Capture from", "Camera",
-                            Icons.camera_alt_rounded),
+                        child: Icon_Method(
+                            "Capture from", "Camera", Icons.camera_alt_rounded),
                       )
                     ],
                   ),
                   verticalSpace(size.height * 0.1),
-                  Container(
-                    height: size.height * 0.35,
-                    width: size.width * 0.97,
-                    decoration: BoxDecoration(
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(Routes.HISTORY_VIEW_SCREEN);
+                    },
+                    child: Container(
+                      height: size.height * 0.35,
+                      width: size.width * 0.97,
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(size.height * 0.1),
-                        color: secondaryColor),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.history,
-                          size: size.height * 0.28,
-                          color: onSecondaryColor,
-                        ),
-                        Text(
-                          "Previous Logs",
-                          style: TextStyle(
+                        color: secondaryColor,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.history,
+                            size: size.height * 0.28,
+                            color: onSecondaryColor,
+                          ),
+                          Text(
+                            "Previous Logs",
+                            style: TextStyle(
                               color: onSecondaryColor,
                               fontSize: size.height * 0.16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
+
                   verticalSpace(size.height * 0.1),
                   // Container(
                   //   height: size.height * 1,
@@ -122,8 +127,6 @@ class HomeView extends GetView<HomeController> {
                   //     ],
                   //   ),
                   // ),
-               
-               
                 ],
               ),
             ),
@@ -152,8 +155,8 @@ class HomeView extends GetView<HomeController> {
             ),
             Text(
               smallTexted,
-              style: TextStyle(
-                  fontSize: size.height * 0.08, color: tertoryColor),
+              style:
+                  TextStyle(fontSize: size.height * 0.08, color: tertoryColor),
             ),
             Text(
               largeTexted,
@@ -274,15 +277,12 @@ class HomeView extends GetView<HomeController> {
       // print(foodData.item.name);
       Get.back();
 
-      Get.toNamed(
-        Routes.RESPONSE_SCREEN,
-        // arguments: {
-        //   'response': response.text ?? '',
-        //   'imageFile': Image.file(imgFile),
-        // },
-        arguments: [response.text ?? '',Image.file(imgFile)]
-         
-      );
+      Get.toNamed(Routes.RESPONSE_SCREEN,
+          // arguments: {
+          //   'response': response.text ?? '',
+          //   'imageFile': Image.file(imgFile),
+          // },
+          arguments: [response.text ?? '', Image.file(imgFile)]);
     } catch (e) {
       // Close the loading dialog
       Get.back();
@@ -387,10 +387,10 @@ Row Logo_Text() {
       Text(
         'Cal',
         style: TextStyle(
-            fontSize: size.height * 0.45,
+            fontSize: size.height * 0.5,
             color: onPrimaryColor,
             fontWeight: FontWeight.w900,
-            height: size.height * 0.015),
+            height: size.height * 0.016),
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -399,7 +399,7 @@ Row Logo_Text() {
           Text(
             'ories',
             style: TextStyle(
-                fontSize: size.height * 0.23,
+                fontSize: size.height * 0.28,
                 color: onPrimaryColor,
                 fontWeight: FontWeight.w900,
                 // letterSpacing: 1,

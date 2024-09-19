@@ -8,6 +8,7 @@ abstract class Routes {
   static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
   static const RESPONSE_SCREEN = _Paths.RESPONSE_SCREEN;
   static const HISTORY_VIEW_SCREEN = _Paths.HISTORY_VIEW_SCREEN;
+  static const COMPARISON_VIEW_SCREEN = _Paths.COMPARISON_VIEW_SCREEN;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const SPLASH_SCREEN = '/splash_view';
   static const RESPONSE_SCREEN = '/response-screen';
   static const HISTORY_VIEW_SCREEN = '/history_show.dart';
+  static const COMPARISON_VIEW_SCREEN = '/comparison_view.dart';
 }

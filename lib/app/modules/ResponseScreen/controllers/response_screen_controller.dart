@@ -36,22 +36,14 @@ class ResponseScreenController extends GetxController {
     final arguments = Get.arguments;
     final String response = arguments[0];
     imageFile.value = arguments[1];
-    print("Argument ${response}");
+    print("Argument $response");
     Map<String, dynamic> jsonMap = jsonDecode(response);
     foodData.value = FoodData.fromJson(jsonMap);
 
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
 }
