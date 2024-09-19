@@ -101,6 +101,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
                   ),
+
                   verticalSpace(size.height * 0.1),
                   // Container(
                   //   height: size.height * 1,
@@ -268,10 +269,10 @@ Row Logo_Text() {
       Text(
         'Cal',
         style: TextStyle(
-            fontSize: size.height * 0.45,
+            fontSize: size.height * 0.5,
             color: onPrimaryColor,
             fontWeight: FontWeight.w900,
-            height: size.height * 0.015),
+            height: size.height * 0.016),
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -280,7 +281,7 @@ Row Logo_Text() {
           Text(
             'ories',
             style: TextStyle(
-                fontSize: size.height * 0.23,
+                fontSize: size.height * 0.28,
                 color: onPrimaryColor,
                 fontWeight: FontWeight.w900,
                 // letterSpacing: 1,

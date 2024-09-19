@@ -1,4 +1,6 @@
 import 'package:calories_detector/app/modules/home/controllers/history_show_controller.dart';
+import 'package:calories_detector/app/modules/home/views/comparison_view.dart';
+import 'package:calories_detector/app/modules/home/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:calories_detector/sizeConfig.dart';
@@ -12,6 +14,8 @@ Size size = Size(
     SizeConfig.blockSizeHorizontal * 90, SizeConfig.blockSizeHorizontal * 50);
 
 class HistoryShow extends GetView<HistoryShowController> {
+  const HistoryShow({super.key});
+
   @override
   Widget build(BuildContext context) {
     // final controller = Get.put(HistoryViewController());

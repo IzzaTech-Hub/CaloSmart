@@ -1,5 +1,3 @@
-import 'package:calories_detector/app/modules/home/views/home_view.dart';
-import 'package:calories_detector/app/modules/home/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:get/get.dart';
@@ -24,3 +22,4 @@ void main() async {
     // const MaterialApp(home: SplashView()),
   );
 }
+

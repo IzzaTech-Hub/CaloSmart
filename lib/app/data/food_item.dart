@@ -60,7 +60,6 @@ class FoodItem {
     );
   }
 
-  // Method for converting an instance to JSON
   Map<String, dynamic> toJson() {
     return {
       'name': name,

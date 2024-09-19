@@ -239,7 +239,7 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                   // top: 0,
                   left: 0,
                   child: Center(
-                    child: Container(
+                    child: SizedBox(
                       // Set the overall size of the container to constrain the pie chart
                       height: SizeConfig.screenHeight * 0.1225,
 
@@ -472,7 +472,9 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
           SizedBox(height: SizeConfig.screenHeight * 0.025),
           Center(
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                // ResponseScreenController().rece centFoodData.logFood(currentFoodData);
+              },
               style: TextButton.styleFrom(
                 backgroundColor: secondaryColor,
               ),
