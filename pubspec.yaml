@@ -41,6 +41,8 @@ dependencies:
   google_generative_ai: ^0.4.6
   get_cli: ^1.8.1
   fl_chart: ^0.69.0
+  sqflite: ^2.3.3+1
+  path: ^1.9.0
   shared_preferences: ^2.3.2
 
 dev_dependencies:

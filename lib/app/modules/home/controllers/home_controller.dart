@@ -1,93 +1,157 @@
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+// import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/services.dart';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
+// import 'dart:convert';
+import '../../../routes/app_pages.dart';
 
+import 'dart:convert';
+import '../../../data/food_item.dart';
 
-class FoodItem {
-  String name;
-  String quantity;
-  int fat;
-  int carbs;
-  int protein;
-  double waterquantity;
-  double exercise;
-
-  FoodItem({
-    required this.name,
-    required this.quantity,
-    required this.fat,
-    required this.carbs,
-    required this.protein,
-    required this.waterquantity,
-    required this.exercise,
-  });
-
-  // Factory constructor for creating an instance from JSON
-  factory FoodItem.fromJson(Map<String, dynamic> json) {
-    return FoodItem(
-      name: json['name'],
-      quantity: json['quantity'],
-      fat: json['fat'],
-      carbs: json['carbs'],
-      protein: json['protein'],
-      waterquantity: json['waterquantity'].toDouble(),
-      exercise: json['exercise'].toDouble(),
-    );
-  }
-
-  // Method for converting an instance to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'quantity': quantity,
-      'fat': fat,
-      'carbs': carbs,
-      'protein': protein,
-      'waterquantity': waterquantity,
-      'exercise': exercise,
-    };
-  }
-}
-
-class FoodData {
-  FoodItem item;
-  FoodItem alternate1;
-  FoodItem alternate2;
-  FoodItem alternate3;
-
-  FoodData({
-    required this.item,
-    required this.alternate1,
-    required this.alternate2,
-    required this.alternate3,
-  });
-
-  // Factory constructor for creating an instance from JSON
-  factory FoodData.fromJson(Map<String, dynamic> json) {
-    return FoodData(
-      item: FoodItem.fromJson(json['item']),
-      alternate1: FoodItem.fromJson(json['alternate1']),
-      alternate2: FoodItem.fromJson(json['alternate2']),
-      alternate3: FoodItem.fromJson(json['alternate3']),
-    );
-  }
-
-  // Method for converting an instance to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'item': item.toJson(),
-      'alternate1': alternate1.toJson(),
-      'alternate2': alternate2.toJson(),
-      'alternate3': alternate3.toJson(),
-    };
-  }
-}
-
+final ImagePicker _picker = ImagePicker();
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
 
+  Future<void> pickImageFromCamera() async {
+    try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+      if (image != null) {
+        File imageFile = File(image.path);
+        print('Image Path: ${image.path}');
+        sendImageToGoogleAI(imageFile); // Send image to Gemini
+      }
+    } catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  Future<void> pickImageFromGallery() async {
+    try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        File imageFile = File(image.path);
+        print('Image Path: ${image.path}');
+        sendImageToGoogleAI(imageFile); // Send image to Gemini
+      }
+    } catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  Future<void> sendImageToGoogleAI(File imgFile) async {
+    Get.dialog(
+      Center(child: CircularProgressIndicator()), // Loading screen
+      barrierDismissible:
+          false, // Prevents dismissing the dialog by tapping outside
+    );
+
+    final model = GenerativeModel(
+      model: 'gemini-1.5-flash',
+      apiKey: 'AIzaSyD4cCpD7lP-Q9raPF59L8npR8H5NF3pLIo',
+    );
+
+    // final prompt ='Give me json response according to map given in instructions';
+    final prompt =
+        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items, mass in kg no. of scoops, no. of litres or anything else suitable for that food. then tell 3 best and healthy alternates for them to consume instead of them. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours). provide a response in JSON format with the following structure:\n'
+        '''
+{
+  "item": {
+    "name": "<string>",\n
+    "quantity": "<string>",\n
+    "fat": <int>,\n
+    "carbs": <int>,\n
+    "protein": <int>,\n
+    "waterquantity": <float>,\n
+    "exercise": <float>\n
+  },\n
+  "alternate1": {
+    "name": "<string>",\n
+    "quantity": "<string>",\n
+    "fat": <int>,\n
+    "carbs": <int>,\n
+    "protein": <int>,\n
+    "waterquantity": <float>,\n
+    "exercise": <float>\n
+  },\n
+  "alternate2": {
+    "name": "<string>",\n
+    "quantity": "<string>",\n
+    "fat": <int>,\n
+    "carbs": <int>,\n
+    "protein": <int>,\n
+    "waterquantity": <float>,\n
+    "exercise": <float>\n
+  },\n
+  "alternate3": {
+    "name": "<string>",\n
+    "quantity": "<string>",\n
+    "fat": <int>,\n
+    "carbs": <int>,\n
+    "protein": <int>,\n
+    "waterquantity": <float>,\n
+    "exercise": <float>\n
+  }\n
+}
+'''
+        'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
+    Uint8List imageBytes = await imgFile.readAsBytes();
+
+    final content = [
+      Content.multi([TextPart(prompt), DataPart('image/jpeg', imageBytes)]),
+    ];
+    //   final response = await model.generateContent(content);
+    // print(response.text);
+    //     Map<String, dynamic> jsonMap = jsonDecode(response.text?? '');
+
+    // FoodData foodData = FoodData.fromJson(jsonMap);
+    try {
+      final response = await model.generateContent(content);
+      // Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
+      // FoodData foodData = FoodData.fromJson(jsonMap);
+
+      // FoodData foodData = await parseFoodData();
+      // Close the loading dialog
+      print(response.text);
+      // print(foodData.item.name);
+      Get.back();
+      Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
+      FoodData foodData = FoodData.fromJson(jsonMap);
+
+      goToREsponse(foodData, imgFile);
+    } catch (e) {
+      // Close the loading dialog
+      Get.back();
+
+      // Handle the error
+      Get.snackbar(
+        'Error',
+        // 'Failed to get response: $e',
+        'There is something Wrong with your image',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  void goToREsponse(FoodData foodData, File imgFile) {
+    try {
+      Get.toNamed(Routes.RESPONSE_SCREEN,
+          // arguments: [response.text ?? '',Image.file(imgFile)]
+          arguments: [foodData, Image.file(imgFile)]);
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        // 'Failed to get response:\nThere is something Wrong with your image',
+        'There is something Wrong with your image',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
   final count = 0.obs;
-
-
 
   void increment() => count.value++;
 }

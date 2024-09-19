@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
-
+import 'package:calories_detector/sizeConfig.dart';
 import '../controllers/response_screen_controller.dart';
 
 class ResponseScreenView extends GetView<ResponseScreenController> {
@@ -9,8 +9,8 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
+    // double screenHeight = MediaQuery.of(context).size.height;
+    // double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: primaryColor,
@@ -22,9 +22,9 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
             children: [
               Container(
                 clipBehavior: Clip.hardEdge,
-                height: screenWidth * 0.65,
+                height: SizeConfig.screenWidth * 0.65,
                 // height: screenHeight * 0.286,
-                width: screenWidth,
+                width: SizeConfig.screenWidth,
                 decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.only(
@@ -59,7 +59,7 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                   color: Colors.black),
             ),
           ),
-          SizedBox(height: screenHeight * 0.01),
+          SizedBox(height: SizeConfig.screenHeight * 0.01),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -83,7 +83,7 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                 ],
               ),
               SizedBox(
-                width: screenWidth * 0.0,
+                width: SizeConfig.screenWidth * 0.0,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,17 +117,17 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
               )
             ],
           ),
-          SizedBox(height: screenHeight * 0.025),
+          SizedBox(height: SizeConfig.screenHeight * 0.025),
           SizedBox(
-            height: screenHeight * 0.1225,
-            width: screenWidth,
+            height: SizeConfig.screenHeight * 0.1225,
+            width: SizeConfig.screenWidth,
             child: Stack(
               children: [
                 Positioned(
                   right: 0,
                   child: Container(
-                    width: screenWidth * 0.8,
-                    height: screenHeight * 0.1225,
+                    width: SizeConfig.screenWidth * 0.8,
+                    height: SizeConfig.screenHeight * 0.1225,
                     // height: 100,
                     color: onSecondaryColor,
                     child: Row(
@@ -149,7 +149,8 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                             Text(
                               'Protien',
                               style: TextStyle(
-                                  color: Color(0xffFFD700),
+                                  // color: Color(0xffFFD700),
+                                  color: Colors.blue,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 20),
                             ),
@@ -240,9 +241,9 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                   child: Center(
                     child: SizedBox(
                       // Set the overall size of the container to constrain the pie chart
-                      height: screenHeight * 0.1225,
+                      height: SizeConfig.screenHeight * 0.1225,
 
-                      width: screenWidth * 0.4, // Set the desired width
+                      width: SizeConfig.screenWidth * 0.4, // Set the desired width
                       child: PieChart(
                         PieChartData(
                           sectionsSpace: 0, // No space between sections
@@ -256,7 +257,7 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                                   .toDouble(),
                               // Remove text by setting an empty string for the title
                               title: '',
-                              radius: screenHeight *
+                              radius: SizeConfig.screenHeight *
                                   0.06125, // Adjust radius to fit within the container
                             ),
                             PieChartSectionData(
@@ -267,7 +268,7 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                                   .toDouble(),
                               // value: protienp.toDouble(),
                               title: '',
-                              radius: screenHeight *
+                              radius: SizeConfig.screenHeight *
                                   0.06125, // Adjust radius to fit within the container
                             ),
                             PieChartSectionData(
@@ -277,7 +278,7 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                                   .toDouble(),
                               // value: fatp.toDouble(),
                               title: '',
-                              radius: screenHeight *
+                              radius: SizeConfig.screenHeight *
                                   0.06125, // Adjust radius to fit within the container
                             ),
                           ],
@@ -289,15 +290,15 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                 Positioned(
                   // right: screenWidth * 0,
                   // top: 0,
-                  left: screenWidth * 0.2 - screenHeight * 0.06125,
-                  child: SizedBox(
-                    height: screenHeight * 0.1225,
-                    width: screenHeight * 0.1225,
+                  left: SizeConfig.screenWidth * 0.2 - SizeConfig.screenHeight * 0.06125,
+                  child: Container(
+                    height: SizeConfig.screenHeight * 0.1225,
+                    width: SizeConfig.screenHeight * 0.1225,
                     child: Center(
                       child: Container(
                         // Set the overall size of the container to constrain the pie chart
-                        height: screenHeight * 0.1,
-                        width: screenHeight * 0.1,
+                        height: SizeConfig.screenHeight * 0.1,
+                        width: SizeConfig.screenHeight * 0.1,
                         decoration: BoxDecoration(
                             color: primaryColor,
                             borderRadius: BorderRadius.circular(100)),
@@ -330,17 +331,17 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
               ],
             ),
           ),
-          SizedBox(height: screenHeight * 0.025),
+          SizedBox(height: SizeConfig.screenHeight * 0.025),
           SizedBox(
-            height: screenHeight * 0.1225,
-            width: screenWidth,
+            height: SizeConfig.screenHeight * 0.1225,
+            width: SizeConfig.screenWidth,
             child: Stack(
               children: [
                 Positioned(
                   left: 0,
                   child: Container(
-                    width: screenWidth * 0.8,
-                    height: screenHeight * 0.1225,
+                    width: SizeConfig.screenWidth * 0.8,
+                    height: SizeConfig.screenHeight * 0.1225,
                     // height: 100,
                     color: onSecondaryColor,
                     child: Padding(
@@ -385,18 +386,18 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                 Positioned(
                   // right: screenWidth * 0,
                   // top: 0,
-                  right: screenWidth * 0.2 - screenHeight * 0.06125,
+                  right: SizeConfig.screenWidth * 0.2 - SizeConfig.screenHeight * 0.06125,
                   child: Container(
-                    height: screenHeight * 0.1225,
-                    width: screenHeight * 0.1225,
+                    height: SizeConfig.screenHeight * 0.1225,
+                    width: SizeConfig.screenHeight * 0.1225,
                     decoration: BoxDecoration(
                         color: secondaryColor,
                         borderRadius: BorderRadius.circular(100)),
                     child: Center(
                       child: Container(
                         // Set the overall size of the container to constrain the pie chart
-                        height: screenHeight * 0.1,
-                        width: screenHeight * 0.1,
+                        height: SizeConfig.screenHeight * 0.1,
+                        width: SizeConfig.screenHeight * 0.1,
                         decoration: BoxDecoration(
                             color: primaryColor,
                             borderRadius: BorderRadius.circular(100)),
@@ -415,7 +416,7 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
               ],
             ),
           ),
-          SizedBox(height: screenHeight * 0.025),
+          SizedBox(height: SizeConfig.screenHeight * 0.025),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -429,7 +430,7 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                   child: SizedBox(
-                    width: screenWidth * 0.3,
+                    width: SizeConfig.screenWidth * 0.3,
                     child: Center(
                       child: Text(
                         'Compare',
@@ -451,7 +452,7 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                   child: SizedBox(
-                    width: screenWidth * 0.3,
+                    width: SizeConfig.screenWidth * 0.3,
                     child: Center(
                       child: Text('Alternative',
                           style: TextStyle(
@@ -465,7 +466,7 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
               // SizedBox(width: screenWidth * 0.05),
             ],
           ),
-          SizedBox(height: screenHeight * 0.025),
+          SizedBox(height: SizeConfig.screenHeight * 0.025),
           Center(
             child: TextButton(
               onPressed: () {
@@ -477,20 +478,31 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                child: SizedBox(
-                  width: screenWidth * 0.5,
-                  child: Center(
-                    child: Text('Log food',
-                        style: TextStyle(
-                            color: onSecondaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20)),
+                child: InkWell(
+                  // onTap: controller.logFeed(controller.foodData.value!),
+                  onTap: () {
+  if (controller.foodData.value != null) {
+    controller.logFeed(controller.foodData.value!);
+  } else {
+    print('FoodData is null.');
+  }
+},
+
+                  child: SizedBox(
+                    width: SizeConfig.screenWidth * 0.5,
+                    child: Center(
+                      child: Text('Log food',
+                          style: TextStyle(
+                              color: onSecondaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20)),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-          SizedBox(height: screenHeight * 0.025)
+          SizedBox(height: SizeConfig.screenHeight * 0.025)
         ],
       ),
     );

@@ -1,16 +1,20 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, avoid_print
 
-import 'dart:io';
+// import 'dart:io';
+// import 'package:calories_detector/app/modules/ResponseScreen/views/response_screen_view.dart';
+import 'package:calories_detector/app/data/Data_Base.dart';
+import 'package:calories_detector/app/modules/home/controllers/history_show_controller.dart';
+import 'package:calories_detector/app/modules/home/views/history_show.dart';
+import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
+// import 'package:google_generative_ai/google_generative_ai.dart';
+// import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:permission_handler/permission_handler.dart';
 import '../controllers/home_controller.dart';
-import 'package:flutter/services.dart';
-import '../../../routes/app_pages.dart';
-
-List<FoodData> foodItemsList = [];
+// import '../../../routes/app_pages.dart';
 
 Size size = Size(
     SizeConfig.blockSizeHorizontal * 90, SizeConfig.blockSizeHorizontal * 50);
@@ -50,14 +54,14 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       InkWell(
                         onTap: () {
-                          pickImageFromGallery();
+                          controller.pickImageFromGallery();
                         },
                         child:
                             Icon_Method("Choose from", "Gallery", Icons.image),
                       ),
                       InkWell(
                         onTap: () {
-                          pickImageFromCamera();
+                          controller.pickImageFromCamera();
                         },
                         child: Icon_Method(
                             "Capture from", "Camera", Icons.camera_alt_rounded),
@@ -67,15 +71,16 @@ class HomeView extends GetView<HomeController> {
                   verticalSpace(size.height * 0.1),
                   InkWell(
                     onTap: () {
+                      // DatabaseHelper().deleteDatabaseFile();
                       Get.toNamed(Routes.HISTORY_VIEW_SCREEN);
                     },
                     child: Container(
                       height: size.height * 0.35,
                       width: size.width * 0.97,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(size.height * 0.1),
-                        color: secondaryColor,
-                      ),
+                          borderRadius:
+                              BorderRadius.circular(size.height * 0.1),
+                          color: secondaryColor),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,10 +93,9 @@ class HomeView extends GetView<HomeController> {
                           Text(
                             "Previous Logs",
                             style: TextStyle(
-                              color: onSecondaryColor,
-                              fontSize: size.height * 0.16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                                color: onSecondaryColor,
+                                fontSize: size.height * 0.16,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -171,131 +175,9 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  final ImagePicker _picker = ImagePicker();
-
   // Function to capture image from camera
-  Future<void> pickImageFromCamera() async {
-    try {
-      final XFile? image = await _picker.pickImage(source: ImageSource.camera);
-      if (image != null) {
-        File imageFile = File(image.path);
-        print('Image Path: ${image.path}');
-        sendImageToGoogleAI(imageFile); // Send image to Gemini
-      }
-    } catch (e) {
-      print('Failed to pick image: $e');
-    }
-  }
-
-  Future<void> pickImageFromGallery() async {
-    try {
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        File imageFile = File(image.path);
-        print('Image Path: ${image.path}');
-        sendImageToGoogleAI(imageFile); // Send image to Gemini
-      }
-    } catch (e) {
-      print('Failed to pick image: $e');
-    }
-  }
-
-  Future<void> sendImageToGoogleAI(File imgFile) async {
-    Get.dialog(
-      Center(child: CircularProgressIndicator()), // Loading screen
-      barrierDismissible:
-          false, // Prevents dismissing the dialog by tapping outside
-    );
-
-    final model = GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: 'AIzaSyD4cCpD7lP-Q9raPF59L8npR8H5NF3pLIo',
-    );
-
-    // final prompt ='Give me json response according to map given in instructions';
-    final prompt =
-        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items, mass in kg no. of scoops, no. of litres or anything else suitable for that food. then tell 3 best and healthy alternates for them to consume instead of them. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours). provide a response in JSON format with the following structure:\n'
-        '''
-{
-  "item": {
-    "name": "<string>",\n
-    "quantity": "<string>",\n
-    "fat": <int>,\n
-    "carbs": <int>,\n
-    "protein": <int>,\n
-    "waterquantity": <float>,\n
-    "exercise": <float>\n
-  },\n
-  "alternate1": {
-    "name": "<string>",\n
-    "quantity": "<string>",\n
-    "fat": <int>,\n
-    "carbs": <int>,\n
-    "protein": <int>,\n
-    "waterquantity": <float>,\n
-    "exercise": <float>\n
-  },\n
-  "alternate2": {
-    "name": "<string>",\n
-    "quantity": "<string>",\n
-    "fat": <int>,\n
-    "carbs": <int>,\n
-    "protein": <int>,\n
-    "waterquantity": <float>,\n
-    "exercise": <float>\n
-  },\n
-  "alternate3": {
-    "name": "<string>",\n
-    "quantity": "<string>",\n
-    "fat": <int>,\n
-    "carbs": <int>,\n
-    "protein": <int>,\n
-    "waterquantity": <float>,\n
-    "exercise": <float>\n
-  }\n
 }
-'''
-        'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
-    Uint8List imageBytes = await imgFile.readAsBytes();
 
-    final content = [
-      Content.multi([TextPart(prompt), DataPart('image/jpeg', imageBytes)]),
-    ];
-    //   final response = await model.generateContent(content);
-    // print(response.text);
-    //     Map<String, dynamic> jsonMap = jsonDecode(response.text?? '');
-
-    // FoodData foodData = FoodData.fromJson(jsonMap);
-    try {
-      final response = await model.generateContent(content);
-      // Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
-      // FoodData foodData = FoodData.fromJson(jsonMap);
-
-      // FoodData foodData = await parseFoodData();
-      // Close the loading dialog
-      print(response.text);
-      // print(foodData.item.name);
-      Get.back();
-
-      Get.toNamed(Routes.RESPONSE_SCREEN,
-          // arguments: {
-          //   'response': response.text ?? '',
-          //   'imageFile': Image.file(imgFile),
-          // },
-          arguments: [response.text ?? '', Image.file(imgFile)]);
-    } catch (e) {
-      // Close the loading dialog
-      Get.back();
-
-      // Handle the error
-      Get.snackbar(
-        'Error',
-        'Failed to get response: $e',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    }
-  }
-}
 //   void sendImageToGoogleAI(File imageFile) async {
 //     final apiKey =
 //         'AIzaSyBNwVLoxY4jj1IZOZbUjqrO10SEL3db060'; // Ensure you provide your actual API key
