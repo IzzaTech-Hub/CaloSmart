@@ -50,11 +50,13 @@ dependencies:
   firebase_analytics: ^11.3.2
   firebase_messaging: ^15.1.2
   flutter_local_notifications: ^17.2.2
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   change_app_package_name: ^1.4.0
+  flutter_launcher_icons: ^0.13.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -62,6 +64,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/iconlogo.png"
+  remove_alpha_ios: false
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
