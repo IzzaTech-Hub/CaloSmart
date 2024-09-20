@@ -1,6 +1,7 @@
 import 'package:calories_detector/app/modules/ResponseScreen/controllers/response_screen_controller.dart';
 import 'package:calories_detector/app/modules/home/controllers/comparison_controller.dart';
 import 'package:calories_detector/app/modules/home/views/home_view.dart';
+import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -242,7 +243,7 @@ class ComparisonView extends GetView<ComparisonController> {
           Container(
               height: size.height * 1.2,
               width: size.width * 2,
-              color: tertoryColor,
+              color: AppColors.tertoryColor,
               child: Column(
                   // mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,

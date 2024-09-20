@@ -112,7 +112,7 @@ class goalView extends GetView<GoalController> {
                   "What is Your Goal?",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: size.height * 0.12),
+                      fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
                 verticalSpace(size.height * 0.5),

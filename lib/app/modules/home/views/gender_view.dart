@@ -115,7 +115,7 @@ class gender_view extends GetView<GenderController> {
                   "Please Enter Your Gender",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: size.height * 0.12),
+                      fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
                 verticalSpace(size.height * 0.5),
