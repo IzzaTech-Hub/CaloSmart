@@ -5,6 +5,7 @@
 import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:calories_detector/app/modules/home/controllers/history_show_controller.dart';
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
+import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
@@ -17,32 +18,32 @@ import '../controllers/home_controller.dart';
 // import '../../../routes/app_pages.dart';
 
 Size size = Size(
-    SizeConfig.blockSizeHorizontal * 90, SizeConfig.blockSizeHorizontal * 50);
+    SizeConfig.blockSizeHorizontal *90, SizeConfig.blockSizeHorizontal*50);
 
-Color onSecondaryColor = const Color(0xffFFffff);
-Color secondaryColor = Color(0xffFF4D6D);
-Color primaryColor = Color(0xffFFD1DC);
-Color onPrimaryColor = Color(0xff1E3A5F);
-Color tertoryColor = Color(0xffE3D7FF);
 
 class HomeView extends GetView<HomeController> {
   HomeView({super.key});
+  
   // NutritionInfo? proteinInfo;
   // NutritionInfo? fatInfo;
   // NutritionInfo? carbsInfo;
 
   @override
   Widget build(BuildContext context) {
+    // SizeConfig().init(context);
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: AppColors.primaryColor,
       body: Container(
         child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            verticalSpace(size.height*0.15),
             Logo_Text(),
             Text(
               "Analyze your image now",
               style: TextStyle(
-                  fontSize: size.height * 0.15, color: onPrimaryColor),
+                  fontSize: size.height * 0.15, color: AppColors.onPrimaryColor),
             ),
             SizedBox(height: size.height * 0.15),
             Container(
@@ -80,7 +81,7 @@ class HomeView extends GetView<HomeController> {
                       decoration: BoxDecoration(
                           borderRadius:
                               BorderRadius.circular(size.height * 0.1),
-                          color: secondaryColor),
+                          color: AppColors.secondaryColor),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,12 +89,12 @@ class HomeView extends GetView<HomeController> {
                           Icon(
                             Icons.history,
                             size: size.height * 0.28,
-                            color: onSecondaryColor,
+                            color: AppColors.onSecondaryColor,
                           ),
                           Text(
                             "Previous Logs",
                             style: TextStyle(
-                                color: onSecondaryColor,
+                                color:AppColors. onSecondaryColor,
                                 fontSize: size.height * 0.16,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -146,7 +147,7 @@ class HomeView extends GetView<HomeController> {
       width: size.width * 0.45,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(size.height * 0.12),
-          color: secondaryColor),
+          color: AppColors.secondaryColor),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: size.height * 0.05),
         child: Column(
@@ -155,18 +156,18 @@ class HomeView extends GetView<HomeController> {
             Icon(
               icon,
               size: size.height * 0.4,
-              color: onSecondaryColor,
+              color: AppColors.onSecondaryColor,
             ),
             Text(
               smallTexted,
               style:
-                  TextStyle(fontSize: size.height * 0.08, color: tertoryColor),
+                  TextStyle(fontSize: size.height * 0.08, color: AppColors.tertoryColor),
             ),
             Text(
               largeTexted,
               style: TextStyle(
                   fontSize: size.height * 0.16,
-                  color: onSecondaryColor,
+                  color: AppColors.onSecondaryColor,
                   fontWeight: FontWeight.w900),
             ),
           ],
@@ -266,23 +267,25 @@ Row Logo_Text() {
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
+      
       Text(
         'Cal',
         style: TextStyle(
-            fontSize: size.height * 0.5,
-            color: onPrimaryColor,
+            fontSize: 80,
+            color: AppColors.onPrimaryColor,
             fontWeight: FontWeight.w900,
-            height: size.height * 0.016),
+            // height: size.height * 0.016
+            ),
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             'ories',
             style: TextStyle(
                 fontSize: size.height * 0.28,
-                color: onPrimaryColor,
+                color: AppColors.onPrimaryColor,
                 fontWeight: FontWeight.w900,
                 // letterSpacing: 1,
                 height: size.height * 0.004),
@@ -292,7 +295,7 @@ Row Logo_Text() {
             style: TextStyle(
                 // letterSpacing: 1,
                 fontSize: size.height * 0.19,
-                color: onPrimaryColor,
+                color: AppColors.onPrimaryColor,
                 fontWeight: FontWeight.w900,
                 height: size.height * 0.005),
           )

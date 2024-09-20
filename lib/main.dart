@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
       navigatorObservers: <NavigatorObserver>[observer],
 
       initialRoute: AppPages.INITIAL,
-      // initialRoute: AppPages.AGE_SCREEN,
+      // initialRoute: AppPages.HOME,
       getPages: AppPages.routes,
     );
   }
