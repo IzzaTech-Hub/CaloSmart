@@ -10,7 +10,8 @@ import 'package:fl_chart/fl_chart.dart';
 // Color onSecondaryColor = const Color(0xffFFffff);
 Color onSecondaryColor = const Color(0xffFFffff);
 Color secondaryColor = Color(0xffFF4D6D);
-Color primaryColor = Color.fromARGB(255, 252, 203, 214);
+Color primaryColor = Color.fromARGB(255, 247, 226, 230);
+// Color primaryColor = Color.fromARGB(255, 252, 203, 214);
 Color onPrimaryColor = Color(0xff1E3A5F);
 
 class ComparisonView extends GetView<ComparisonController> {
@@ -36,7 +37,7 @@ class ComparisonView extends GetView<ComparisonController> {
         ),
         title: Center(
           child: Text(
-            "Comparison",
+            controller.name.value!,
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 30,
@@ -420,7 +421,7 @@ class ComparisonView extends GetView<ComparisonController> {
                 child: Stack(
                   children: [
                     Positioned(
-                      right: 0,
+                      left: 0,
                       child: Container(
                         width: SizeConfig.screenWidth * 0.8,
                         height: SizeConfig.screenHeight * 0.1225,
@@ -430,7 +431,6 @@ class ComparisonView extends GetView<ComparisonController> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            SizedBox(),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -526,7 +526,8 @@ class ComparisonView extends GetView<ComparisonController> {
                                 ),
                                 SizedBox(),
                               ],
-                            )
+                            ),
+                            SizedBox(),
                           ],
                         ),
                       ),
@@ -534,7 +535,8 @@ class ComparisonView extends GetView<ComparisonController> {
                     Positioned(
                       // right: screenWidth * 0,
                       // top: 0,
-                      left: 0,
+                      // left: 0,
+                      right: 0,
                       child: Center(
                         child: SizedBox(
                           // Set the overall size of the container to constrain the pie chart
@@ -588,8 +590,10 @@ class ComparisonView extends GetView<ComparisonController> {
                     Positioned(
                       // right: screenWidth * 0,
                       // top: 0,
-                      left: SizeConfig.screenWidth * 0.2 -
+                      right: SizeConfig.screenWidth * 0.2 -
                           SizeConfig.screenHeight * 0.06125,
+                      // left: SizeConfig.screenWidth * 0.2 -
+                      //     SizeConfig.screenHeight * 0.06125,
                       child: Container(
                         height: SizeConfig.screenHeight * 0.1225,
                         width: SizeConfig.screenHeight * 0.1225,

@@ -154,7 +154,7 @@ class ResponseScreenController extends GetxController {
     try {
       Get.toNamed(Routes.COMPARISON_VIEW_SCREEN,
           // arguments: [response.text ?? '',Image.file(imgFile)]
-          arguments: [fooditem1, fooditem2]);
+          arguments: [fooditem1, fooditem2, 'Comparison']);
     } catch (e) {
       Get.snackbar(
         'Error',

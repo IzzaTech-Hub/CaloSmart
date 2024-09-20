@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import '../controllers/response_screen_controller.dart';
+import '../../../routes/app_pages.dart';
 
 class ResponseScreenView extends GetView<ResponseScreenController> {
   const ResponseScreenView({super.key});
@@ -452,7 +453,13 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(Routes.COMPARISON_VIEW_SCREEN, arguments: [
+                    controller.foodData.value!.item,
+                    controller.foodData.value!.alternate1,
+                    'Alternate'
+                  ]);
+                },
                 style: TextButton.styleFrom(
                   backgroundColor: secondaryColor,
                 ),
