@@ -14,8 +14,7 @@ Color primaryColor = Color.fromARGB(255, 252, 203, 214);
 Color onPrimaryColor = Color(0xff1E3A5F);
 
 class ComparisonView extends GetView<ComparisonController> {
-  const ComparisonView({super.key});
-
+  ComparisonView({super.key});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -47,7 +46,7 @@ class ComparisonView extends GetView<ComparisonController> {
         children: [
           verticalSpace(size.height * 0.15),
           Text(
-            "  A Piece of cake",
+            controller.food1.value!.name,
             style: TextStyle(fontSize: size.height * 0.15),
           ),
           Row(
@@ -55,7 +54,7 @@ class ComparisonView extends GetView<ComparisonController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "  Toral Calories",
+                "  Total Calories",
                 style:
                     TextStyle(color: Colors.red, fontSize: size.height * 0.15),
               ),
@@ -64,7 +63,7 @@ class ComparisonView extends GetView<ComparisonController> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    "271",
+                    controller.food1.value!.totalCalories.toString(),
                     style: TextStyle(
                         color: Colors.red,
                         fontSize: size.height * 0.1,
@@ -76,7 +75,7 @@ class ComparisonView extends GetView<ComparisonController> {
                         color: Colors.red, fontSize: size.height * 0.08),
                   ),
                   Text(
-                    "in 1 cake o.5 kg",
+                    controller.food1.value!.quantity,
                     style: TextStyle(
                         color: Colors.red, fontSize: size.height * 0.075),
                   ),
@@ -132,7 +131,7 @@ class ComparisonView extends GetView<ComparisonController> {
                           children: [
                             Text(
                               // '${ResponseScreenController().foodData.value!.item.carbs} g',
-                              "35 g",
+                              "${controller.food1.value!.carbs} g",
                               style: TextStyle(
                                   color: Color(0xffFF69B4),
                                   fontWeight: FontWeight.w500,
@@ -140,7 +139,7 @@ class ComparisonView extends GetView<ComparisonController> {
                             ),
                             Text(
                               // '${ResponseScreenController().foodData.value!.item.protein} g',
-                              "45 g",
+                              "${controller.food1.value!.protein} g",
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.w500,
@@ -148,7 +147,7 @@ class ComparisonView extends GetView<ComparisonController> {
                             ),
                             Text(
                               // '${ResponseScreenController().foodData.value!.item.fat} g',
-                              "110 g",
+                              "${controller.food1.value!.fat} g",
                               style: TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.w500,
@@ -162,7 +161,7 @@ class ComparisonView extends GetView<ComparisonController> {
                           children: [
                             Text(
                               // '${ResponseScreenController().foodData.value!.item.percentageCaloriesFromCarbs} %',
-                              "10 %",
+                              "${controller.food1.value!.percentageCaloriesFromCarbs} %",
                               style: TextStyle(
                                   color: Color(0xffFF69B4),
                                   fontWeight: FontWeight.w500,
@@ -170,7 +169,7 @@ class ComparisonView extends GetView<ComparisonController> {
                             ),
                             Text(
                               // '${ResponseScreenController().foodData.value!.item.percentageCaloriesFromProtein} %',
-                              "23 %",
+                              "${controller.food1.value!.percentageCaloriesFromProtein} %",
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.w500,
@@ -178,7 +177,7 @@ class ComparisonView extends GetView<ComparisonController> {
                             ),
                             Text(
                               // '${ResponseScreenController().foodData.value!.item.percentageCaloriesFromFat} %',
-                              "42 %",
+                              "${controller.food1.value!.percentageCaloriesFromFat} %",
                               style: TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.w500,

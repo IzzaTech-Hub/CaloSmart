@@ -51,10 +51,11 @@ class HistoryShow extends GetView<HistoryShowController> {
           children: [
             Expanded(
               child: Obx(() => ListView.builder(
-                    reverse: true,
+                    // reverse: true,
                     itemCount: controller.historyData.length,
                     itemBuilder: (context, index) {
                       var item = controller.historyData[index];
+                      var date = controller.historyDate[index];
                       return Container(
                         margin:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 15),
@@ -100,12 +101,12 @@ class HistoryShow extends GetView<HistoryShowController> {
                             ),
                           ),
                           Positioned(
-                            child: Text(
-                              'data',
-                              style: TextStyle(height: 1, fontSize: 10),
-                            ),
                             right: 5,
                             bottom: 1,
+                            child: Text(
+                              date,
+                              style: TextStyle(height: 1, fontSize: 10),
+                            ),
                           )
                         ]),
                       );

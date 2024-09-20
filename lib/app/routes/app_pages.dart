@@ -27,7 +27,7 @@ class AppPages {
   AppPages._();
 
   static const INITIAL = Routes.SPLASH_SCREEN;
-  static const GOAL_SCREEN = Routes.GOAL_SCREEN;
+  static const AGE_SCREEN = Routes.AGE_SCREEN;
   // static const Home = Routes.HOME;
 
   static final routes = [

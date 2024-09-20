@@ -2,11 +2,15 @@
 
 import 'package:calories_detector/app/modules/home/controllers/age_controller.dart';
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
+import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
+import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:numberpicker/numberpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Color onSecondaryColor = const Color(0xffFFffff);
 Color secondaryColor = Color(0xffFF4D6D);
@@ -120,62 +124,63 @@ class AgeView extends GetView<AgeController> {
                       fontSize: size.height * 0.12),
                   textAlign: TextAlign.center,
                 ),
-                verticalSpace(size.height * 0.8),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    InkWell(
-                      onTap: () {
-                        print("My age is ");
-                      },
+                SizedBox(height: SizeConfig.screenHeight * 0.015),
+                Obx(() => InkWell(
+                      onTap: () =>
+                          print("My age is ${controller.selectedNumber}"),
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.circular(size.height * 0.15)),
-                        height: size.height * 0.29,
-                        width: size.width * 0.5,
+                            // color: Colors.white,
+                            borderRadius: BorderRadius.circular(
+                                SizeConfig.screenHeight * 0.05)),
+                        height: SizeConfig.screenHeight * 0.49,
+                        width: SizeConfig.screenWidth * 0.75,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            DropdownButton<int>(
-                              value: _selectedNumber,
-                              // icon: const Icon(Icons.arrow_downward),
-                              // iconSize: size.height * 0.1,
-                              elevation: 16,
-                              style: TextStyle(color: Colors.deepPurple),
-                              underline: Container(
-                                height: 1,
-                                color: Colors.deepPurpleAccent,
+                            NumberPicker(
+                              value: controller.selectedNumber.value,
+                              minValue: 6,
+                              maxValue: 95,
+                              onChanged: (newValue) =>
+                                  controller.selectedNumber.value = newValue,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border:
+                                    Border.all(color: Colors.deepPurpleAccent),
                               ),
-                              onChanged: (int? newValue) {
-                                // Update the local variable without calling setState
-                                _selectedNumber = newValue;
-                              },
-                              items: numbers
-                                  .map<DropdownMenuItem<int>>((int value) {
-                                return DropdownMenuItem<int>(
-                                  value: value,
-                                  child: Text(value.toString()),
-                                );
-                              }).toList(),
                             ),
                             TextButton(
-                              onPressed: () {
-                                // Print the selected number
-                                print("Selected Number: $_selectedNumber");
+                              onPressed: () async {
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.setInt('selected_number',
+                                    controller.selectedNumber.value);
+                                print(
+                                    "Selected Number: ${controller.selectedNumber.value}");
+                                Get.toNamed(Routes.HOME);
                               },
-                              child: Text('OK',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w400)),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(size.height * 0.15),
+                                  color: AppColors.primaryColor,
+                                ),
+                                height: size.height * 0.25,
+                                width: size.width * 0.25,
+                                child: Center(
+                                  child: Text('OK',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.onPrimaryColor)),
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    )),
               ],
             ),
           ),

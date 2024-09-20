@@ -1,10 +1,12 @@
 import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:calories_detector/app/data/Runtime_List_Handeler.dart';
 import 'package:calories_detector/app/data/food_item.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HistoryShowController extends GetxController {
   RxList<FoodData> historyData = <FoodData>[].obs;
+  RxList<String> historyDate = <String>[].obs;
 
   // This will be called when the controller is initialized
   @override
@@ -18,7 +20,11 @@ class HistoryShowController extends GetxController {
     print('trying getting data, function works');
     try {
       List<FoodData> data = await DatabaseHelper().fetchFoodData();
-      historyData.value = data; // Assign the fetched data to historyData
+      List<String> date = await DatabaseHelper().fetchDate();
+      // date.reversed;
+      // data.reversed;
+      historyData.value = data.reversed.toList();
+      historyDate.value = date.reversed.toList();
     } catch (e) {
       print('Error fetching data: $e');
     }

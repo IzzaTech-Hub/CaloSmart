@@ -3,10 +3,12 @@
 import 'package:calories_detector/app/modules/home/controllers/gender_controller.dart';
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
+import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Color onSecondaryColor = const Color(0xffFFffff);
 Color secondaryColor = Color(0xffFF4D6D);
@@ -121,8 +123,17 @@ class gender_view extends GetView<GenderController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     InkWell(
-                      onTap: () {
-                        print("Male Print");
+                      onTap: () async {
+                        print("Male");
+                        // Obtain shared preferences
+                        final prefs = await SharedPreferences.getInstance();
+
+                        // Save a value
+                        await prefs.setString('selected_gender', 'Male');
+                        String selectedGender =
+                            prefs.getString('selected_gender') ?? 'None';
+                        print("Selected gender: $selectedGender");
+                        Get.toNamed(Routes.AGE_SCREEN);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -150,8 +161,17 @@ class gender_view extends GetView<GenderController> {
                     ),
                     verticalSpace(size.height * 0.15),
                     InkWell(
-                      onTap: () {
-                        print("Female Print");
+                      onTap: () async {
+                        print("Female");
+                        // Obtain shared preferences
+                        final prefs = await SharedPreferences.getInstance();
+
+                        // Save a value
+                        await prefs.setString('selected_gender', 'Female');
+                        String selectedGender =
+                            prefs.getString('selected_gender') ?? 'None';
+                        print("Selected gender: $selectedGender");
+                        Get.toNamed(Routes.AGE_SCREEN);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -179,8 +199,17 @@ class gender_view extends GetView<GenderController> {
                     ),
                     verticalSpace(size.height * 0.15),
                     InkWell(
-                      onTap: () {
-                        print("Rather Not Say Print");
+                      onTap: () async {
+                        print("Rather not say");
+                        // Obtain shared preferences
+                        final prefs = await SharedPreferences.getInstance();
+
+                        // Save a value
+                        await prefs.setString('selected_gender', 'Rather not say');
+                        String selectedGender =
+                            prefs.getString('selected_gender') ?? 'None';
+                        print("Selected gender: $selectedGender");
+                        Get.toNamed(Routes.AGE_SCREEN);
                       },
                       child: Container(
                         decoration: BoxDecoration(

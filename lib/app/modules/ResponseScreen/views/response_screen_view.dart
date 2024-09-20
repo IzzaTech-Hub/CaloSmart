@@ -243,7 +243,8 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                       // Set the overall size of the container to constrain the pie chart
                       height: SizeConfig.screenHeight * 0.1225,
 
-                      width: SizeConfig.screenWidth * 0.4, // Set the desired width
+                      width:
+                          SizeConfig.screenWidth * 0.4, // Set the desired width
                       child: PieChart(
                         PieChartData(
                           sectionsSpace: 0, // No space between sections
@@ -290,7 +291,8 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                 Positioned(
                   // right: screenWidth * 0,
                   // top: 0,
-                  left: SizeConfig.screenWidth * 0.2 - SizeConfig.screenHeight * 0.06125,
+                  left: SizeConfig.screenWidth * 0.2 -
+                      SizeConfig.screenHeight * 0.06125,
                   child: Container(
                     height: SizeConfig.screenHeight * 0.1225,
                     width: SizeConfig.screenHeight * 0.1225,
@@ -386,7 +388,8 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                 Positioned(
                   // right: screenWidth * 0,
                   // top: 0,
-                  right: SizeConfig.screenWidth * 0.2 - SizeConfig.screenHeight * 0.06125,
+                  right: SizeConfig.screenWidth * 0.2 -
+                      SizeConfig.screenHeight * 0.06125,
                   child: Container(
                     height: SizeConfig.screenHeight * 0.1225,
                     width: SizeConfig.screenHeight * 0.1225,
@@ -422,7 +425,12 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
             children: [
               // SizedBox(width: screenWidth * 0.05),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.Comparefunction(context);
+                  print('now going');
+                  // controller.goToCompare(controller.compairFood1.value!,
+                  //     controller.compairFood2.value!);
+                },
                 style: TextButton.styleFrom(
                   backgroundColor: secondaryColor,
                 ),
@@ -481,12 +489,12 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                 child: InkWell(
                   // onTap: controller.logFeed(controller.foodData.value!),
                   onTap: () {
-  if (controller.foodData.value != null) {
-    controller.logFeed(controller.foodData.value!);
-  } else {
-    print('FoodData is null.');
-  }
-},
+                    if (controller.foodData.value != null) {
+                      controller.logFeed(controller.foodData.value!);
+                    } else {
+                      print('FoodData is null.');
+                    }
+                  },
 
                   child: SizedBox(
                     width: SizeConfig.screenWidth * 0.5,
