@@ -19,7 +19,8 @@ class HistoryShow extends GetView<HistoryShowController> {
     return Scaffold(
         // backgroundColor: AppThemeColors.secondery1,
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(80), child: appThemeAppBar(context,'History')),
+            preferredSize: Size.fromHeight(80),
+            child: appThemeAppBar(context, 'History')),
         //  AppBar(
         //   backgroundColor: AppColors.secondaryColor,
         //   leading: IconButton(
@@ -65,60 +66,65 @@ class HistoryShow extends GetView<HistoryShowController> {
                       itemBuilder: (context, index) {
                         var item = controller.historyData[index];
                         var date = controller.historyDate[index];
-                        return Container(
-                          margin:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                          padding: EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Stack(children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    // item['item'],
-                                    controller.historyData[index].item.name,
-                                    style: TextStyle(
-                                        height: 1,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    controller
-                                        .historyData[index].item.totalCalories
-                                        .toString(),
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        height: 1,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey),
-                                  ),
-                                ],
-                              ),
+                        return InkWell(
+                          onTap: () {
+                            controller.showResponse(index);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
+                            padding: EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
                             ),
-                            Positioned(
-                              right: 5,
-                              bottom: 1,
-                              child: Text(
-                                date,
-                                style: TextStyle(height: 1, fontSize: 10),
+                            child: Stack(children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      // item['item'],
+                                      controller.historyData[index].item.name,
+                                      style: TextStyle(
+                                          height: 1,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      controller
+                                          .historyData[index].item.totalCalories
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          height: 1,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )
-                          ]),
+                              Positioned(
+                                right: 5,
+                                bottom: 1,
+                                child: Text(
+                                  date,
+                                  style: TextStyle(height: 1, fontSize: 10),
+                                ),
+                              )
+                            ]),
+                          ),
                         );
                       },
                     )),

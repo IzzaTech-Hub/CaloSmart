@@ -12,6 +12,7 @@ abstract class Routes {
   static const GENDER_SCREEN = _Paths.GENDER_SCREEN;
   static const GOAL_SCREEN = _Paths.GOAL_SCREEN;
   static const AGE_SCREEN = _Paths.AGE_SCREEN;
+  static const HISTORY_RESPONSE = _Paths.HISTORY_RESPONSE;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const RESPONSE_SCREEN = '/response-screen';
   static const HISTORY_VIEW_SCREEN = '/history_show.dart';
   static const COMPARISON_VIEW_SCREEN = '/comparison_view.dart';
+  static const HISTORY_RESPONSE = '/history-response';
 }

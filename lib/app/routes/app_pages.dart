@@ -1,23 +1,26 @@
-import 'package:calories_detector/app/modules/home/bindings/age_binding.dart';
-import 'package:calories_detector/app/modules/home/bindings/comparison_binding.dart';
-import 'package:calories_detector/app/modules/home/bindings/gender_binding.dart';
-import 'package:calories_detector/app/modules/home/bindings/goal_binding.dart';
-import 'package:calories_detector/app/modules/home/bindings/history_binding.dart';
-import 'package:calories_detector/app/modules/home/bindings/splash_binding.dart';
-import 'package:calories_detector/app/modules/home/controllers/age_controller.dart';
-import 'package:calories_detector/app/modules/home/views/age_view.dart';
-import 'package:calories_detector/app/modules/home/views/comparison_view.dart';
-import 'package:calories_detector/app/modules/home/views/gender_view.dart';
-import 'package:calories_detector/app/modules/home/views/goal_view.dart';
-import 'package:calories_detector/app/modules/home/views/history_show.dart';
-import 'package:calories_detector/app/modules/home/views/splash_view.dart';
 import 'package:flutter/foundation.dart';
+
 import 'package:get/get.dart';
 
+import '../modules/history_response/bindings/history_response_binding.dart';
+import '../modules/history_response/views/history_response_view.dart';
 import '../modules/ResponseScreen/bindings/response_screen_binding.dart';
 import '../modules/ResponseScreen/views/response_screen_view.dart';
+import '../modules/home/bindings/age_binding.dart';
+import '../modules/home/bindings/comparison_binding.dart';
+import '../modules/home/bindings/gender_binding.dart';
+import '../modules/home/bindings/goal_binding.dart';
+import '../modules/home/bindings/history_binding.dart';
 import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/bindings/splash_binding.dart';
+import '../modules/home/controllers/age_controller.dart';
+import '../modules/home/views/age_view.dart';
+import '../modules/home/views/comparison_view.dart';
+import '../modules/home/views/gender_view.dart';
+import '../modules/home/views/goal_view.dart';
+import '../modules/home/views/history_show.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/home/views/splash_view.dart';
 import '../modules/intro_screens/bindings/intro_screens_binding.dart';
 import '../modules/intro_screens/views/intro_screens_view.dart';
 
@@ -27,7 +30,7 @@ class AppPages {
   AppPages._();
 
   static const INITIAL = Routes.SPLASH_SCREEN;
-  static const HOME= Routes.HOME;
+  static const HOME = Routes.HOME;
   // static const Home = Routes.HOME;
 
   static final routes = [
@@ -75,6 +78,11 @@ class AppPages {
       name: _Paths.COMPARISON_VIEW_SCREEN,
       page: () => ComparisonView(),
       binding: ComparisonBinding(),
+    ),
+    GetPage(
+      name: _Paths.HISTORY_RESPONSE,
+      page: () => const HistoryResponseView(),
+      binding: HistoryResponseBinding(),
     ),
   ];
 }

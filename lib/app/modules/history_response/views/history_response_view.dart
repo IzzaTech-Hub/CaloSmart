@@ -1,16 +1,16 @@
 import 'package:calories_detector/app/data/Data_Base.dart';
+import 'package:calories_detector/app/modules/history_response/controllers/history_response_controller.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
 import 'package:calories_detector/sizeConfig.dart';
-import '../controllers/response_screen_controller.dart';
 import '../../../routes/app_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ResponseScreenView extends GetView<ResponseScreenController> {
-  const ResponseScreenView({super.key});
+class HistoryResponseView extends GetView<HistoryResponseController> {
+  const HistoryResponseView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,9 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
     // double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(80),
+          child: appThemeAppBar(context, controller.foodData.value!.item.name)),
       // backgroundColor: AppColors.onSecondaryColor,
       // backgroundColor: primaryColor,
       body: Container(
@@ -26,49 +29,52 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                Container(
-                  clipBehavior: Clip.hardEdge,
-                  height: SizeConfig.screenWidth * 0.65,
-                  // height: screenHeight * 0.286,
-                  width: SizeConfig.screenWidth,
-                  decoration: BoxDecoration(
-                      gradient: AppThemeColors.primaryGradient1,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30))),
-                  child: FittedBox(
-                    fit: BoxFit.cover,
-                    child: controller.imageFile.value,
-                  ),
-                ),
-                Positioned(
-                    child: SafeArea(
-                  child: IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        color: AppThemeColors.iconColor,
-                      )),
-                ))
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20, top: 10, bottom: 5),
-              child: Text(
-                controller.foodData.value!.item.name,
-                textAlign: TextAlign.left,
-                style: AppThemeText().headline1,
-                // TextStyle(
-                //     fontWeight: FontWeight.w500,
-                //     fontSize: 30,
-                //     color: Colors.black),
-              ),
-            ),
+            // Stack(
+            //   children: [
+            //     Container(
+            //       clipBehavior: Clip.hardEdge,
+            //       height: SizeConfig.screenWidth * 0.65,
+            //       // height: screenHeight * 0.286,
+            //       width: SizeConfig.screenWidth,
+            //       decoration: BoxDecoration(
+            //           gradient: AppThemeColors.primaryGradient1,
+            //           borderRadius: BorderRadius.only(
+            //               bottomLeft: Radius.circular(30),
+            //               bottomRight: Radius.circular(30))),
+            //       child: FittedBox(
+            //         fit: BoxFit.cover,
+            //         // child: controller.imageFile.value,
+            //       ),
+            //     ),
+            //     Positioned(
+            //         child: SafeArea(
+            //       child: IconButton(
+            //           onPressed: () {
+            //             Get.back();
+            //           },
+            //           icon: Icon(
+            //             Icons.arrow_back_ios_new_rounded,
+            //             color: AppThemeColors.iconColor,
+            //           )),
+            //     ))
+            //   ],
+            // ),
+
+            // Padding(
+            //   padding: EdgeInsets.only(left: 20, top: 10, bottom: 5),
+            //   child: Text(
+            //     controller.foodData.value!.item.name,
+            //     textAlign: TextAlign.left,
+            //     style: AppThemeText().headline1,
+            //     // TextStyle(
+            //     //     fontWeight: FontWeight.w500,
+            //     //     fontSize: 30,
+            //     //     color: Colors.black),
+            //   ),
+            // ),
+
             SizedBox(height: SizeConfig.screenHeight * 0.01),
+            SizedBox(height: SizeConfig.screenHeight * 0.02),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -470,24 +476,25 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                     .smallButton(),
               ],
             ),
-            SizedBox(height: SizeConfig.screenHeight * 0.005),
-            Center(
-              child: AppThemeButton(
-                      onPressed: () {
-                        controller.logFeed(controller.foodData.value!);
-                      },
-                      // onPressed: () async {
-                      //   SharedPreferences prefs =
-                      //       await SharedPreferences.getInstance();
-                      //   await prefs.clear();
-                      //   DatabaseHelper().deleteDatabaseFile();
-                      //   print('done');
-                      // },
+            // SizedBox(height: SizeConfig.screenHeight * 0.005),
+            // Center(
+            //   child: AppThemeButton(
+            //           onPressed: () {
+            //             controller.logFeed(controller.foodData.value!);
+            //           },
+            //           // onPressed: () async {
+            //           //   SharedPreferences prefs =
+            //           //       await SharedPreferences.getInstance();
+            //           //   await prefs.clear();
+            //           //   DatabaseHelper().deleteDatabaseFile();
+            //           //   print('done');
+            //           // },
 
-                      text: 'Log Food')
-                  .largeButton(),
-            ),
+            //           text: 'log Food')
+            //       .largeButton(),
+            // ),
             SizedBox(height: SizeConfig.screenHeight * 0.025),
+            SizedBox(height: SizeConfig.screenHeight * 0.3),
           ],
         ),
       ),

@@ -18,8 +18,8 @@ final ImagePicker _picker = ImagePicker();
 // Color primaryColor = Color(0xffFFD1DC);
 // Color onPrimaryColor = Color(0xff1E3A5F);
 
-class ResponseScreenController extends GetxController {
-  Rxn<Image> imageFile = Rxn<Image>();
+class HistoryResponseController extends GetxController {
+  // Rxn<Image> imageFile = Rxn<Image>();
   Rxn<FoodData> foodData = Rxn<FoodData>();
   Rxn<FoodItem> compairFood1 = Rxn<FoodItem>();
   Rxn<FoodItem> compairFood2 = Rxn<FoodItem>();
@@ -225,7 +225,7 @@ class ResponseScreenController extends GetxController {
     print('check first become true');
     final arguments = Get.arguments;
     final FoodData response = arguments[0];
-    imageFile.value = arguments[1];
+    // imageFile.value = arguments[1];
     print("Argument ${response}");
     foodData.value = response;
     compairFood1.value = response.item;

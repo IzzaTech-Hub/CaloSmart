@@ -12,6 +12,9 @@ class AppThemeColors {
   static const secondery2 = ThemeColors.secondery2;
   static const iconColor = Colors.white;
   static const logoColor = ThemeColors.logoColor;
+  static const graph1 = ThemeColors.graph1;
+  static const graph2 = ThemeColors.graph2;
+  static const graph3 = ThemeColors.graph3;
   // static const iconColor = ThemeColors.iconColor;
 
 // static const buttonGradient = LinearGradient(colors: [onPrimary1,onPrimary2],begin: Alignment.topLeft,end: Alignment.bottomRight);
@@ -63,8 +66,10 @@ class AppThemeButton {
                 height: SizeConfig.screenWidth * 0.425,
                 // height: 10,
                 // width: 10,
+
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
+                    // borderRadius: BorderRadius.circular(100),
+                    shape: BoxShape.circle,
                     // color: Colors.black,
                     border: Border.all(
                         color: const Color.fromARGB(150, 255, 255, 255),
@@ -133,9 +138,7 @@ class AppThemeButton {
   }
 }
 
-Container appThemeAppBar(
-  context,String title
-) {
+Container appThemeAppBar(context, String title) {
   return Container(
     padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
     height: 80.0, // Height of AppBar

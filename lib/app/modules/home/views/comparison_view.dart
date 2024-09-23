@@ -135,24 +135,24 @@ class ComparisonView extends GetView<ComparisonController> {
                                   Text(
                                     'Carbs',
                                     style: TextStyle(
-                                        color: Color(0xffFF69B4),
+                                        color: AppThemeColors.graph1,
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 20),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     'Protien',
                                     style: TextStyle(
                                         // color: Color(0xffFFD700),
-                                        color: Colors.blue,
+                                        color: AppThemeColors.graph2,
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 20),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     'Fat',
                                     style: TextStyle(
-                                        color: Colors.green,
+                                        color: AppThemeColors.graph3,
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 20),
+                                        fontSize: 16),
                                   ),
                                   SizedBox(),
                                 ],
@@ -167,26 +167,26 @@ class ComparisonView extends GetView<ComparisonController> {
                                     // '$carbsW g',
                                     '${controller.food1.value!.carbs} g',
                                     style: TextStyle(
-                                        color: Color(0xffFF69B4),
+                                        color: AppThemeColors.graph1,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     // '$protienW g',
                                     '${controller.food1.value!.protein} g',
                                     style: TextStyle(
-                                        color: Colors.blue,
+                                        color: AppThemeColors.graph2,
                                         // color: Color(0xffFFD700),
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     '${controller.food1.value!.fat} g',
                                     // '$fatW g',
                                     style: TextStyle(
-                                        color: Colors.green,
+                                        color: AppThemeColors.graph3,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   SizedBox(),
                                 ],
@@ -201,26 +201,26 @@ class ComparisonView extends GetView<ComparisonController> {
                                     '${controller.food1.value!.percentageCaloriesFromCarbs} %',
                                     // '$carbsp %',
                                     style: TextStyle(
-                                        color: Color(0xffFF69B4),
+                                        color: AppThemeColors.graph1,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     '${controller.food1.value!.percentageCaloriesFromProtein} %',
                                     // '$protienp %',
                                     style: TextStyle(
-                                        color: Colors.blue,
+                                        color: AppThemeColors.graph2,
                                         // color: Color(0xffFFD700),
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     '${controller.food1.value!.percentageCaloriesFromFat} %',
                                     // '$fatp %',
                                     style: TextStyle(
-                                        color: Colors.green,
+                                        color: AppThemeColors.graph3,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   SizedBox(),
                                 ],
@@ -246,7 +246,7 @@ class ComparisonView extends GetView<ComparisonController> {
                                 centerSpaceRadius: 0, // No space in the center
                                 sections: [
                                   PieChartSectionData(
-                                    color: Color(0xffFF69B4),
+                                    color: AppThemeColors.graph1,
                                     // value: carbsp.toDouble(),
                                     value: controller.food1.value!
                                         .percentageCaloriesFromCarbs
@@ -258,7 +258,7 @@ class ComparisonView extends GetView<ComparisonController> {
                                   ),
                                   PieChartSectionData(
                                     // color: Color(0xffFFD700),
-                                    color: Colors.blue,
+                                    color: AppThemeColors.graph2,
                                     value: controller.food1.value!
                                         .percentageCaloriesFromProtein
                                         .toDouble(),
@@ -268,7 +268,7 @@ class ComparisonView extends GetView<ComparisonController> {
                                         0.06125, // Adjust radius to fit within the container
                                   ),
                                   PieChartSectionData(
-                                    color: Colors.green,
+                                    color: AppThemeColors.graph3,
                                     value: controller
                                         .food1.value!.percentageCaloriesFromFat
                                         .toDouble(),
@@ -428,24 +428,24 @@ class ComparisonView extends GetView<ComparisonController> {
                                   Text(
                                     'Carbs',
                                     style: TextStyle(
-                                        color: Color(0xffFF69B4),
+                                        color: AppThemeColors.graph1,
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 20),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     'Protien',
                                     style: TextStyle(
                                         // color: Color(0xffFFD700),
-                                        color: Colors.blue,
+                                        color: AppThemeColors.graph2,
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 20),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     'Fat',
                                     style: TextStyle(
-                                        color: Colors.green,
+                                        color: AppThemeColors.graph3,
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 20),
+                                        fontSize: 16),
                                   ),
                                   SizedBox(),
                                 ],
@@ -460,26 +460,26 @@ class ComparisonView extends GetView<ComparisonController> {
                                     // '$carbsW g',
                                     '${controller.food2.value!.carbs} g',
                                     style: TextStyle(
-                                        color: Color(0xffFF69B4),
+                                        color: AppThemeColors.graph1,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     // '$protienW g',
                                     '${controller.food2.value!.protein} g',
                                     style: TextStyle(
-                                        color: Colors.blue,
+                                        color: AppThemeColors.graph2,
                                         // color: Color(0xffFFD700),
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     '${controller.food2.value!.fat} g',
                                     // '$fatW g',
                                     style: TextStyle(
-                                        color: Colors.green,
+                                        color: AppThemeColors.graph3,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   SizedBox(),
                                 ],
@@ -494,26 +494,26 @@ class ComparisonView extends GetView<ComparisonController> {
                                     '${controller.food2.value!.percentageCaloriesFromCarbs} %',
                                     // '$carbsp %',
                                     style: TextStyle(
-                                        color: Color(0xffFF69B4),
+                                        color: AppThemeColors.graph1,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     '${controller.food2.value!.percentageCaloriesFromProtein} %',
                                     // '$protienp %',
                                     style: TextStyle(
-                                        color: Colors.blue,
+                                        color: AppThemeColors.graph2,
                                         // color: Color(0xffFFD700),
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   Text(
                                     '${controller.food2.value!.percentageCaloriesFromFat} %',
                                     // '$fatp %',
                                     style: TextStyle(
-                                        color: Colors.green,
+                                        color: AppThemeColors.graph3,
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 17),
+                                        fontSize: 16),
                                   ),
                                   SizedBox(),
                                 ],
@@ -541,7 +541,7 @@ class ComparisonView extends GetView<ComparisonController> {
                                 centerSpaceRadius: 0, // No space in the center
                                 sections: [
                                   PieChartSectionData(
-                                    color: Color(0xffFF69B4),
+                                    color: AppThemeColors.graph1,
                                     // value: carbsp.toDouble(),
                                     value: controller.food2.value!
                                         .percentageCaloriesFromCarbs
@@ -553,7 +553,7 @@ class ComparisonView extends GetView<ComparisonController> {
                                   ),
                                   PieChartSectionData(
                                     // color: Color(0xffFFD700),
-                                    color: Colors.blue,
+                                    color: AppThemeColors.graph2,
                                     value: controller.food2.value!
                                         .percentageCaloriesFromProtein
                                         .toDouble(),
@@ -563,7 +563,7 @@ class ComparisonView extends GetView<ComparisonController> {
                                         0.06125, // Adjust radius to fit within the container
                                   ),
                                   PieChartSectionData(
-                                    color: Colors.green,
+                                    color: AppThemeColors.graph3,
                                     value: controller
                                         .food2.value!.percentageCaloriesFromFat
                                         .toDouble(),
@@ -685,7 +685,6 @@ class ComparisonView extends GetView<ComparisonController> {
 
 
 
-
    //    Column(
     //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
     //     crossAxisAlignment: CrossAxisAlignment.start,
@@ -751,21 +750,21 @@ class ComparisonView extends GetView<ComparisonController> {
     //                         Text(
     //                           'Carbs',
     //                           style: TextStyle(
-    //                               color: Color(0xffFF69B4),
+    //                               color: AppThemeColors.graph1,
     //                               fontWeight: FontWeight.w700,
     //                               fontSize: size.height * 0.08),
     //                         ),
     //                         Text(
     //                           'Protein',
     //                           style: TextStyle(
-    //                               color: Colors.blue,
+    //                               color: AppThemeColors.graph2,
     //                               fontWeight: FontWeight.w700,
     //                               fontSize: size.height * 0.08),
     //                         ),
     //                         Text(
     //                           'Fat',
     //                           style: TextStyle(
-    //                               color: Colors.green,
+    //                               color: AppThemeColors.graph3,
     //                               fontWeight: FontWeight.w700,
     //                               fontSize: size.height * 0.08),
     //                         ),
@@ -779,7 +778,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                           // '${ResponseScreenController().foodData.value!.item.carbs} g',
     //                           "${controller.food1.value!.carbs} g",
     //                           style: TextStyle(
-    //                               color: Color(0xffFF69B4),
+    //                               color: AppThemeColors.graph1,
     //                               fontWeight: FontWeight.w500,
     //                               fontSize: size.height * 0.08),
     //                         ),
@@ -787,7 +786,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                           // '${ResponseScreenController().foodData.value!.item.protein} g',
     //                           "${controller.food1.value!.protein} g",
     //                           style: TextStyle(
-    //                               color: Colors.blue,
+    //                               color: AppThemeColors.graph2,
     //                               fontWeight: FontWeight.w500,
     //                               fontSize: size.height * 0.08),
     //                         ),
@@ -795,7 +794,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                           // '${ResponseScreenController().foodData.value!.item.fat} g',
     //                           "${controller.food1.value!.fat} g",
     //                           style: TextStyle(
-    //                               color: Colors.green,
+    //                               color: AppThemeColors.graph3,
     //                               fontWeight: FontWeight.w500,
     //                               fontSize: size.height * 0.08),
     //                         ),
@@ -809,7 +808,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                           // '${ResponseScreenController().foodData.value!.item.percentageCaloriesFromCarbs} %',
     //                           "${controller.food1.value!.percentageCaloriesFromCarbs} %",
     //                           style: TextStyle(
-    //                               color: Color(0xffFF69B4),
+    //                               color: AppThemeColors.graph1,
     //                               fontWeight: FontWeight.w500,
     //                               fontSize: size.height * 0.08),
     //                         ),
@@ -817,7 +816,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                           // '${ResponseScreenController().foodData.value!.item.percentageCaloriesFromProtein} %',
     //                           "${controller.food1.value!.percentageCaloriesFromProtein} %",
     //                           style: TextStyle(
-    //                               color: Colors.blue,
+    //                               color: AppThemeColors.graph2,
     //                               fontWeight: FontWeight.w500,
     //                               fontSize: size.height * 0.08),
     //                         ),
@@ -825,7 +824,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                           // '${ResponseScreenController().foodData.value!.item.percentageCaloriesFromFat} %',
     //                           "${controller.food1.value!.percentageCaloriesFromFat} %",
     //                           style: TextStyle(
-    //                               color: Colors.green,
+    //                               color: AppThemeColors.graph3,
     //                               fontWeight: FontWeight.w500,
     //                               fontSize: size.height * 0.08),
     //                         ),
@@ -958,21 +957,21 @@ class ComparisonView extends GetView<ComparisonController> {
     //                                   Text(
     //                                     'Carbs',
     //                                     style: TextStyle(
-    //                                         color: Color(0xffFF69B4),
+    //                                         color: AppThemeColors.graph1,
     //                                         fontWeight: FontWeight.w700,
     //                                         fontSize: size.height * 0.08),
     //                                   ),
     //                                   Text(
     //                                     'Protein',
     //                                     style: TextStyle(
-    //                                         color: Colors.blue,
+    //                                         color: AppThemeColors.graph2,
     //                                         fontWeight: FontWeight.w700,
     //                                         fontSize: size.height * 0.08),
     //                                   ),
     //                                   Text(
     //                                     'Fat',
     //                                     style: TextStyle(
-    //                                         color: Colors.green,
+    //                                         color: AppThemeColors.graph3,
     //                                         fontWeight: FontWeight.w700,
     //                                         fontSize: size.height * 0.08),
     //                                   ),
@@ -988,7 +987,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                                     // '${ResponseScreenController().foodData.value!.item.carbs} g',
     //                                     "35 g",
     //                                     style: TextStyle(
-    //                                         color: Color(0xffFF69B4),
+    //                                         color: AppThemeColors.graph1,
     //                                         fontWeight: FontWeight.w500,
     //                                         fontSize: size.height * 0.08),
     //                                   ),
@@ -996,7 +995,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                                     // '${ResponseScreenController().foodData.value!.item.protein} g',
     //                                     "45 g",
     //                                     style: TextStyle(
-    //                                         color: Colors.blue,
+    //                                         color: AppThemeColors.graph2,
     //                                         fontWeight: FontWeight.w500,
     //                                         fontSize: size.height * 0.08),
     //                                   ),
@@ -1004,7 +1003,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                                     // '${ResponseScreenController().foodData.value!.item.fat} g',
     //                                     "110 g",
     //                                     style: TextStyle(
-    //                                         color: Colors.green,
+    //                                         color: AppThemeColors.graph3,
     //                                         fontWeight: FontWeight.w500,
     //                                         fontSize: size.height * 0.08),
     //                                   ),
@@ -1020,7 +1019,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                                     // '${ResponseScreenController().foodData.value!.item.percentageCaloriesFromCarbs} %',
     //                                     "10 %",
     //                                     style: TextStyle(
-    //                                         color: Color(0xffFF69B4),
+    //                                         color: AppThemeColors.graph1,
     //                                         fontWeight: FontWeight.w500,
     //                                         fontSize: size.height * 0.08),
     //                                   ),
@@ -1028,7 +1027,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                                     // '${ResponseScreenController().foodData.value!.item.percentageCaloriesFromProtein} %',
     //                                     "23 %",
     //                                     style: TextStyle(
-    //                                         color: Colors.blue,
+    //                                         color: AppThemeColors.graph2,
     //                                         fontWeight: FontWeight.w500,
     //                                         fontSize: size.height * 0.08),
     //                                   ),
@@ -1036,7 +1035,7 @@ class ComparisonView extends GetView<ComparisonController> {
     //                                     // '${ResponseScreenController().foodData.value!.item.percentageCaloriesFromFat} %',
     //                                     "42 %",
     //                                     style: TextStyle(
-    //                                         color: Colors.green,
+    //                                         color: AppThemeColors.graph3,
     //                                         fontWeight: FontWeight.w500,
     //                                         fontSize: size.height * 0.08),
     //                                   ),
@@ -1117,3 +1116,4 @@ class ComparisonView extends GetView<ComparisonController> {
     //   ),
     // );
  
+

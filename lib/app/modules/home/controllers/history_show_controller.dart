@@ -1,12 +1,18 @@
 import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:calories_detector/app/data/Runtime_List_Handeler.dart';
 import 'package:calories_detector/app/data/food_item.dart';
+import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HistoryShowController extends GetxController {
   RxList<FoodData> historyData = <FoodData>[].obs;
   RxList<String> historyDate = <String>[].obs;
+
+  void showResponse(int index) {
+    Get.toNamed(Routes.HISTORY_RESPONSE, arguments: [historyData[index]]);
+    print(historyData[index]);
+  }
 
   // This will be called when the controller is initialized
   @override

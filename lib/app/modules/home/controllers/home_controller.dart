@@ -1,5 +1,7 @@
+import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
 import 'package:calories_detector/main.dart';
+import 'package:calories_detector/sizeConfig.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -53,7 +55,31 @@ class HomeController extends GetxController {
 
   Future<void> sendImageToGoogleAI(File imgFile) async {
     Get.dialog(
-      Center(child: CircularProgressIndicator()), // Loading screen
+      Expanded(
+          child: Container(
+              color: AppThemeColors.secondery1.withOpacity(0.6),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Analyzing your image',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                  SizedBox(
+                    height: SizeConfig.screenHeight * 0.1,
+                  ),
+                  CircularProgressIndicator(
+                    strokeWidth: 5,
+                    // value: 100,
+                    color: AppThemeColors.onPrimary1,
+                  )
+                ],
+              ))), // Loading screen
       barrierDismissible:
           false, // Prevents dismissing the dialog by tapping outside
     );
