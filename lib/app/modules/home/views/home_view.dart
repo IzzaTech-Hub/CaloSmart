@@ -18,7 +18,7 @@ import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 // import '../../../routes/app_pages.dart';
 
-// Size size = Size(
+// Size size = Size(  
 //     SizeConfig.blockSizeHorizontal * 90, SizeConfig.blockSizeHorizontal * 50);
 
 class HomeView extends GetView<HomeController> {
