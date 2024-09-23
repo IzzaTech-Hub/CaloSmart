@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "828532925773",
+    "project_id": "calories-scanner-2772d",
+    "storage_bucket": "calories-scanner-2772d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828532925773:android:4f39df4e65dfe884bb8304",
+        "android_client_info": {
+          "package_name": "com.ai.caloriescanner.calorietracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ1moqwuSg737mgpQB5dPwoL05Bj0E0-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

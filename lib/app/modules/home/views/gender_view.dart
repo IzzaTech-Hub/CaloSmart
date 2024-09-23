@@ -2,6 +2,7 @@
 
 import 'package:calories_detector/app/modules/home/controllers/gender_controller.dart';
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
+import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:calories_detector/sizeConfig.dart';
@@ -21,55 +22,71 @@ class gender_view extends GetView<GenderController> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      // appBar: PreferredSize(
+      //     preferredSize: Size.fromHeight(80),
+      //     child: appThemeAppBar(context, 'About yourself')),
       body: Container(
-        color: tertoryColor,
+        decoration: BoxDecoration(
+          gradient: AppThemeColors.bgGradient,
+        ),
+        // color: tertoryColor,
         child: Stack(children: [
           Positioned(
-            top: 0,
-            child: ShaderMask(
-              shaderCallback: (Rect bounds) {
-                return LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.white, // Fully visible
-                    Colors.transparent // Fully transparent
-                  ],
-                ).createShader(bounds);
-              },
-              blendMode:
-                  BlendMode.dstIn, // This blends the gradient with the image
-              child: Image.asset(AppImages.bkgImage,
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.cover,
-              ),
-            ),
+            left: 10,
+            top: 40,
+            child: IconButton(
+                onPressed: Get.back,
+                icon: Icon(Icons.arrow_back_ios_new_rounded)),
           ),
-          Positioned(
-            bottom: 0,
-            child: ShaderMask(
-              shaderCallback: (Rect bounds) {
-                return LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent, // Fully visible
-                    Colors.white // Fully transparent
-                  ],
-                ).createShader(bounds);
-              },
-              blendMode:
-                  BlendMode.dstIn, // This blends the gradient with the image
-              child: Image.asset(AppImages.bkgImage,
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 0,
+          //   child: ShaderMask(
+          //     shaderCallback: (Rect bounds) {
+          //       return LinearGradient(
+          //         begin: Alignment.topCenter,
+          //         end: Alignment.bottomCenter,
+          //         colors: [
+          //           Colors.white,
+          //           Colors.transparent
+          //         ],
+          //       ).createShader(bounds);
+          //     },
+          //     blendMode:BlendMode.dstIn,
+          //                   child: Image.asset(
+          //       AppImages.bkgImage,
+          //       width: MediaQuery.of(context).size.width,
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+          // Positioned(
+          //   bottom: 0,
+          //   child: ShaderMask(
+          //     shaderCallback: (Rect bounds) {
+          //       return LinearGradient(
+          //         begin: Alignment.topCenter,
+          //         end: Alignment.bottomCenter,
+          //         colors: [
+          //           Colors.transparent, // Fully visible
+          //           Colors.white // Fully transparent
+          //         ],
+          //       ).createShader(bounds);
+          //     },
+          //     blendMode:
+          //         BlendMode.dstIn, // This blends the gradient with the image
+          //     child: Image.asset(
+          //       AppImages.bkgImage,
+          //       width: MediaQuery.of(context).size.width,
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+
           Padding(
-            padding: EdgeInsets.symmetric(vertical: size.height * 0.3),
+            padding:
+                EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.1),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start, // Aligns to the top
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
@@ -113,9 +130,7 @@ class gender_view extends GetView<GenderController> {
                 verticalSpace(size.height * 0.15),
                 Text(
                   "Please Enter Your Gender",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: size.height * 0.12),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
                 verticalSpace(size.height * 0.5),
@@ -205,7 +220,8 @@ class gender_view extends GetView<GenderController> {
                         final prefs = await SharedPreferences.getInstance();
 
                         // Save a value
-                        await prefs.setString('selected_gender', 'Rather not say');
+                        await prefs.setString(
+                            'selected_gender', 'Rather not say');
                         String selectedGender =
                             prefs.getString('selected_gender') ?? 'None';
                         print("Selected gender: $selectedGender");
@@ -230,7 +246,6 @@ class gender_view extends GetView<GenderController> {
                               "Rather Not Say",
                               style: TextStyle(fontWeight: FontWeight.w400),
                             ),
-                            
                           ],
                         ),
                       ),

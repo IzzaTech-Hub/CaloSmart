@@ -11,17 +11,17 @@ import '../../../routes/app_pages.dart';
 
 final ImagePicker _picker = ImagePicker();
 
-Color onSecondaryColor = const Color(0xffFFffff);
-Color secondaryColor = Color(0xffFF4D6D);
-Color primaryColor = Color(0xffFFD1DC);
-Color onPrimaryColor = Color(0xff1E3A5F);
+// Color onSecondaryColor = const Color(0xffFFffff);
+// Color secondaryColor = Color(0xffFF4D6D);
+// Color primaryColor = Color(0xffFFD1DC);
+// Color onPrimaryColor = Color(0xff1E3A5F);
 
 class ResponseScreenController extends GetxController {
   Rxn<Image> imageFile = Rxn<Image>();
   Rxn<FoodData> foodData = Rxn<FoodData>();
   Rxn<FoodItem> compairFood1 = Rxn<FoodItem>();
   Rxn<FoodItem> compairFood2 = Rxn<FoodItem>();
-
+  RxBool checkFirst = true.obs;
   void Comparefunction(BuildContext context) {
     showDialog(
       context: context,
@@ -91,10 +91,10 @@ class ResponseScreenController extends GetxController {
       model: 'gemini-1.5-flash',
       apiKey: 'AIzaSyD4cCpD7lP-Q9raPF59L8npR8H5NF3pLIo',
     );
-
+    String goal = 'gain Weight';
     // final prompt ='Give me json response according to map given in instructions';
     final prompt =
-        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items, mass in kg no. of scoops, no. of litres or anything else suitable for that food. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours). provide a response in JSON format with the following structure:\n'
+        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items, mass in kg no. of scoops, no. of litres or anything else suitable for that food. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours).in description string compare this food with ${compairFood1.value!.name} which have ${compairFood1.value!.totalCalories}. tell which food is best if my goal is to $goal. provide a response in JSON format with the following structure:\n'
         '''
 {
   "name": "<string>",\n
@@ -104,6 +104,7 @@ class ResponseScreenController extends GetxController {
   "protein": <int>,\n
   "waterquantity": <float>,\n
   "exercise": <float>\n
+  "description":<string>\n
 }
 '''
         'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
@@ -128,12 +129,13 @@ class ResponseScreenController extends GetxController {
       // print(foodData.item.name);
       Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
       FoodItem fooditem2 = FoodItem.fromJson(jsonMap);
-
+      String description = jsonMap['description'] ?? '';
+      print('this is description: $description');
       print('Converted to FoodItem');
       compairFood2.value = fooditem2;
       Get.back();
       print('closeed dialoge');
-      goToCompare(compairFood1.value!, compairFood2.value!);
+      goToCompare(compairFood1.value!, compairFood2.value!, description);
       print('gone');
       // goToREsponse(foodData, imgFile);
     } catch (e) {
@@ -150,11 +152,12 @@ class ResponseScreenController extends GetxController {
     }
   }
 
-  void goToCompare(FoodItem fooditem1, FoodItem fooditem2) {
+  void goToCompare(FoodItem fooditem1, FoodItem fooditem2, String description) {
+    print(description);
     try {
       Get.toNamed(Routes.COMPARISON_VIEW_SCREEN,
           // arguments: [response.text ?? '',Image.file(imgFile)]
-          arguments: [fooditem1, fooditem2, 'Comparison']);
+          arguments: [fooditem1, fooditem2, 'Comparison', description]);
     } catch (e) {
       Get.snackbar(
         'Error',
@@ -167,19 +170,33 @@ class ResponseScreenController extends GetxController {
 
   void logFeed(FoodData foodData) async {
     final dbHelper = DatabaseHelper(); // Create an instance of DatabaseHelper
-    // dbHelper.deleteDatabaseFile();
+    if (checkFirst.value) // dbHelper.deleteDatabaseFile();
+    {
+      try {
+        await dbHelper.insertFoodData(foodData);
+        // Insert FoodData into the database
+        // checkFirst.value == false;
+        checkFirst.toggle();
 
-    try {
-      await dbHelper.insertFoodData(foodData);
-      // Insert FoodData into the database
-      print('Food data logged successfully.');
-    } catch (e) {
-      print('Error logging food data: $e');
+        print('value of check ${checkFirst.value}');
+        print('Food data logged successfully.');
+      } catch (e) {
+        print('Error logging food data: $e');
+      }
+    } else {
+      Get.snackbar(
+        "Unable to log",
+        // 'Failed to get response:\nThere is something Wrong with your image',
+        'Already Saved',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
   @override
   void onInit() {
+    checkFirst.value = true;
+    print('check first become true');
     final arguments = Get.arguments;
     final FoodData response = arguments[0];
     imageFile.value = arguments[1];

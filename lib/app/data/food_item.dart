@@ -1,5 +1,3 @@
-
-
 class FoodItem {
   String name;
   String quantity;
@@ -9,7 +7,7 @@ class FoodItem {
   double waterquantity;
   double exercise;
 
-  // New fields for calculated values
+  // Calculated values
   int caloriesFromCarbs;
   int caloriesFromProtein;
   int caloriesFromFat;
@@ -30,15 +28,14 @@ class FoodItem {
         caloriesFromProtein = protein * 4,
         caloriesFromFat = fat * 9,
         totalCalories = (carbs * 4) + (protein * 4) + (fat * 9),
-        percentageCaloriesFromCarbs = ((carbs * 4) * 100 /
-                ((carbs * 4) + (protein * 4) + (fat * 9)))
-            .round(),
-        percentageCaloriesFromProtein = ((protein * 4) * 100 /
-                ((carbs * 4) + (protein * 4) + (fat * 9)))
-            .round(),
+        percentageCaloriesFromCarbs =
+            ((carbs * 4) * 100 / ((carbs * 4) + (protein * 4) + (fat * 9)))
+                .round(),
+        percentageCaloriesFromProtein =
+            ((protein * 4) * 100 / ((carbs * 4) + (protein * 4) + (fat * 9)))
+                .round(),
         percentageCaloriesFromFat = 100 -
-            (((carbs * 4) * 100 /
-                        ((carbs * 4) + (protein * 4) + (fat * 9)))
+            (((carbs * 4) * 100 / ((carbs * 4) + (protein * 4) + (fat * 9)))
                     .round() +
                 ((protein * 4) * 100 /
                         ((carbs * 4) + (protein * 4) + (fat * 9)))
@@ -46,17 +43,14 @@ class FoodItem {
 
   // Factory constructor for creating an instance from JSON
   factory FoodItem.fromJson(Map<String, dynamic> json) {
-    int fat = json['fat'];
-    int carbs = json['carbs'];
-    int protein = json['protein'];
     return FoodItem(
       name: json['name'],
       quantity: json['quantity'],
-      fat: fat,
-      carbs: carbs,
-      protein: protein,
-      waterquantity: json['waterquantity'].toDouble(),
-      exercise: json['exercise'].toDouble(),
+      fat: json['fat'],
+      carbs: json['carbs'],
+      protein: json['protein'],
+      waterquantity: (json['waterquantity'] as num).toDouble(),
+      exercise: (json['exercise'] as num).toDouble(),
     );
   }
 
@@ -79,7 +73,6 @@ class FoodItem {
     };
   }
 
-  // Convert a FoodItem into a Map for SQLite
   Map<String, dynamic> toMap() {
     return {
       'name': name,
@@ -99,7 +92,6 @@ class FoodItem {
     };
   }
 
-  // Create a FoodItem from a Map (for SQLite)
   factory FoodItem.fromMap(Map<String, dynamic> map) {
     return FoodItem(
       name: map['name'],
@@ -116,53 +108,43 @@ class FoodItem {
 class FoodData {
   FoodItem item;
   FoodItem alternate1;
-  FoodItem alternate2;
-  FoodItem alternate3;
+  String description;
 
   FoodData({
     required this.item,
     required this.alternate1,
-    required this.alternate2,
-    required this.alternate3,
+    required this.description,
   });
 
-  // Factory constructor for creating an instance from JSON
   factory FoodData.fromJson(Map<String, dynamic> json) {
     return FoodData(
       item: FoodItem.fromJson(json['item']),
       alternate1: FoodItem.fromJson(json['alternate1']),
-      alternate2: FoodItem.fromJson(json['alternate2']),
-      alternate3: FoodItem.fromJson(json['alternate3']),
+      description: json['description'],
     );
   }
 
-  // Method for converting an instance to JSON
   Map<String, dynamic> toJson() {
     return {
       'item': item.toJson(),
       'alternate1': alternate1.toJson(),
-      'alternate2': alternate2.toJson(),
-      'alternate3': alternate3.toJson(),
+      'description': description,
     };
   }
 
-  // Convert FoodData to Map (for SQLite)
   Map<String, dynamic> toMap() {
     return {
       'item': item.toMap(),
       'alternate1': alternate1.toMap(),
-      'alternate2': alternate2.toMap(),
-      'alternate3': alternate3.toMap(),
+      'description': description,
     };
   }
 
-  // Create FoodData from Map (for SQLite)
   factory FoodData.fromMap(Map<String, dynamic> map) {
     return FoodData(
       item: FoodItem.fromMap(map['item']),
       alternate1: FoodItem.fromMap(map['alternate1']),
-      alternate2: FoodItem.fromMap(map['alternate2']),
-      alternate3: FoodItem.fromMap(map['alternate3']),
+      description: map['description'],
     );
   }
 }

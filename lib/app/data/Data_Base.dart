@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'food_item.dart';
+import 'food_item.dart'; // Assuming this contains FoodItem class definition
 import 'package:intl/intl.dart';
 
 class DatabaseHelper {
@@ -14,20 +14,13 @@ class DatabaseHelper {
   }
 
   Future<Database> get database async {
-    print('database function works');
-
     if (_database != null) return _database!;
-    {
-      print('if condition works');
-      _database = await _initDatabase();
-    }
+    _database = await _initDatabase();
     return _database!;
   }
 
   Future<Database> _initDatabase() async {
-    print('initiate db function works');
     String path = join(await getDatabasesPath(), 'food_data.db');
-    print(path);
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
@@ -36,6 +29,8 @@ class DatabaseHelper {
     CREATE TABLE food_data (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       date TEXT,
+      description TEXT, -- This is the description of the overall entry
+      
       -- Main item fields
       itemName TEXT,
       itemQuantity TEXT,
@@ -52,27 +47,9 @@ class DatabaseHelper {
       alternate1Carbs INTEGER,
       alternate1Protein INTEGER,
       alternate1Waterquantity REAL,
-      alternate1Exercise REAL,
-      
-      -- Alternate 2 fields
-      alternate2Name TEXT,
-      alternate2Quantity TEXT,
-      alternate2Fat INTEGER,
-      alternate2Carbs INTEGER,
-      alternate2Protein INTEGER,
-      alternate2Waterquantity REAL,
-      alternate2Exercise REAL,
-      
-      -- Alternate 3 fields
-      alternate3Name TEXT,
-      alternate3Quantity TEXT,
-      alternate3Fat INTEGER,
-      alternate3Carbs INTEGER,
-      alternate3Protein INTEGER,
-      alternate3Waterquantity REAL,
-      alternate3Exercise REAL
+      alternate1Exercise REAL
     )
-  ''');
+    ''');
   }
 
   Future<void> insertFoodData(FoodData foodData) async {
@@ -81,6 +58,8 @@ class DatabaseHelper {
     final db = await database;
     await db.insert('food_data', {
       'date': nowDate,
+      'description': foodData.description, // Insert the description field
+      
       // Main item fields
       'itemName': foodData.item.name,
       'itemQuantity': foodData.item.quantity,
@@ -98,24 +77,6 @@ class DatabaseHelper {
       'alternate1Protein': foodData.alternate1.protein,
       'alternate1Waterquantity': foodData.alternate1.waterquantity,
       'alternate1Exercise': foodData.alternate1.exercise,
-
-      // Alternate 2 fields
-      'alternate2Name': foodData.alternate2.name,
-      'alternate2Quantity': foodData.alternate2.quantity,
-      'alternate2Fat': foodData.alternate2.fat,
-      'alternate2Carbs': foodData.alternate2.carbs,
-      'alternate2Protein': foodData.alternate2.protein,
-      'alternate2Waterquantity': foodData.alternate2.waterquantity,
-      'alternate2Exercise': foodData.alternate2.exercise,
-
-      // Alternate 3 fields
-      'alternate3Name': foodData.alternate3.name,
-      'alternate3Quantity': foodData.alternate3.quantity,
-      'alternate3Fat': foodData.alternate3.fat,
-      'alternate3Carbs': foodData.alternate3.carbs,
-      'alternate3Protein': foodData.alternate3.protein,
-      'alternate3Waterquantity': foodData.alternate3.waterquantity,
-      'alternate3Exercise': foodData.alternate3.exercise,
     });
   }
 
@@ -125,6 +86,7 @@ class DatabaseHelper {
 
     return List.generate(maps.length, (i) {
       return FoodData(
+        description: maps[i]['description'], // Fetch description
         item: FoodItem(
           name: maps[i]['itemName'],
           quantity: maps[i]['itemQuantity'],
@@ -143,24 +105,6 @@ class DatabaseHelper {
           waterquantity: maps[i]['alternate1Waterquantity'],
           exercise: maps[i]['alternate1Exercise'],
         ),
-        alternate2: FoodItem(
-          name: maps[i]['alternate2Name'],
-          quantity: maps[i]['alternate2Quantity'],
-          fat: maps[i]['alternate2Fat'],
-          carbs: maps[i]['alternate2Carbs'],
-          protein: maps[i]['alternate2Protein'],
-          waterquantity: maps[i]['alternate2Waterquantity'],
-          exercise: maps[i]['alternate2Exercise'],
-        ),
-        alternate3: FoodItem(
-          name: maps[i]['alternate3Name'],
-          quantity: maps[i]['alternate3Quantity'],
-          fat: maps[i]['alternate3Fat'],
-          carbs: maps[i]['alternate3Carbs'],
-          protein: maps[i]['alternate3Protein'],
-          waterquantity: maps[i]['alternate3Waterquantity'],
-          exercise: maps[i]['alternate3Exercise'],
-        ),
       );
     });
   }
@@ -170,7 +114,6 @@ class DatabaseHelper {
     final List<Map<String, dynamic>> maps = await db.query('food_data');
 
     return List.generate(maps.length, (i) {
-      // Ensure 'date' is properly accessed from the map
       return maps[i]['date'] as String;
     });
   }

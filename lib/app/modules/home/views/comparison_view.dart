@@ -1,18 +1,20 @@
 import 'package:calories_detector/app/modules/ResponseScreen/controllers/response_screen_controller.dart';
 import 'package:calories_detector/app/modules/home/controllers/comparison_controller.dart';
 import 'package:calories_detector/app/modules/home/views/home_view.dart';
+import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
+import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:fl_chart/fl_chart.dart';
 
+// // Color onSecondaryColor = const Color(0xffFFffff);
 // Color onSecondaryColor = const Color(0xffFFffff);
-Color onSecondaryColor = const Color(0xffFFffff);
-Color secondaryColor = Color(0xffFF4D6D);
-Color primaryColor = Color.fromARGB(255, 247, 226, 230);
-// Color primaryColor = Color.fromARGB(255, 252, 203, 214);
-Color onPrimaryColor = Color(0xff1E3A5F);
+// Color secondaryColor = Color(0xffFF4D6D);
+// Color primaryColor = Color.fromARGB(255, 247, 226, 230);
+// // Color primaryColor = Color.fromARGB(255, 252, 203, 214);
+// Color onPrimaryColor = Color(0xff1E3A5F);
 
 class ComparisonView extends GetView<ComparisonController> {
   ComparisonView({super.key});
@@ -23,311 +25,646 @@ class ComparisonView extends GetView<ComparisonController> {
     final screenHeight = SizeConfig.screenHeight;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 253, 135, 174),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_rounded,
-            size: 30,
-            color: Colors.white, // Adjusting for a more standardized size
-          ),
-          onPressed: () {
-            Get.back(); // This will take you back to the previous screen
-          },
-        ),
-        title: Center(
-          child: Text(
-            controller.name.value!,
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold), // Adjusting for readability
-          ),
-        ),
-      ),
-      backgroundColor: onSecondaryColor,
-      body: Column(
-        children: [
-          Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 20, top: 10, bottom: 5),
-                child: Text(
-                  controller.food1.value!.name,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 30,
-                      color: Colors.black),
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(80),
+          child: appThemeAppBar(context, controller.name.value!)),
+      // backgroundColor: ,
+      body: Container(
+        decoration: BoxDecoration(gradient: AppThemeColors.bgGradient),
+        child: Column(
+          children: [
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 20, top: 10, bottom: 5),
+                  child: Text(
+                    controller.food1.value!.name,
+                    textAlign: TextAlign.left,
+                    style: AppThemeText().headline1,
+                  ),
                 ),
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.01),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Total',
-                        style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.w700,
-                            color: secondaryColor,
-                            height: 1),
-                      ),
-                      Text('Calories',
-                          style: TextStyle(
-                              fontSize: 35,
-                              fontWeight: FontWeight.w700,
-                              color: secondaryColor,
-                              height: 1))
-                    ],
-                  ),
-                  SizedBox(
-                    width: 0,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        controller.food1.value!.totalCalories.toString(),
-                        style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.w900,
-                            color: onPrimaryColor,
-                            height: 1),
-                      ),
-                      Text(
-                        'Kcal',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: secondaryColor,
-                            height: 1),
-                      ),
-                      Text(
-                        // quantity,
-                        controller.food1.value!.quantity,
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            color: secondaryColor,
-                            height: 1),
-                      )
-                    ],
-                  )
-                ],
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.025),
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.1225,
-                width: SizeConfig.screenWidth,
-                child: Stack(
+                SizedBox(height: SizeConfig.screenHeight * 0.01),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Positioned(
-                      right: 0,
-                      child: Container(
-                        width: SizeConfig.screenWidth * 0.8,
-                        height: SizeConfig.screenHeight * 0.1225,
-                        // height: 100,
-                        // color: onSecondaryColor,
-                        color: primaryColor,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SizedBox(),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(),
-                                Text(
-                                  'Carbs',
-                                  style: TextStyle(
-                                      color: Color(0xffFF69B4),
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20),
-                                ),
-                                Text(
-                                  'Protien',
-                                  style: TextStyle(
-                                      // color: Color(0xffFFD700),
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20),
-                                ),
-                                Text(
-                                  'Fat',
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20),
-                                ),
-                                SizedBox(),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(),
-                                Text(
-                                  // '$carbsW g',
-                                  '${controller.food1.value!.carbs} g',
-                                  style: TextStyle(
-                                      color: Color(0xffFF69B4),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                Text(
-                                  // '$protienW g',
-                                  '${controller.food1.value!.protein} g',
-                                  style: TextStyle(
-                                      color: Colors.blue,
-                                      // color: Color(0xffFFD700),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                Text(
-                                  '${controller.food1.value!.fat} g',
-                                  // '$fatW g',
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                SizedBox(),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(),
-                                Text(
-                                  '${controller.food1.value!.percentageCaloriesFromCarbs} %',
-                                  // '$carbsp %',
-                                  style: TextStyle(
-                                      color: Color(0xffFF69B4),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                Text(
-                                  '${controller.food1.value!.percentageCaloriesFromProtein} %',
-                                  // '$protienp %',
-                                  style: TextStyle(
-                                      color: Colors.blue,
-                                      // color: Color(0xffFFD700),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                Text(
-                                  '${controller.food1.value!.percentageCaloriesFromFat} %',
-                                  // '$fatp %',
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                SizedBox(),
-                              ],
-                            )
-                          ],
+                    SizedBox(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Total', style: AppThemeText().headline2,
+                          // TextStyle(
+                          //     fontSize: 35,
+                          //     fontWeight: FontWeight.w700,
+                          //     color: secondaryColor,
+                          //     height: 1),
+                        ),
+                        Text(
+                          'Calories',
+                          style: AppThemeText().headline2,
+                          // TextStyle(
+                          //     fontSize: 35,
+                          //     fontWeight: FontWeight.w700,
+                          //     color: secondaryColor,
+                          //     height: 1)
+                        ),
+                      ],
+                    ),
+                    SizedBox(),
+                    SizedBox(),
+                    SizedBox(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          controller.food1.value!.totalCalories.toString(),
+                          style: AppThemeText().headline2,
+                          // TextStyle(
+                          //     fontSize: 35,
+                          //     fontWeight: FontWeight.w900,
+                          //     color: onPrimaryColor,
+                          //     height: 1),
+                        ),
+                        Text(
+                          'Kcal',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppThemeColors.onPrimary1,
+                              height: 1),
+                        ),
+                        Text(
+                          // quantity,
+                          controller.food1.value!.quantity,
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                              color: AppThemeColors.onPrimary1,
+                              height: 1),
+                        )
+                      ],
+                    ),
+                    SizedBox(),
+                  ],
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.025),
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.1225,
+                  width: SizeConfig.screenWidth,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        right: 0,
+                        child: Container(
+                          width: SizeConfig.screenWidth * 0.8,
+                          height: SizeConfig.screenHeight * 0.1225,
+                          // height: 100,
+                          // color: onSecondaryColor,
+                          decoration: BoxDecoration(
+                              gradient: AppThemeColors.secondaryGradient1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(),
+                                  Text(
+                                    'Carbs',
+                                    style: TextStyle(
+                                        color: Color(0xffFF69B4),
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20),
+                                  ),
+                                  Text(
+                                    'Protien',
+                                    style: TextStyle(
+                                        // color: Color(0xffFFD700),
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20),
+                                  ),
+                                  Text(
+                                    'Fat',
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20),
+                                  ),
+                                  SizedBox(),
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(),
+                                  Text(
+                                    // '$carbsW g',
+                                    '${controller.food1.value!.carbs} g',
+                                    style: TextStyle(
+                                        color: Color(0xffFF69B4),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  Text(
+                                    // '$protienW g',
+                                    '${controller.food1.value!.protein} g',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        // color: Color(0xffFFD700),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  Text(
+                                    '${controller.food1.value!.fat} g',
+                                    // '$fatW g',
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  SizedBox(),
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(),
+                                  Text(
+                                    '${controller.food1.value!.percentageCaloriesFromCarbs} %',
+                                    // '$carbsp %',
+                                    style: TextStyle(
+                                        color: Color(0xffFF69B4),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  Text(
+                                    '${controller.food1.value!.percentageCaloriesFromProtein} %',
+                                    // '$protienp %',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        // color: Color(0xffFFD700),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  Text(
+                                    '${controller.food1.value!.percentageCaloriesFromFat} %',
+                                    // '$fatp %',
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  SizedBox(),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      // right: screenWidth * 0,
-                      // top: 0,
-                      left: 0,
-                      child: Center(
-                        child: SizedBox(
-                          // Set the overall size of the container to constrain the pie chart
-                          height: SizeConfig.screenHeight * 0.1225,
+                      Positioned(
+                        // right: screenWidth * 0,
+                        // top: 0,
+                        left: 0,
+                        child: Center(
+                          child: SizedBox(
+                            // Set the overall size of the container to constrain the pie chart
+                            height: SizeConfig.screenHeight * 0.1225,
 
-                          width: SizeConfig.screenWidth *
-                              0.4, // Set the desired width
-                          child: PieChart(
-                            PieChartData(
-                              sectionsSpace: 0, // No space between sections
-                              centerSpaceRadius: 0, // No space in the center
-                              sections: [
-                                PieChartSectionData(
-                                  color: Color(0xffFF69B4),
-                                  // value: carbsp.toDouble(),
-                                  value: controller
-                                      .food1.value!.percentageCaloriesFromCarbs
-                                      .toDouble(),
-                                  // Remove text by setting an empty string for the title
-                                  title: '',
-                                  radius: SizeConfig.screenHeight *
-                                      0.06125, // Adjust radius to fit within the container
-                                ),
-                                PieChartSectionData(
-                                  // color: Color(0xffFFD700),
-                                  color: Colors.blue,
-                                  value: controller.food1.value!
-                                      .percentageCaloriesFromProtein
-                                      .toDouble(),
-                                  // value: protienp.toDouble(),
-                                  title: '',
-                                  radius: SizeConfig.screenHeight *
-                                      0.06125, // Adjust radius to fit within the container
-                                ),
-                                PieChartSectionData(
-                                  color: Colors.green,
-                                  value: controller
-                                      .food1.value!.percentageCaloriesFromFat
-                                      .toDouble(),
-                                  // value: fatp.toDouble(),
-                                  title: '',
-                                  radius: SizeConfig.screenHeight *
-                                      0.06125, // Adjust radius to fit within the container
-                                ),
-                              ],
+                            width: SizeConfig.screenWidth *
+                                0.4, // Set the desired width
+                            child: PieChart(
+                              PieChartData(
+                                sectionsSpace: 0, // No space between sections
+                                centerSpaceRadius: 0, // No space in the center
+                                sections: [
+                                  PieChartSectionData(
+                                    color: Color(0xffFF69B4),
+                                    // value: carbsp.toDouble(),
+                                    value: controller.food1.value!
+                                        .percentageCaloriesFromCarbs
+                                        .toDouble(),
+                                    // Remove text by setting an empty string for the title
+                                    title: '',
+                                    radius: SizeConfig.screenHeight *
+                                        0.06125, // Adjust radius to fit within the container
+                                  ),
+                                  PieChartSectionData(
+                                    // color: Color(0xffFFD700),
+                                    color: Colors.blue,
+                                    value: controller.food1.value!
+                                        .percentageCaloriesFromProtein
+                                        .toDouble(),
+                                    // value: protienp.toDouble(),
+                                    title: '',
+                                    radius: SizeConfig.screenHeight *
+                                        0.06125, // Adjust radius to fit within the container
+                                  ),
+                                  PieChartSectionData(
+                                    color: Colors.green,
+                                    value: controller
+                                        .food1.value!.percentageCaloriesFromFat
+                                        .toDouble(),
+                                    // value: fatp.toDouble(),
+                                    title: '',
+                                    radius: SizeConfig.screenHeight *
+                                        0.06125, // Adjust radius to fit within the container
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
+                      Positioned(
+                        // right: screenWidth * 0,
+                        // top: 0,
+                        left: SizeConfig.screenWidth * 0.2 -
+                            SizeConfig.screenHeight * 0.06125,
+                        child: Container(
+                          height: SizeConfig.screenHeight * 0.1225,
+                          width: SizeConfig.screenHeight * 0.1225,
+                          child: Center(
+                            child: Container(
+                              // Set the overall size of the container to constrain the pie chart
+                              height: SizeConfig.screenHeight * 0.1,
+                              width: SizeConfig.screenHeight * 0.1,
+                              decoration: BoxDecoration(
+                                  color: AppThemeColors.secondery2,
+                                  // color: primaryColor,
+                                  borderRadius: BorderRadius.circular(100)),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    controller.food1.value!.totalCalories
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontSize: 23,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w800,
+                                        height: 1.1),
+                                  ),
+                                  Text(
+                                    'Kcal',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w400,
+                                        height: 1),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.025),
+              ],
+            ),
+            Divider(
+              height: 5,
+              thickness: 2,
+              color: AppThemeColors.secondery2,
+              indent: SizeConfig.screenWidth * 0.1,
+              endIndent: SizeConfig.screenWidth * 0.1,
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 20, top: 10, bottom: 5),
+                  child: Text(
+                    controller.food2.value!.name,
+                    textAlign: TextAlign.left,
+                    // style: TextStyle(
+                    // fontWeight: FontWeight.w500,
+                    // fontSize: 30,
+                    // color: Colors.black),
+                    style: AppThemeText().headline1,
+                  ),
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.01),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Total',
+                          style: AppThemeText().headline2,
+                        ),
+                        Text(
+                          'Calories',
+                          style: AppThemeText().headline2,
+                        )
+                      ],
                     ),
-                    Positioned(
-                      // right: screenWidth * 0,
-                      // top: 0,
-                      left: SizeConfig.screenWidth * 0.2 -
-                          SizeConfig.screenHeight * 0.06125,
-                      child: Container(
-                        height: SizeConfig.screenHeight * 0.1225,
-                        width: SizeConfig.screenHeight * 0.1225,
+                    SizedBox(
+                      width: 0,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          controller.food2.value!.totalCalories.toString(),
+                          style: AppThemeText().headline2,
+                        ),
+                        Text(
+                          'Kcal',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppThemeColors.onPrimary1,
+                              height: 1),
+                        ),
+                        Text(
+                          // quantity,
+                          controller.food2.value!.quantity,
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                              color: AppThemeColors.onPrimary1,
+                              height: 1),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.025),
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.1225,
+                  width: SizeConfig.screenWidth,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 0,
+                        child: Container(
+                          width: SizeConfig.screenWidth * 0.8,
+                          height: SizeConfig.screenHeight * 0.1225,
+                          // height: 100,
+                          // color: onSecondaryColor,
+                          decoration: BoxDecoration(
+                              gradient: AppThemeColors.secondaryGradient1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(),
+                                  Text(
+                                    'Carbs',
+                                    style: TextStyle(
+                                        color: Color(0xffFF69B4),
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20),
+                                  ),
+                                  Text(
+                                    'Protien',
+                                    style: TextStyle(
+                                        // color: Color(0xffFFD700),
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20),
+                                  ),
+                                  Text(
+                                    'Fat',
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20),
+                                  ),
+                                  SizedBox(),
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(),
+                                  Text(
+                                    // '$carbsW g',
+                                    '${controller.food2.value!.carbs} g',
+                                    style: TextStyle(
+                                        color: Color(0xffFF69B4),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  Text(
+                                    // '$protienW g',
+                                    '${controller.food2.value!.protein} g',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        // color: Color(0xffFFD700),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  Text(
+                                    '${controller.food2.value!.fat} g',
+                                    // '$fatW g',
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  SizedBox(),
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(),
+                                  Text(
+                                    '${controller.food2.value!.percentageCaloriesFromCarbs} %',
+                                    // '$carbsp %',
+                                    style: TextStyle(
+                                        color: Color(0xffFF69B4),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  Text(
+                                    '${controller.food2.value!.percentageCaloriesFromProtein} %',
+                                    // '$protienp %',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        // color: Color(0xffFFD700),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  Text(
+                                    '${controller.food2.value!.percentageCaloriesFromFat} %',
+                                    // '$fatp %',
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  SizedBox(),
+                                ],
+                              ),
+                              SizedBox(),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        // right: screenWidth * 0,
+                        // top: 0,
+                        // left: 0,
+                        right: 0,
                         child: Center(
-                          child: Container(
+                          child: SizedBox(
                             // Set the overall size of the container to constrain the pie chart
-                            height: SizeConfig.screenHeight * 0.1,
-                            width: SizeConfig.screenHeight * 0.1,
-                            decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.circular(100)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  controller.food1.value!.totalCalories
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      color: onPrimaryColor,
-                                      fontWeight: FontWeight.w800,
-                                      height: 1.1),
-                                ),
-                                Text(
-                                  'Kcal',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: onPrimaryColor,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1),
-                                ),
-                              ],
+                            height: SizeConfig.screenHeight * 0.1225,
+
+                            width: SizeConfig.screenWidth *
+                                0.4, // Set the desired width
+                            child: PieChart(
+                              PieChartData(
+                                sectionsSpace: 0, // No space between sections
+                                centerSpaceRadius: 0, // No space in the center
+                                sections: [
+                                  PieChartSectionData(
+                                    color: Color(0xffFF69B4),
+                                    // value: carbsp.toDouble(),
+                                    value: controller.food2.value!
+                                        .percentageCaloriesFromCarbs
+                                        .toDouble(),
+                                    // Remove text by setting an empty string for the title
+                                    title: '',
+                                    radius: SizeConfig.screenHeight *
+                                        0.06125, // Adjust radius to fit within the container
+                                  ),
+                                  PieChartSectionData(
+                                    // color: Color(0xffFFD700),
+                                    color: Colors.blue,
+                                    value: controller.food2.value!
+                                        .percentageCaloriesFromProtein
+                                        .toDouble(),
+                                    // value: protienp.toDouble(),
+                                    title: '',
+                                    radius: SizeConfig.screenHeight *
+                                        0.06125, // Adjust radius to fit within the container
+                                  ),
+                                  PieChartSectionData(
+                                    color: Colors.green,
+                                    value: controller
+                                        .food2.value!.percentageCaloriesFromFat
+                                        .toDouble(),
+                                    // value: fatp.toDouble(),
+                                    title: '',
+                                    radius: SizeConfig.screenHeight *
+                                        0.06125, // Adjust radius to fit within the container
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        // right: screenWidth * 0,
+                        // top: 0,
+                        right: SizeConfig.screenWidth * 0.2 -
+                            SizeConfig.screenHeight * 0.06125,
+                        // left: SizeConfig.screenWidth * 0.2 -
+                        //     SizeConfig.screenHeight * 0.06125,
+                        child: Container(
+                          height: SizeConfig.screenHeight * 0.1225,
+                          width: SizeConfig.screenHeight * 0.1225,
+                          child: Center(
+                            child: Container(
+                              // Set the overall size of the container to constrain the pie chart
+                              height: SizeConfig.screenHeight * 0.1,
+                              width: SizeConfig.screenHeight * 0.1,
+                              decoration: BoxDecoration(
+                                  color: AppThemeColors.secondery2,
+                                  // color: primaryColor,
+                                  borderRadius: BorderRadius.circular(100)),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    controller.food2.value!.totalCalories
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontSize: 23,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w800,
+                                        height: 1.1),
+                                  ),
+                                  Text(
+                                    'Kcal',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w400,
+                                        height: 1),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: SizeConfig.screenHeight * 0.025),
+              ],
+            ),
+            Divider(
+              height: 5,
+              thickness: 0,
+              color: Colors.transparent,
+              // color: AppThemeColors.secondery2,
+              indent: SizeConfig.screenWidth * 0.1,
+              endIndent: SizeConfig.screenWidth * 0.1,
+            ),
+            Expanded(
+              child: Container(
+                width: screenWidth,
+                padding: EdgeInsets.fromLTRB(20, 20, 5, 20),
+                decoration: BoxDecoration(
+                  gradient: AppThemeColors.secondaryGradient1,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Description:',
+                      style: AppThemeText().headline2,
+                    ),
+                    SizedBox(height: 20),
+                    // Add a Scrollbar with padding to push it to the right
+                    Expanded(
+                      child: Scrollbar(
+                        thumbVisibility:
+                            true, // Makes the scrollbar thumb always visible
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              right:
+                                  15.0), // Adds space between scrollbar and text
+                          child: SingleChildScrollView(
+                            child: Text(
+                              '${controller.description}', // Long text
+                              style: AppThemeText().bodyText1,
                             ),
                           ),
                         ),
@@ -336,311 +673,20 @@ class ComparisonView extends GetView<ComparisonController> {
                   ],
                 ),
               ),
-              SizedBox(height: SizeConfig.screenHeight * 0.025),
-            ],
-          ),
-          Divider(
-            height: 10,
-            thickness: 2,
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 20, top: 10, bottom: 5),
-                child: Text(
-                  controller.food2.value!.name,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 30,
-                      color: Colors.black),
-                ),
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.01),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Total',
-                        style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.w700,
-                            color: secondaryColor,
-                            height: 1),
-                      ),
-                      Text('Calories',
-                          style: TextStyle(
-                              fontSize: 35,
-                              fontWeight: FontWeight.w700,
-                              color: secondaryColor,
-                              height: 1))
-                    ],
-                  ),
-                  SizedBox(
-                    width: 0,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        controller.food2.value!.totalCalories.toString(),
-                        style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.w900,
-                            color: onPrimaryColor,
-                            height: 1),
-                      ),
-                      Text(
-                        'Kcal',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: secondaryColor,
-                            height: 1),
-                      ),
-                      Text(
-                        // quantity,
-                        controller.food2.value!.quantity,
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            color: secondaryColor,
-                            height: 1),
-                      )
-                    ],
-                  )
-                ],
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.025),
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.1225,
-                width: SizeConfig.screenWidth,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 0,
-                      child: Container(
-                        width: SizeConfig.screenWidth * 0.8,
-                        height: SizeConfig.screenHeight * 0.1225,
-                        // height: 100,
-                        // color: onSecondaryColor,
-                        color: primaryColor,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(),
-                                Text(
-                                  'Carbs',
-                                  style: TextStyle(
-                                      color: Color(0xffFF69B4),
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20),
-                                ),
-                                Text(
-                                  'Protien',
-                                  style: TextStyle(
-                                      // color: Color(0xffFFD700),
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20),
-                                ),
-                                Text(
-                                  'Fat',
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20),
-                                ),
-                                SizedBox(),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(),
-                                Text(
-                                  // '$carbsW g',
-                                  '${controller.food2.value!.carbs} g',
-                                  style: TextStyle(
-                                      color: Color(0xffFF69B4),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                Text(
-                                  // '$protienW g',
-                                  '${controller.food2.value!.protein} g',
-                                  style: TextStyle(
-                                      color: Colors.blue,
-                                      // color: Color(0xffFFD700),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                Text(
-                                  '${controller.food2.value!.fat} g',
-                                  // '$fatW g',
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                SizedBox(),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(),
-                                Text(
-                                  '${controller.food2.value!.percentageCaloriesFromCarbs} %',
-                                  // '$carbsp %',
-                                  style: TextStyle(
-                                      color: Color(0xffFF69B4),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                Text(
-                                  '${controller.food2.value!.percentageCaloriesFromProtein} %',
-                                  // '$protienp %',
-                                  style: TextStyle(
-                                      color: Colors.blue,
-                                      // color: Color(0xffFFD700),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                Text(
-                                  '${controller.food2.value!.percentageCaloriesFromFat} %',
-                                  // '$fatp %',
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17),
-                                ),
-                                SizedBox(),
-                              ],
-                            ),
-                            SizedBox(),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      // right: screenWidth * 0,
-                      // top: 0,
-                      // left: 0,
-                      right: 0,
-                      child: Center(
-                        child: SizedBox(
-                          // Set the overall size of the container to constrain the pie chart
-                          height: SizeConfig.screenHeight * 0.1225,
-
-                          width: SizeConfig.screenWidth *
-                              0.4, // Set the desired width
-                          child: PieChart(
-                            PieChartData(
-                              sectionsSpace: 0, // No space between sections
-                              centerSpaceRadius: 0, // No space in the center
-                              sections: [
-                                PieChartSectionData(
-                                  color: Color(0xffFF69B4),
-                                  // value: carbsp.toDouble(),
-                                  value: controller
-                                      .food2.value!.percentageCaloriesFromCarbs
-                                      .toDouble(),
-                                  // Remove text by setting an empty string for the title
-                                  title: '',
-                                  radius: SizeConfig.screenHeight *
-                                      0.06125, // Adjust radius to fit within the container
-                                ),
-                                PieChartSectionData(
-                                  // color: Color(0xffFFD700),
-                                  color: Colors.blue,
-                                  value: controller.food2.value!
-                                      .percentageCaloriesFromProtein
-                                      .toDouble(),
-                                  // value: protienp.toDouble(),
-                                  title: '',
-                                  radius: SizeConfig.screenHeight *
-                                      0.06125, // Adjust radius to fit within the container
-                                ),
-                                PieChartSectionData(
-                                  color: Colors.green,
-                                  value: controller
-                                      .food2.value!.percentageCaloriesFromFat
-                                      .toDouble(),
-                                  // value: fatp.toDouble(),
-                                  title: '',
-                                  radius: SizeConfig.screenHeight *
-                                      0.06125, // Adjust radius to fit within the container
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      // right: screenWidth * 0,
-                      // top: 0,
-                      right: SizeConfig.screenWidth * 0.2 -
-                          SizeConfig.screenHeight * 0.06125,
-                      // left: SizeConfig.screenWidth * 0.2 -
-                      //     SizeConfig.screenHeight * 0.06125,
-                      child: Container(
-                        height: SizeConfig.screenHeight * 0.1225,
-                        width: SizeConfig.screenHeight * 0.1225,
-                        child: Center(
-                          child: Container(
-                            // Set the overall size of the container to constrain the pie chart
-                            height: SizeConfig.screenHeight * 0.1,
-                            width: SizeConfig.screenHeight * 0.1,
-                            decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.circular(100)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  controller.food2.value!.totalCalories
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      color: onPrimaryColor,
-                                      fontWeight: FontWeight.w800,
-                                      height: 1.1),
-                                ),
-                                Text(
-                                  'Kcal',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: onPrimaryColor,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.025),
-            ],
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
-    //    Column(
+  }
+}
+
+
+
+
+
+
+   //    Column(
     //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
     //     crossAxisAlignment: CrossAxisAlignment.start,
     //     children: [
@@ -1070,5 +1116,4 @@ class ComparisonView extends GetView<ComparisonController> {
     //     ],
     //   ),
     // );
-  }
-}
+ 

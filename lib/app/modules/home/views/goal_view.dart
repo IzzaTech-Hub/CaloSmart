@@ -2,6 +2,7 @@
 
 import 'package:calories_detector/app/modules/home/controllers/goal_controller.dart';
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
+import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
@@ -17,54 +18,57 @@ class goalView extends GetView<GoalController> {
     SizeConfig().init(context);
     return Scaffold(
       body: Container(
-        color: AppColors.tertoryColor,
+        // color: AppColors.tertoryColor,
+        decoration: BoxDecoration(gradient: AppThemeColors.bgGradient),
         child: Stack(children: [
-          Positioned(
-            top: 0,
-            child: ShaderMask(
-              shaderCallback: (Rect bounds) {
-                return LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.white, // Fully visible
-                    Colors.transparent // Fully transparent
-                  ],
-                ).createShader(bounds);
-              },
-              blendMode:
-                  BlendMode.dstIn, // This blends the gradient with the image
-              child: Image.asset(
-                AppImages.bkgImage,
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: ShaderMask(
-              shaderCallback: (Rect bounds) {
-                return LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent, // Fully visible
-                    Colors.white // Fully transparent
-                  ],
-                ).createShader(bounds);
-              },
-              blendMode:
-                  BlendMode.dstIn, // This blends the gradient with the image
-              child: Image.asset(
-                AppImages.bkgImage,
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 0,
+          //   child: ShaderMask(
+          //     shaderCallback: (Rect bounds) {
+          //       return LinearGradient(
+          //         begin: Alignment.topCenter,
+          //         end: Alignment.bottomCenter,
+          //         colors: [
+          //           Colors.white, // Fully visible
+          //           Colors.transparent // Fully transparent
+          //         ],
+          //       ).createShader(bounds);
+          //     },
+          //     blendMode:
+          //         BlendMode.dstIn, // This blends the gradient with the image
+          //     child: Image.asset(
+          //       AppImages.bkgImage,
+          //       width: MediaQuery.of(context).size.width,
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+          // Positioned(
+          //   bottom: 0,
+          //   child: ShaderMask(
+          //     shaderCallback: (Rect bounds) {
+          //       return LinearGradient(
+          //         begin: Alignment.topCenter,
+          //         end: Alignment.bottomCenter,
+          //         colors: [
+          //           Colors.transparent, // Fully visible
+          //           Colors.white // Fully transparent
+          //         ],
+          //       ).createShader(bounds);
+          //     },
+          //     blendMode:
+          //         BlendMode.dstIn, // This blends the gradient with the image
+          //     child: Image.asset(
+          //       AppImages.bkgImage,
+          //       width: MediaQuery.of(context).size.width,
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+
           Padding(
-            padding: EdgeInsets.symmetric(vertical: size.height * 0.3),
+            padding:
+                EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.1),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start, // Aligns to the top
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -110,9 +114,7 @@ class goalView extends GetView<GoalController> {
                 verticalSpace(size.height * 0.15),
                 Text(
                   "What is Your Goal?",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: size.height * 0.12),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
                 verticalSpace(size.height * 0.5),
@@ -202,7 +204,8 @@ class goalView extends GetView<GoalController> {
                         final prefs = await SharedPreferences.getInstance();
 
                         // Save a value
-                        await prefs.setString('selected_button', 'Maintain Weight');
+                        await prefs.setString(
+                            'selected_button', 'Maintain Weight');
                         String selectedButton =
                             prefs.getString('selected_button') ?? 'None';
                         print("Selected button: $selectedButton");

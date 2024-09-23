@@ -1,3 +1,6 @@
+import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
+import 'package:calories_detector/main.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:permission_handler/permission_handler.dart';
@@ -15,6 +18,12 @@ final ImagePicker _picker = ImagePicker();
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    handlePushNotification();
+    super.onInit();
+  }
 
   Future<void> pickImageFromCamera() async {
     try {
@@ -55,8 +64,9 @@ class HomeController extends GetxController {
     );
 
     // final prompt ='Give me json response according to map given in instructions';
+    RxString goal = 'gain weight'.obs;
     final prompt =
-        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items, mass in kg no. of scoops, no. of litres or anything else suitable for that food. then tell 3 best and healthy alternates for them to consume instead of them. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours). provide a response in JSON format with the following structure:\n'
+        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items with name, mass in kg no. of scoops, no. of litres or anything else suitable for that food. then tell 1 best and healthy alternates for it to consume instead of them if i want to ${goal.value}. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours).At last give a short description about why should i consume the alternate how it is better than original. provide a response in JSON format with the following structure:\n'
         '''
 {
   "item": {
@@ -77,24 +87,7 @@ class HomeController extends GetxController {
     "waterquantity": <float>,\n
     "exercise": <float>\n
   },\n
-  "alternate2": {
-    "name": "<string>",\n
-    "quantity": "<string>",\n
-    "fat": <int>,\n
-    "carbs": <int>,\n
-    "protein": <int>,\n
-    "waterquantity": <float>,\n
-    "exercise": <float>\n
-  },\n
-  "alternate3": {
-    "name": "<string>",\n
-    "quantity": "<string>",\n
-    "fat": <int>,\n
-    "carbs": <int>,\n
-    "protein": <int>,\n
-    "waterquantity": <float>,\n
-    "exercise": <float>\n
-  }\n
+  "description":<string>\n
 }
 '''
         'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
@@ -154,4 +147,58 @@ class HomeController extends GetxController {
   final count = 0.obs;
 
   void increment() => count.value++;
+
+  handlePushNotification() async {
+    // 1. This method call when app in terminated state and you get a notification
+    // when you click on notification app open from terminated state and you can get notification data in this method
+
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+            alert: true, badge: true, sound: true);
+
+    FirebaseMessaging.instance.getInitialMessage().then(
+      (message) {
+        print("FirebaseMessaging.instance.getInitialMessage");
+        if (message != null) {
+          print("New Notification");
+          // if (message.data['_id'] != null) {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (context) => DemoScreen(
+          //         id: message.data['_id'],
+          //       ),
+          //     ),
+          //   );
+          // }
+        }
+      },
+    );
+
+    // 2. This method only call when App in forground it mean app must be opened
+    FirebaseMessaging.onMessage.listen(
+      (message) {
+        print("FirebaseMessaging.onMessage.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data11 ${message.data}");
+          LocalNotificationService.createanddisplaynotification(message);
+        }
+      },
+    );
+
+    // 3. This method only call when App in background and not terminated(not closed)
+    FirebaseMessaging.onMessageOpenedApp.listen(
+      (message) {
+        print("FirebaseMessaging.onMessageOpenedApp.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data22 ${message.data['_id']}");
+        }
+      },
+    );
+
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  }
 }

@@ -2,6 +2,7 @@
 
 import 'package:calories_detector/app/modules/home/controllers/age_controller.dart';
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
+import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
@@ -26,164 +27,184 @@ class AgeView extends GetView<AgeController> {
     SizeConfig().init(context);
     return Scaffold(
       body: Container(
-        color: tertoryColor,
+        // color: tertoryColor,
+        decoration: BoxDecoration(gradient: AppThemeColors.bgGradient),
         child: Stack(children: [
           Positioned(
-            top: 0,
-            child: ShaderMask(
-              shaderCallback: (Rect bounds) {
-                return LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.white, // Fully visible
-                    Colors.transparent // Fully transparent
-                  ],
-                ).createShader(bounds);
-              },
-              blendMode:
-                  BlendMode.dstIn, // This blends the gradient with the image
-              child: Image.asset(
-                AppImages.bkgImage,
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.cover,
-              ),
-            ),
+            left: 10,
+            top: 40,
+            child: IconButton(
+                onPressed: Get.back,
+                icon: Icon(Icons.arrow_back_ios_new_rounded)),
           ),
-          Positioned(
-            bottom: 0,
-            child: ShaderMask(
-              shaderCallback: (Rect bounds) {
-                return LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent, // Fully visible
-                    Colors.white // Fully transparent
-                  ],
-                ).createShader(bounds);
-              },
-              blendMode:
-                  BlendMode.dstIn, // This blends the gradient with the image
-              child: Image.asset(
-                AppImages.bkgImage,
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 0,
+          //   child: ShaderMask(
+          //     shaderCallback: (Rect bounds) {
+          //       return LinearGradient(
+          //         begin: Alignment.topCenter,
+          //         end: Alignment.bottomCenter,
+          //         colors: [
+          //           Colors.white, // Fully visible
+          //           Colors.transparent // Fully transparent
+          //         ],
+          //       ).createShader(bounds);
+          //     },
+          //     blendMode:
+          //         BlendMode.dstIn, // This blends the gradient with the image
+          //     child: Image.asset(
+          //       AppImages.bkgImage,
+          //       width: MediaQuery.of(context).size.width,
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+          // Positioned(
+          //   bottom: 0,
+          //   child: ShaderMask(
+          //     shaderCallback: (Rect bounds) {
+          //       return LinearGradient(
+          //         begin: Alignment.topCenter,
+          //         end: Alignment.bottomCenter,
+          //         colors: [
+          //           Colors.transparent, // Fully visible
+          //           Colors.white // Fully transparent
+          //         ],
+          //       ).createShader(bounds);
+          //     },
+          //     blendMode:
+          //         BlendMode.dstIn, // This blends the gradient with the image
+          //     child: Image.asset(
+          //       AppImages.bkgImage,
+          //       width: MediaQuery.of(context).size.width,
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+
           Padding(
-            padding: EdgeInsets.symmetric(vertical: size.height * 0.3),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start, // Aligns to the top
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              padding: EdgeInsets.only(top: SizeConfig.screenHeight * 0.1),
+              child: Column(
+                  mainAxisAlignment:
+                      MainAxisAlignment.start, // Aligns to the top
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      'Cal',
-                      style: TextStyle(
-                          fontSize: 90,
-                          color: onPrimaryColor,
-                          fontWeight: FontWeight.w900,
-                          height: 1),
-                    ),
-                    Column(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'ories',
+                          'Cal',
                           style: TextStyle(
-                              fontSize: 45,
+                              fontSize: 90,
                               color: onPrimaryColor,
                               fontWeight: FontWeight.w900,
-                              letterSpacing: 1,
-                              height: 0.8),
+                              height: 1),
                         ),
-                        Text(
-                          'culator',
-                          style: TextStyle(
-                              letterSpacing: 1,
-                              fontSize: 45,
-                              color: onPrimaryColor,
-                              fontWeight: FontWeight.w900,
-                              height: 0.8),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'ories',
+                              style: TextStyle(
+                                  fontSize: 45,
+                                  color: onPrimaryColor,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 1,
+                                  height: 0.8),
+                            ),
+                            Text(
+                              'culator',
+                              style: TextStyle(
+                                  letterSpacing: 1,
+                                  fontSize: 45,
+                                  color: onPrimaryColor,
+                                  fontWeight: FontWeight.w900,
+                                  height: 0.8),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
-                ),
-                verticalSpace(size.height * 0.15),
-                Text(
-                  "Please Enter Your Age",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: size.height * 0.12),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: SizeConfig.screenHeight * 0.015),
-                Obx(() => InkWell(
-                      onTap: () =>
-                          print("My age is ${controller.selectedNumber}"),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            // color: Colors.white,
-                            borderRadius: BorderRadius.circular(
-                                SizeConfig.screenHeight * 0.05)),
-                        height: SizeConfig.screenHeight * 0.49,
-                        width: SizeConfig.screenWidth * 0.75,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            NumberPicker(
-                              value: controller.selectedNumber.value,
-                              minValue: 6,
-                              maxValue: 95,
-                              onChanged: (newValue) =>
-                                  controller.selectedNumber.value = newValue,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border:
-                                    Border.all(color: Colors.deepPurpleAccent),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () async {
-                                final prefs =
-                                    await SharedPreferences.getInstance();
-                                await prefs.setInt('selected_number',
-                                    controller.selectedNumber.value);
-                                print(
-                                    "Selected Number: ${controller.selectedNumber.value}");
-                                Get.toNamed(Routes.HOME);
-                              },
-                              child: Container(
+                    ),
+                    verticalSpace(size.height * 0.2),
+                    Text(
+                      "Please Enter Your Age",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: SizeConfig.screenHeight * 0.1),
+                    Obx(() => InkWell(
+                          onTap: () =>
+                              print("My age is ${controller.selectedNumber}"),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              NumberPicker(
+                                value: controller.selectedNumber.value,
+                                minValue: 1,
+                                maxValue: 100,
+                                itemHeight: 55,
+                                itemWidth: 325,
+                                textStyle: TextStyle(fontSize: 15),
+                                selectedTextStyle: TextStyle(
+                                    fontSize: 35,
+                                    color: AppThemeColors.onPrimary1),
+                                axis: Axis.vertical,
+                                onChanged: (newValue) =>
+                                    controller.selectedNumber.value = newValue,
                                 decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(size.height * 0.15),
-                                  color: AppColors.primaryColor,
-                                ),
-                                height: size.height * 0.25,
-                                width: size.width * 0.25,
-                                child: Center(
-                                  child: Text('OK',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.onPrimaryColor)),
-                                ),
+                                    borderRadius: BorderRadius.circular(25),
+                                    border: Border.all(
+                                        color: AppThemeColors.onPrimary1),
+                                    shape: BoxShape.rectangle),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )),
-              ],
-            ),
-          ),
+                              verticalSpace(size.height * 1.15),
+                              // TextButton(
+                              //   onPressed: () async {
+                              //     final prefs =
+                              //         await SharedPreferences.getInstance();
+                              //     await prefs.setInt('selected_number',
+                              //         controller.selectedNumber.value);
+                              //     print(
+                              //         "Selected Number: ${controller.selectedNumber.value}");
+                              //     Get.toNamed(Routes.HOME);
+                              //   },
+                              //   child: Container(
+                              //     decoration: BoxDecoration(
+                              //       borderRadius: BorderRadius.circular(20),
+                              //       color: AppColors.secondaryColor,
+                              //     ),
+                              //     height: SizeConfig.screenHeight * 0.06,
+                              //     width: SizeConfig.screenWidth * 0.87,
+                              //     child: Center(
+                              //       child: Text('Next',
+                              //           style: TextStyle(
+                              //               fontWeight: FontWeight.w800,
+                              //               fontSize: 20,
+                              //               color: Colors.white)),
+                              //     ),
+                              //   ),
+                              // ),
+
+                              AppThemeButton(
+                                      onPressed: () async {
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        await prefs.setInt('selected_number',
+                                            controller.selectedNumber.value);
+                                        print(
+                                            "Selected Number: ${controller.selectedNumber.value}");
+                                        Get.toNamed(Routes.HOME);
+                                      },
+                                      text: 'Next')
+                                  .largeButton()
+                            ],
+                          ),
+                        )),
+                  ])),
         ]),
       ),
     );
