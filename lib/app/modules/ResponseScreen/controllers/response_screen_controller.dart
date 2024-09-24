@@ -2,6 +2,7 @@ import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../../../data/food_item.dart';
 import '../../../data/Data_Base.dart';
@@ -24,33 +25,129 @@ class ResponseScreenController extends GetxController {
   Rxn<FoodItem> compairFood1 = Rxn<FoodItem>();
   Rxn<FoodItem> compairFood2 = Rxn<FoodItem>();
   RxBool checkFirst = true.obs;
+  // void Comparefunction(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Compare this item'),
+  //         content: Text('Choose another item from'),
+  //         actions: <Widget>[
+  //           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+  //             TextButton(
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //                 pickImageFromGallery(); // Close the dialog
+  //                 // Handle button 1 action here
+  //               },
+  //               child: Text('Gallery'),
+  //             ),
+  //             TextButton(
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //                 pickImageFromCamera(); // Close the dialog
+  //                 // Handle button 2 action here
+  //               },
+  //               child: Text('Camera'),
+  //             ),
+  //           ])
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
   void Comparefunction(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Compare this item'),
-          content: Text('Choose another item from'),
-          actions: <Widget>[
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  pickImageFromGallery(); // Close the dialog
-                  // Handle button 1 action here
-                },
-                child: Text('Gallery'),
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15), // Rounded corners
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              // gradient: LinearGradient(
+              //   colors: [Colors.lightBlueAccent, Colors.blueAccent],
+              //   begin: Alignment.topLeft,
+              //   end: Alignment.bottomRight,
+              // ),
+              gradient: AppThemeColors.buttonColor,
+              borderRadius: BorderRadius.circular(15), // Keep gradient rounded
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Compare Your Item',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // Make title stand out on gradient
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Text(
+                    'Would you like to select an item from your gallery or take a new picture?',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                      // color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 25),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          pickImageFromGallery(); // Close dialog and open gallery
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              // Colors.green, // Gallery button background
+                              Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        icon:
+                            Icon(Icons.photo, color: AppThemeColors.onPrimary1),
+                        label: Text('Gallery',
+                            style: TextStyle(color: Colors.black)),
+                      ),
+                      SizedBox(),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          pickImageFromCamera(); // Close dialog and open camera
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.white, // Camera button background
+                          padding: EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        icon: Icon(Icons.camera_alt,
+                            color: AppThemeColors.onPrimary1),
+                        label: Text('Camera',
+                            style: TextStyle(color: Colors.black)),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  pickImageFromCamera(); // Close the dialog
-                  // Handle button 2 action here
-                },
-                child: Text('Camera'),
-              ),
-            ])
-          ],
+            ),
+          ),
         );
       },
     );
@@ -83,34 +180,94 @@ class ResponseScreenController extends GetxController {
   }
 
   Future<void> sendImageToGoogleAI(File imgFile) async {
+    // Get.dialog(
+    //   Expanded(
+    //       child: Container(
+    //           color: AppThemeColors.secondery1.withOpacity(0.6),
+    //           child: Column(
+    //             mainAxisAlignment: MainAxisAlignment.center,
+    //             crossAxisAlignment: CrossAxisAlignment.center,
+    //             children: [
+    //               Text(
+    //                 'Analyzing your image',
+    //                 style: TextStyle(
+    //                   fontSize: 16,
+    //                   color: Colors.black,
+    //                   decoration: TextDecoration.none,
+    //                 ),
+    //               ),
+    //               SizedBox(
+    //                 height: SizeConfig.screenHeight * 0.1,
+    //               ),
+    //               CircularProgressIndicator(
+    //                 strokeWidth: 5,
+    //                 // value: 100,
+    //                 color: AppThemeColors.onPrimary1,
+    //               )
+    //             ],
+    //           ))), // Loading screen
+    //   barrierDismissible:
+    //       false, // Prevents dismissing the dialog by tapping outside
+    // );
     Get.dialog(
-      Expanded(
+      Container(
+        color: AppThemeColors.secondery1
+            .withOpacity(0.6), // Semi-transparent background
+        child: Center(
           child: Container(
-              color: AppThemeColors.secondery1.withOpacity(0.6),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Analyzing your image',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      decoration: TextDecoration.none,
-                    ),
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white, // Background for the dialog content
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            width: SizeConfig.screenWidth * 0.8,
+            child: Column(
+              mainAxisSize:
+                  MainAxisSize.min, // Shrinks the column to fit content
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Analyzing your image...',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    // fontFamily: 'Inter', // Inter font family
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87, // color: AppThemeColors.onPrimary1,
+                    decoration: TextDecoration.none,
                   ),
-                  SizedBox(
-                    height: SizeConfig.screenHeight * 0.1,
-                  ),
-                  CircularProgressIndicator(
-                    strokeWidth: 5,
-                    // value: 100,
-                    color: AppThemeColors.onPrimary1,
-                  )
-                ],
-              ))), // Loading screen
-      barrierDismissible:
-          false, // Prevents dismissing the dialog by tapping outside
+                ),
+                SizedBox(height: 30),
+                LinearProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      AppThemeColors.onPrimary1), // Custom progress bar color
+                  backgroundColor: AppThemeColors.secondery1.withOpacity(0.2),
+                  minHeight: 8, // Thickness of the loading bar
+                ),
+                SizedBox(height: 20),
+                // Text(
+                //   'Please wait while we process your image...',
+                //   textAlign: TextAlign.center,
+                //   style: TextStyle(
+                //     // fontFamily: 'Inter', // Inter font family
+                //     fontSize: 14,
+                //     color: Colors.grey[600],
+                //     decoration: TextDecoration.none,
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      barrierDismissible: false, // Prevent dismissing by tapping outside
     );
 
     final model = GenerativeModel(
@@ -118,9 +275,11 @@ class ResponseScreenController extends GetxController {
       apiKey: 'AIzaSyD4cCpD7lP-Q9raPF59L8npR8H5NF3pLIo',
     );
     String goal = 'gain Weight';
+    final prefs = await SharedPreferences.getInstance();
+
     // final prompt ='Give me json response according to map given in instructions';
     final prompt =
-        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items, mass in kg no. of scoops, no. of litres or anything else suitable for that food. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours).in description string compare this food with ${compairFood1.value!.name} which have ${compairFood1.value!.totalCalories}. tell which food is best if my goal is to $goal. provide a response in JSON format with the following structure:\n'
+        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items, mass in kg no. of scoops, no. of litres or anything else suitable for that food. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours).in description string compare this food with ${compairFood1.value!.name} which have ${compairFood1.value!.totalCalories}. tell which food is best if my goal is to ${prefs.getString('selected_button') ?? 'None'} and my age is ${prefs.getInt('selected_number') ?? 'None'.toString()}.try not to mention my age in descriprion if not nessesary. provide a response in JSON format with the following structure:\n'
         '''
 {
   "name": "<string>",\n
@@ -135,7 +294,7 @@ class ResponseScreenController extends GetxController {
 '''
         'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
     Uint8List imageBytes = await imgFile.readAsBytes();
-
+    print(prompt);
     final content = [
       Content.multi([TextPart(prompt), DataPart('image/jpeg', imageBytes)]),
     ];
@@ -206,14 +365,26 @@ class ResponseScreenController extends GetxController {
 
         print('value of check ${checkFirst.value}');
         print('Food data logged successfully.');
+        Get.snackbar(
+          "Saved",
+          // 'Failed to get response:\nThere is something Wrong with your image',
+          '',
+          snackPosition: SnackPosition.BOTTOM,
+        );
       } catch (e) {
         print('Error logging food data: $e');
+        Get.snackbar(
+          "Try again",
+          // 'Failed to get response:\nThere is something Wrong with your image',
+          'Something Went wrong',
+          snackPosition: SnackPosition.BOTTOM,
+        );
       }
     } else {
       Get.snackbar(
-        "Unable to log",
+        "Saved",
         // 'Failed to get response:\nThere is something Wrong with your image',
-        'Already Saved',
+        '',
         snackPosition: SnackPosition.BOTTOM,
       );
     }

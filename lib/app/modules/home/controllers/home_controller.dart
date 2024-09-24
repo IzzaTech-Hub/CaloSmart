@@ -15,6 +15,7 @@ import '../../../routes/app_pages.dart';
 
 import 'dart:convert';
 import '../../../data/food_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final ImagePicker _picker = ImagePicker();
 
@@ -54,34 +55,94 @@ class HomeController extends GetxController {
   }
 
   Future<void> sendImageToGoogleAI(File imgFile) async {
+    // Get.dialog(
+    //   Expanded(
+    //       child: Container(
+    //           color: AppThemeColors.secondery1.withOpacity(0.6),
+    //           child: Column(
+    //             mainAxisAlignment: MainAxisAlignment.center,
+    //             crossAxisAlignment: CrossAxisAlignment.center,
+    //             children: [
+    //               Text(
+    //                 'Analyzing your image',
+    //                 style: TextStyle(
+    //                   fontSize: 16,
+    //                   color: Colors.black,
+    //                   decoration: TextDecoration.none,
+    //                 ),
+    //               ),
+    //               SizedBox(
+    //                 height: SizeConfig.screenHeight * 0.1,
+    //               ),
+    //               CircularProgressIndicator(
+    //                 strokeWidth: 5,
+    //                 // value: 100,
+    //                 color: AppThemeColors.onPrimary1,
+    //               )
+    //             ],
+    //           ))), // Loading screen
+    //   barrierDismissible:
+    //       false, // Prevents dismissing the dialog by tapping outside
+    // );
     Get.dialog(
-      Expanded(
+      Container(
+        color: AppThemeColors.secondery1
+            .withOpacity(0.6), // Semi-transparent background
+        child: Center(
           child: Container(
-              color: AppThemeColors.secondery1.withOpacity(0.6),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Analyzing your image',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      decoration: TextDecoration.none,
-                    ),
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white, // Background for the dialog content
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            width: SizeConfig.screenWidth * 0.8,
+            child: Column(
+              mainAxisSize:
+                  MainAxisSize.min, // Shrinks the column to fit content
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Analyzing your image...',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    // fontFamily: 'Inter', // Inter font family
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54, // color: AppThemeColors.onPrimary1,
+                    decoration: TextDecoration.none,
                   ),
-                  SizedBox(
-                    height: SizeConfig.screenHeight * 0.1,
-                  ),
-                  CircularProgressIndicator(
-                    strokeWidth: 5,
-                    // value: 100,
-                    color: AppThemeColors.onPrimary1,
-                  )
-                ],
-              ))), // Loading screen
-      barrierDismissible:
-          false, // Prevents dismissing the dialog by tapping outside
+                ),
+                SizedBox(height: 30),
+                LinearProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      AppThemeColors.onPrimary1), // Custom progress bar color
+                  backgroundColor: AppThemeColors.secondery1.withOpacity(0.2),
+                  minHeight: 8, // Thickness of the loading bar
+                ),
+                SizedBox(height: 20),
+                // Text(
+                //   'Please wait while we process your image...',
+                //   textAlign: TextAlign.center,
+                //   style: TextStyle(
+                //     // fontFamily: 'Inter', // Inter font family
+                //     fontSize: 14,
+                //     color: Colors.grey[600],
+                //     decoration: TextDecoration.none,
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      barrierDismissible: false, // Prevent dismissing by tapping outside
     );
 
     final model = GenerativeModel(
@@ -90,9 +151,11 @@ class HomeController extends GetxController {
     );
 
     // final prompt ='Give me json response according to map given in instructions';
-    RxString goal = 'gain weight'.obs;
+    // RxString goal = 'gain weight'.obs;
+    final prefs = await SharedPreferences.getInstance();
+    print('${prefs.getString('selected_button') ?? 'None'}');
     final prompt =
-        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items with name, mass in kg no. of scoops, no. of litres or anything else suitable for that food. then tell 1 best and healthy alternates for it to consume instead of them if i want to ${goal.value}. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours).At last give a short description about why should i consume the alternate how it is better than original. provide a response in JSON format with the following structure:\n'
+        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items with name, mass in kg no. of scoops, no. of litres or anything else suitable for that food. then tell 1 best and healthy alternates for it to consume instead of them if i want to ${prefs.getString('selected_button') ?? 'None'}and my age is ${prefs.getInt('selected_number') ?? 'None'.toString()}.try not to mention my age in description if not nessesary. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours).At last give a short description about why should i consume the alternate how it is better than original. provide a response in JSON format with the following structure:\n'
         '''
 {
   "item": {
@@ -117,6 +180,7 @@ class HomeController extends GetxController {
 }
 '''
         'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
+    print(prompt);
     Uint8List imageBytes = await imgFile.readAsBytes();
 
     final content = [
