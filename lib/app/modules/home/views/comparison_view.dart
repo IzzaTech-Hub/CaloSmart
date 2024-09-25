@@ -640,7 +640,7 @@ class ComparisonView extends GetView<ComparisonController> {
             Expanded(
               child: Container(
                 width: screenWidth,
-                padding: EdgeInsets.fromLTRB(20, 20, 5, 20),
+                padding: EdgeInsets.fromLTRB(15, 15, 5, 15),
                 decoration: BoxDecoration(
                   gradient: AppThemeColors.secondaryGradient1,
                 ),
@@ -651,7 +651,7 @@ class ComparisonView extends GetView<ComparisonController> {
                       'Description:',
                       style: AppThemeText().headline2,
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 15),
                     // Add a Scrollbar with padding to push it to the right
                     Expanded(
                       child: Scrollbar(
@@ -660,11 +660,21 @@ class ComparisonView extends GetView<ComparisonController> {
                         child: Padding(
                           padding: const EdgeInsets.only(
                               right:
-                                  15.0), // Adds space between scrollbar and text
+                                  10.0), // Adds space between scrollbar and text
                           child: SingleChildScrollView(
-                            child: Text(
-                              '${controller.description}', // Long text
-                              style: AppThemeText().bodyText1,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+
+                              padding: EdgeInsets.all(8),
+                              // color: AppThemeColors.primarycolor,
+                              child: Text(
+                                '${controller.description}',
+                                textAlign: TextAlign.justify,
+                                // Long text
+                                style: AppThemeText().bodyText1,
+                              ),
                             ),
                           ),
                         ),

@@ -197,7 +197,8 @@ class AgeView extends GetView<AgeController> {
                                             controller.selectedNumber.value);
                                         print(
                                             "Selected Number: ${controller.selectedNumber.value}");
-                                        Get.toNamed(Routes.HOME);
+                                        // Get.toNamed(Routes.HOME);
+                                        Get.offAllNamed(Routes.HOME);
                                       },
                                       text: 'Next')
                                   .largeButton()

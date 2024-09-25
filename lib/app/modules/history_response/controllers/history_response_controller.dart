@@ -95,7 +95,7 @@ class HistoryResponseController extends GetxController {
                     'Analyzing your image',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.black,
+                      color: Colors.black87,
                       decoration: TextDecoration.none,
                     ),
                   ),

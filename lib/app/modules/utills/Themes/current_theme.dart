@@ -53,6 +53,13 @@ class AppThemeButton {
         width: SizeConfig.screenWidth * 0.425,
         height: SizeConfig.screenHeight * 0.05,
         decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 10.0,
+                offset: Offset(0, 5),
+              ),
+            ],
             borderRadius: BorderRadius.circular(100),
             // color: AppThemeColors.onPrimary1,
             gradient: AppThemeColors.buttonColor),
@@ -68,6 +75,7 @@ class AppThemeButton {
                 // width: 10,
 
                 decoration: BoxDecoration(
+
                     // borderRadius: BorderRadius.circular(100),
                     shape: BoxShape.circle,
                     // color: Colors.black,
@@ -100,6 +108,13 @@ class AppThemeButton {
         height: SizeConfig.screenHeight * 0.05,
         width: SizeConfig.screenWidth * 0.9,
         decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 10.0,
+                offset: Offset(0, 5),
+              ),
+            ],
             borderRadius: BorderRadius.circular(100),
             // color: AppColors.secondaryColor,
             gradient: AppThemeColors.buttonColor),
