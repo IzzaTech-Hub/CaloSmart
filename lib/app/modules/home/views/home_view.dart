@@ -34,7 +34,10 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       // backgroundColor: AppThemeColors.primarycolor,
       body: Container(
-        decoration: BoxDecoration(gradient: AppThemeColors.bgGradient),
+        decoration: BoxDecoration(
+          // color: Colors.red
+            // gradient: AppThemeColors.bgGradient
+            ),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
