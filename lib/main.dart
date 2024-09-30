@@ -1,5 +1,6 @@
 import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
 import 'package:calories_detector/firebase_options.dart';
+import 'package:camera/camera.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -13,6 +14,8 @@ import 'app/routes/app_pages.dart';
 
 void main() async {
   // Ensure that widget bindings are initialized
+      // _initializeCamera();
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -62,7 +65,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
@@ -81,8 +84,21 @@ class MyApp extends StatelessWidget {
       navigatorObservers: <NavigatorObserver>[observer],
 
       initialRoute: AppPages.INITIAL,
-      // initialRoute: AppPages.HOME,
+      // initialRoute: AppPages.CHECK,
       getPages: AppPages.routes,
     );
   }
 }
+//  Future<void> _initializeCamera() async {
+//     cameras.value = await availableCameras();
+//     Cameracontroller = CameraController(
+//       cameras[currentCameraIndex.value],
+//       ResolutionPreset.high,
+//     );
+//     await Cameracontroller?.initialize();
+//     isCameraInitialized.value = true;
+//   }
+//   CameraController? Cameracontroller;
+//   final cameras = <CameraDescription>[].obs;
+//   final isCameraInitialized = false.obs;
+//   final currentCameraIndex = 0.obs;

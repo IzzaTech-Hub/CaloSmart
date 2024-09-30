@@ -13,12 +13,14 @@ abstract class Routes {
   static const GOAL_SCREEN = _Paths.GOAL_SCREEN;
   static const AGE_SCREEN = _Paths.AGE_SCREEN;
   static const HISTORY_RESPONSE = _Paths.HISTORY_RESPONSE;
+  static const CAMERA_SCREEN = _Paths.CAMERA_SCREEN;
 }
 
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
   static const GENDER_SCREEN = '/gender_view';
+  static const CAMERA_SCREEN = '/cameraView';
   static const GOAL_SCREEN = '/goal_view';
   static const AGE_SCREEN = '/age_view';
   static const INTRO_SCREENS = '/intro-screens';

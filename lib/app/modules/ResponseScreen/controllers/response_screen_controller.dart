@@ -21,6 +21,7 @@ final ImagePicker _picker = ImagePicker();
 
 class ResponseScreenController extends GetxController {
   Rxn<Image> imageFile = Rxn<Image>();
+  Uint8List? imageFile2;
   Rxn<FoodData> foodData = Rxn<FoodData>();
   Rxn<FoodItem> compairFood1 = Rxn<FoodItem>();
   Rxn<FoodItem> compairFood2 = Rxn<FoodItem>();
@@ -126,7 +127,8 @@ class ResponseScreenController extends GetxController {
                       ElevatedButton.icon(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          pickImageFromCamera(); // Close dialog and open camera
+                          // pickImageFromCamera();
+                          Get.toNamed(Routes.CAMERA_SCREEN);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -396,9 +398,11 @@ class ResponseScreenController extends GetxController {
     print('check first become true');
     final arguments = Get.arguments;
     final FoodData response = arguments[0];
-    imageFile.value = arguments[1];
-    print("Argument ${response}");
+    // imageFile.value = arguments[1];
+    imageFile2 = arguments[1];
+    print("Argument $response");
     foodData.value = response;
+    print("Image Bytes: ${imageFile2}");
     compairFood1.value = response.item;
     // Map<String, dynamic> jsonMap = jsonDecode(response);
     // foodData.value = FoodData.fromJson(jsonMap);
@@ -406,10 +410,6 @@ class ResponseScreenController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   final count = 0.obs;
 

@@ -1,4 +1,3 @@
-import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {

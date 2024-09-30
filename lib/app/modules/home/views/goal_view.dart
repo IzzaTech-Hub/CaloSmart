@@ -4,7 +4,6 @@ import 'package:calories_detector/app/modules/home/controllers/goal_controller.d
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/app_colors.dart';
-import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
