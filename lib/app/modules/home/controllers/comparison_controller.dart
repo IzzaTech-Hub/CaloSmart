@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:calories_detector/app/data/food_item.dart';
 
 class ComparisonController extends GetxController {

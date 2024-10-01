@@ -1,8 +1,6 @@
 import 'package:calories_detector/app/data/Data_Base.dart';
-import 'package:calories_detector/app/data/Runtime_List_Handeler.dart';
 import 'package:calories_detector/app/data/food_item.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HistoryShowController extends GetxController {

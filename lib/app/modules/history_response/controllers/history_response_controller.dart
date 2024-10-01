@@ -226,7 +226,7 @@ class HistoryResponseController extends GetxController {
     final arguments = Get.arguments;
     final FoodData response = arguments[0];
     // imageFile.value = arguments[1];
-    print("Argument ${response}");
+    print("Argument $response");
     foodData.value = response;
     compairFood1.value = response.item;
     // Map<String, dynamic> jsonMap = jsonDecode(response);
@@ -235,10 +235,6 @@ class HistoryResponseController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   final count = 0.obs;
 

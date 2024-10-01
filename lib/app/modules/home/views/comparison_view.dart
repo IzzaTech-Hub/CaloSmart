@@ -17,7 +17,7 @@ import 'package:fl_chart/fl_chart.dart';
 // Color onPrimaryColor = Color(0xff1E3A5F);
 
 class ComparisonView extends GetView<ComparisonController> {
-  ComparisonView({super.key});
+  const ComparisonView({super.key});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -288,7 +288,7 @@ class ComparisonView extends GetView<ComparisonController> {
                         // top: 0,
                         left: SizeConfig.screenWidth * 0.2 -
                             SizeConfig.screenHeight * 0.06125,
-                        child: Container(
+                        child: SizedBox(
                           height: SizeConfig.screenHeight * 0.1225,
                           width: SizeConfig.screenHeight * 0.1225,
                           child: Center(
@@ -585,7 +585,7 @@ class ComparisonView extends GetView<ComparisonController> {
                             SizeConfig.screenHeight * 0.06125,
                         // left: SizeConfig.screenWidth * 0.2 -
                         //     SizeConfig.screenHeight * 0.06125,
-                        child: Container(
+                        child: SizedBox(
                           height: SizeConfig.screenHeight * 0.1225,
                           width: SizeConfig.screenHeight * 0.1225,
                           child: Center(

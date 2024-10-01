@@ -1,5 +1,4 @@
 import 'package:calories_detector/app/modules/utills/Themes/Theme1.dart';
-import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'package:calories_detector/app/modules/home/bindings/camera_binding.dart';
+import 'package:calories_detector/app/modules/home/views/cameraView.dart';
 
 import 'package:get/get.dart';
 
@@ -13,7 +14,6 @@ import '../modules/home/bindings/goal_binding.dart';
 import '../modules/home/bindings/history_binding.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/bindings/splash_binding.dart';
-import '../modules/home/controllers/age_controller.dart';
 import '../modules/home/views/age_view.dart';
 import '../modules/home/views/comparison_view.dart';
 import '../modules/home/views/gender_view.dart';
@@ -31,13 +31,18 @@ class AppPages {
 
   static const INITIAL = Routes.SPLASH_SCREEN;
   static const HOME = Routes.HOME;
-  // static const Home = Routes.HOME;
+  static const CHECK = Routes.CAMERA_SCREEN;
 
   static final routes = [
     GetPage(
       name: _Paths.HOME,
       page: () => HomeView(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.CAMERA_SCREEN,
+      page: () => Cameraview(),
+      binding: CameraBinding(),
     ),
     GetPage(
       name: _Paths.AGE_SCREEN,

@@ -5,7 +5,6 @@
 // import 'package:calories_detector/app/data/Data_Base.dart';
 // import 'package:calories_detector/app/modules/home/controllers/history_show_controller.dart';
 // import 'package:calories_detector/app/modules/home/views/history_show.dart';
-import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:calories_detector/sizeConfig.dart';
@@ -69,7 +68,8 @@ class HomeView extends GetView<HomeController> {
                     ),
                     InkWell(
                       onTap: () {
-                        controller.pickImageFromCamera();
+                        // controller.pickImageFromCamera();
+                        Get.toNamed(Routes.CAMERA_SCREEN);
                       },
                       child: Icon_Method(
                           "Capture from Camera",

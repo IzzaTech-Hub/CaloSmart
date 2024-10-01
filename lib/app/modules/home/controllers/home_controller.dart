@@ -39,6 +39,16 @@ class HomeController extends GetxController {
     } catch (e) {
       print('Failed to pick image: $e');
     }
+    // try {
+    //   final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    //   if (image != null) {
+    //     File imageFile = File(image.path);
+    //     print('Image Path: ${image.path}');
+    //     sendImageToGoogleAI(imageFile); // Send image to Gemini
+    //   }
+    // } catch (e) {
+    //   print('Failed to pick image: $e');
+    // }
   }
 
   Future<void> pickImageFromGallery() async {
@@ -204,7 +214,7 @@ class HomeController extends GetxController {
       Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
       FoodData foodData = FoodData.fromJson(jsonMap);
 
-      goToREsponse(foodData, imgFile);
+      goToREsponse(foodData, imageBytes);
     } catch (e) {
       // Close the loading dialog
       Get.back();
@@ -219,11 +229,11 @@ class HomeController extends GetxController {
     }
   }
 
-  void goToREsponse(FoodData foodData, File imgFile) {
+  void goToREsponse(FoodData foodData, Uint8List imgFile) {
     try {
       Get.toNamed(Routes.RESPONSE_SCREEN,
           // arguments: [response.text ?? '',Image.file(imgFile)]
-          arguments: [foodData, Image.file(imgFile)]);
+          arguments: [foodData, imgFile]);
     } catch (e) {
       Get.snackbar(
         'Error',
