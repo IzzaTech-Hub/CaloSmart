@@ -6,6 +6,7 @@
 // import 'package:calories_detector/app/modules/home/controllers/history_show_controller.dart';
 // import 'package:calories_detector/app/modules/home/views/history_show.dart';
 import 'package:calories_detector/app/modules/utills/app_colors.dart';
+import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 // import 'package:google_generative_ai/google_generative_ai.dart';
 // import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:image_picker/image_picker.dart';
 // import 'package:permission_handler/permission_handler.dart';
 import '../controllers/home_controller.dart';
@@ -34,10 +36,7 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       // backgroundColor: AppThemeColors.primarycolor,
       body: Container(
-        decoration: BoxDecoration(
-          // color: Colors.red
-            // gradient: AppThemeColors.bgGradient
-            ),
+        decoration: BoxDecoration(gradient: AppThemeColors.bgGradient),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,7 +44,13 @@ class HomeView extends GetView<HomeController> {
             verticalSpace(SizeConfig.screenHeight * 0.05),
             Logo_Text(),
             verticalSpace(SizeConfig.screenHeight * 0.05),
-            Text("Analyze your image now", style: AppThemeText().headline2),
+            Text("Analyze your image now",
+                style: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                        fontSize: SizeConfig.blockSizeHorizontal * 5,
+                        fontWeight: FontWeight.bold))
+                // AppThemeText().headline2
+                ),
             SizedBox(height: SizeConfig.screenHeight * 0.05),
             Column(
               children: [
@@ -56,14 +61,20 @@ class HomeView extends GetView<HomeController> {
                       onTap: () {
                         controller.pickImageFromGallery();
                       },
-                      child: Icon_Method("Choose from", "Gallery", Icons.image),
+                      child: Icon_Method(
+                        "Choose from Gallery",
+                        // Icons.image
+                        AppImages.gallery,
+                      ),
                     ),
                     InkWell(
                       onTap: () {
                         controller.pickImageFromCamera();
                       },
                       child: Icon_Method(
-                          "Capture from", "Camera", Icons.camera_alt_rounded),
+                          "Capture from Camera",
+                          // Icons.camera_alt
+                          AppImages.camera),
                     )
                   ],
                 ),
@@ -74,12 +85,21 @@ class HomeView extends GetView<HomeController> {
                     Get.toNamed(Routes.HISTORY_VIEW_SCREEN);
                   },
                   child: Container(
-                    height: SizeConfig.screenWidth * 0.2,
-                    width: SizeConfig.screenWidth * 0.9,
+                    height: SizeConfig.blockSizeVertical * 9,
+                    width: SizeConfig.blockSizeHorizontal * 88,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                            SizeConfig.screenWidth * 0.05),
-                        // color: AppThemeColors.buttonColor1
+                            SizeConfig.blockSizeHorizontal * 4),
+                        // color: Color.fromARGB(255, 119, 211, 63),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                Colors.black.withOpacity(0.2), // Shadow color
+                            spreadRadius: 1, // Spread radius
+                            blurRadius: 1, // Blur radius
+                            offset: Offset(0, 2), // Shadow position (x, y)
+                          ),
+                        ],
                         gradient: AppThemeColors.buttonColor),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -89,13 +109,18 @@ class HomeView extends GetView<HomeController> {
                         Icon(
                           Icons.history,
                           size: SizeConfig.screenWidth * 0.15,
-                          color: AppThemeColors.iconColor,
+                          color: Colors.limeAccent,
                         ),
+                        // color: Colors.white),
                         SizedBox(width: SizeConfig.screenWidth * 0.05),
-                        Text(
-                          "Previous Logs",
-                          style: AppThemeText().bodyText1,
-                        ),
+                        Text("Previous Logs",
+                            style: GoogleFonts.openSans(
+                                textStyle: TextStyle(
+                                    fontSize:
+                                        SizeConfig.blockSizeHorizontal * 4,
+                                    fontWeight: FontWeight.bold,
+                                    // color: Color(0xFF103A13)
+                                    color: Colors.indigo))),
                       ],
                     ),
                   ),
@@ -108,29 +133,60 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Container Icon_Method(String smallTexted, String largeTexted, IconData icon) {
+  Container Icon_Method(
+    String text,
+    String image,
+    // IconData icon
+  ) {
     return Container(
-      height: SizeConfig.screenWidth * 0.5,
-      width: SizeConfig.screenWidth * 0.425,
+      height: SizeConfig.blockSizeVertical * 20,
+      width: SizeConfig.blockSizeHorizontal * 40,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(SizeConfig.screenWidth * 0.05),
+          borderRadius:
+              BorderRadius.circular(SizeConfig.blockSizeHorizontal * 5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2), // Shadow color
+              spreadRadius: 1, // Spread radius
+              blurRadius: 1, // Blur radius
+              offset: Offset(-3, 0), // Shadow position (x, y)
+            ),
+          ],
           gradient: AppThemeColors.buttonColor
-          // color: AppThemeColors.buttonColor1
+
+          // color: Color.fromARGB(255, 119, 211, 63)
           ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: SizeConfig.screenWidth * 0.05),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(
-              icon,
-              size: SizeConfig.screenWidth * 0.15,
-              // color: AppThemeColors.iconColor,
-              color: AppThemeColors.iconColor,
-              // color: AppColors.onSecondaryColor,
+            Image.asset(
+              image,
+              scale: 10,
             ),
-            Text(smallTexted, style: AppThemeText().bodyText1),
-            Text(largeTexted, style: AppThemeText().bodyText1),
+            // Icon(
+            //   icon,
+            //   size: SizeConfig.screenWidth * 0.15,
+            //   // color: AppThemeColors.iconColor,
+            //   color: AppThemeColors.iconColor,
+            //   // color: AppColors.onSecondaryColor,
+            // ),
+
+            Text(text,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.openSans(
+                    textStyle: TextStyle(
+                        fontSize: SizeConfig.blockSizeHorizontal * 4,
+                        fontWeight: FontWeight.bold,
+                        // color: Color(0xFF103A13)
+                        color: Colors.indigo))),
+            // Text(largeTexted,
+            //     style: GoogleFonts.openSans(
+            //         textStyle: TextStyle(
+            //             fontSize: SizeConfig.blockSizeHorizontal * 4,
+            //             fontWeight: FontWeight.bold,
+            //             color: Color(0xFF00450B)))),
           ],
         ),
       ),
