@@ -1,3 +1,5 @@
+import 'package:calories_detector/app/modules/liquidloading/views/liquidloading_view.dart';
+import 'package:calories_detector/app/modules/navbar/controllers/navbar_controller.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:get/get.dart';
@@ -18,13 +20,15 @@ final ImagePicker _picker = ImagePicker();
 // Color secondaryColor = Color(0xffFF4D6D);
 // Color primaryColor = Color(0xffFFD1DC);
 // Color onPrimaryColor = Color(0xff1E3A5F);
+Rxn<FoodData> foodData = Rxn<FoodData>();
+Rxn<Image> imageFile = Rxn<Image>();
+RxBool isrespnse = false.obs;
+Uint8List? imageFile2;
+
+Rxn<FoodItem> compairFood2 = Rxn<FoodItem>();
 
 class ResponseScreenController extends GetxController {
-  Rxn<Image> imageFile = Rxn<Image>();
-  Uint8List? imageFile2;
-  Rxn<FoodData> foodData = Rxn<FoodData>();
   Rxn<FoodItem> compairFood1 = Rxn<FoodItem>();
-  Rxn<FoodItem> compairFood2 = Rxn<FoodItem>();
   RxBool checkFirst = true.obs;
   // void Comparefunction(BuildContext context) {
   //   showDialog(
@@ -128,7 +132,8 @@ class ResponseScreenController extends GetxController {
                         onPressed: () {
                           Navigator.of(context).pop();
                           // pickImageFromCamera();
-                          Get.toNamed(Routes.CAMERA_SCREEN);
+                          // Get.toNamed(Routes.CAMERA_SCREEN);
+                          pickImageFromCamera();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -182,44 +187,18 @@ class ResponseScreenController extends GetxController {
   }
 
   Future<void> sendImageToGoogleAI(File imgFile) async {
-    // Get.dialog(
-    //   Expanded(
-    //       child: Container(
-    //           color: AppThemeColors.secondery1.withOpacity(0.6),
-    //           child: Column(
-    //             mainAxisAlignment: MainAxisAlignment.center,
-    //             crossAxisAlignment: CrossAxisAlignment.center,
-    //             children: [
-    //               Text(
-    //                 'Analyzing your image',
-    //                 style: TextStyle(
-    //                   fontSize: 16,
-    //                   color: Colors.black,
-    //                   decoration: TextDecoration.none,
-    //                 ),
-    //               ),
-    //               SizedBox(
-    //                 height: SizeConfig.screenHeight * 0.1,
-    //               ),
-    //               CircularProgressIndicator(
-    //                 strokeWidth: 5,
-    //                 // value: 100,
-    //                 color: AppThemeColors.onPrimary1,
-    //               )
-    //             ],
-    //           ))), // Loading screen
-    //   barrierDismissible:
-    //       false, // Prevents dismissing the dialog by tapping outside
-    // );
     Get.dialog(
       Container(
-        color: AppThemeColors.secondery1
-            .withOpacity(0.6), // Semi-transparent background
+        color: AppThemeColors.secondery1.withOpacity(0.6),
         child: Center(
           child: Container(
-            padding: EdgeInsets.all(20),
+            clipBehavior: Clip.hardEdge,
+            height: SizeConfig.screenHeight * 0.2,
+            width: SizeConfig.screenWidth * 0.9,
+
+            // padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.white, // Background for the dialog content
+              color: Colors.white,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
@@ -229,43 +208,7 @@ class ResponseScreenController extends GetxController {
                 ),
               ],
             ),
-            width: SizeConfig.screenWidth * 0.8,
-            child: Column(
-              mainAxisSize:
-                  MainAxisSize.min, // Shrinks the column to fit content
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Analyzing your image...',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    // fontFamily: 'Inter', // Inter font family
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87, // color: AppThemeColors.onPrimary1,
-                    decoration: TextDecoration.none,
-                  ),
-                ),
-                SizedBox(height: 30),
-                LinearProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      AppThemeColors.onPrimary1), // Custom progress bar color
-                  backgroundColor: AppThemeColors.secondery1.withOpacity(0.2),
-                  minHeight: 8, // Thickness of the loading bar
-                ),
-                SizedBox(height: 20),
-                // Text(
-                //   'Please wait while we process your image...',
-                //   textAlign: TextAlign.center,
-                //   style: TextStyle(
-                //     // fontFamily: 'Inter', // Inter font family
-                //     fontSize: 14,
-                //     color: Colors.grey[600],
-                //     decoration: TextDecoration.none,
-                //   ),
-                // ),
-              ],
-            ),
+            child: LiquidloadingView(),
           ),
         ),
       ),
@@ -281,18 +224,68 @@ class ResponseScreenController extends GetxController {
 
     // final prompt ='Give me json response according to map given in instructions';
     final prompt =
-        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items, mass in kg no. of scoops, no. of litres or anything else suitable for that food. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours).in description string compare this food with ${compairFood1.value!.name} which have ${compairFood1.value!.totalCalories}. tell which food is best if my goal is to ${prefs.getString('selected_button') ?? 'None'} and my age is ${prefs.getInt('selected_number') ?? 'None'.toString()}.try not to mention my age in descriprion if not nessesary. provide a response in JSON format with the following structure:\n'
+        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items, mass in kg no. of scoops, no. of litres or anything else suitable for that food. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these and how much exercise should be done(in hours)..Dietary Labels:Vegan,Vegetarian,Paleo,Keto,Gluten-Free,Dairy-Free,Low-Fat,Low-Carb,High-Fiber,Allergens:Gluten,Dairy,Eggs,Nuts,Soy,Shellfish,Warnings/Alerts:High in Sugar,High in Sodium,High in Saturated Fat,Contains Additives (e.g., preservatives, colorants) or you can tell none if there is not any in health score give it rating from five stars .in description string compare this food with ${compairFood1.value!.name} which have ${compairFood1.value!.totalCalories}. tell which food is best if my goal is to ${prefs.getString('selected_button') ?? 'None'} provide a response in JSON format with the following structure:\n'
         '''
 {
-  "name": "<string>",\n
-  "quantity": "<string>",\n
-  "fat": <int>,\n
-  "carbs": <int>,\n
-  "protein": <int>,\n
-  "waterquantity": <float>,\n
-  "exercise": <float>\n
-  "description":<string>\n
+  "item": {\n
+    "name": "<string>",\n
+    "quantity": "<string>",\n
+    "calories": <int>,\n
+    "macronutrients": {\n
+      "fat": <float>,\n
+      "carbs": <float>,\n
+      "protein": <float>,\n
+      "fiber": <float>,\n
+      "sugars": <float>,\n
+      "saturatedFats": <float>,\n
+      "unsaturatedFats": <float>,\n
+      "transFats": <float>\n
+    },\n
+    "micronutrients": {\n
+      "vitamins": {\n
+        "vitaminA": "<string>", \n
+        "vitaminC": "<string>",\n
+        "vitaminD": "<string>",\n
+        "vitaminE": "<string>",\n
+        "vitaminK": "<string>",\n
+        "vitaminB1": "<string>", \n
+        "vitaminB2": "<string>",\n
+        "vitaminB3": "<string>",\n
+        "vitaminB5": "<string>",\n
+        "vitaminB6": "<string>",\n
+        "vitaminB7": "<string>",\n
+        "vitaminB9": "<string>",\n
+        "vitaminB12": "<string>"\n
+      },\n
+      "minerals": {\n
+        "calcium": "<string>",\n
+        "iron": "<string>",\n
+        "potassium": "<string>",\n
+        "magnesium": "<string>",\n
+        "zinc": "<string>",\n
+        "sodium": "<string>",\n
+        "phosphorus": "<string>",\n
+        "copper": "<string>",\n
+        "manganese": "<string>",\n
+        "selenium": "<string>",\n
+        "iodine": "<string>"\n
+      }\n
+    },\n
+    "additionalNutrients": {\n
+      "cholesterol": <string>,\n
+      "waterContent": "<string>",\n
+      "caffeine": <string>\n
+    },\n
+    "allergens": ["<string>", "<string>"],\n
+    "dietCompatibility": ["<string>", "<string>"],\n
+    "warnings": ["<string>", "<string>"],\n
+    "healthScore": <int>,\n
+    "waterquantity": <float>,\n
+    "exercise": <float>\n
+  },\n
+  "description": "<string>"\n
 }
+
 '''
         'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
     Uint8List imageBytes = await imgFile.readAsBytes();
@@ -315,11 +308,20 @@ class ResponseScreenController extends GetxController {
       print(response.text);
       // print(foodData.item.name);
       Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
-      FoodItem fooditem2 = FoodItem.fromJson(jsonMap);
-      String description = jsonMap['description'] ?? '';
+      print('mapdone');
+      CommpareItem compitem = CommpareItem.fromJson(jsonMap);
+      print('Comparing class start');
+      // String description = jsonMap['description'] ?? '';
+      String description = compitem.description;
       print('this is description: $description');
+      FoodItem fooditem2 = compitem.item;
+      //  FoodItem fooditem2 = FoodItem.fromJson(temp);
+      print('foditemdone : $Error');
+
       print('Converted to FoodItem');
       compairFood2.value = fooditem2;
+      compairFood1.value = navFoodData!.item;
+
       Get.back();
       print('closeed dialoge');
       goToCompare(compairFood1.value!, compairFood2.value!, description);
@@ -357,8 +359,10 @@ class ResponseScreenController extends GetxController {
 
   void logFeed(FoodData foodData) async {
     final dbHelper = DatabaseHelper(); // Create an instance of DatabaseHelper
-    if (checkFirst.value) // dbHelper.deleteDatabaseFile();
-    {
+
+    if (checkFirst.value) {
+      // dbHelper.deleteDatabaseFile();
+      // if (0 == 0) {
       try {
         await dbHelper.insertFoodData(foodData);
         // Insert FoodData into the database
@@ -392,26 +396,152 @@ class ResponseScreenController extends GetxController {
     }
   }
 
+  void transfercallFunction(FoodData response, Uint8List img) {
+    foodData.value = response;
+    print('response in');
+    compairFood1.value = response.item;
+    print('response item in');
+
+    imageFile2 = img;
+    print('img in');
+  }
+
   @override
   void onInit() {
     checkFirst.value = true;
-    print('check first become true');
-    final arguments = Get.arguments;
-    final FoodData response = arguments[0];
-    // imageFile.value = arguments[1];
-    imageFile2 = arguments[1];
-    print("Argument $response");
-    foodData.value = response;
-    print("Image Bytes: ${imageFile2}");
-    compairFood1.value = response.item;
-    // Map<String, dynamic> jsonMap = jsonDecode(response);
-    // foodData.value = FoodData.fromJson(jsonMap);
+    foodData.value = navFoodData;
+    print('response in');
+    compairFood1.value = navFoodData!.item;
+    print('response item in');
 
+    imageFile2 = navImg;
+    print('img in');
     super.onInit();
   }
-
 
   final count = 0.obs;
 
   void increment() => count.value++;
+}
+
+class FoodDetailsDialog extends StatelessWidget {
+  final FoodData foodData;
+
+  FoodDetailsDialog({required this.foodData});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        'More Details',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      // title: Text('Food Details: ${foodData.item.name}'),
+      content: SizedBox(
+        width: SizeConfig.screenWidth * 0.8,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Display main food item details
+              _buildSectionTitle("Main Item"),
+
+              _buildDetailRow('Name', foodData.item.name),
+              _buildDetailRow('Quantity', foodData.item.quantity),
+              _buildDetailRow('Fat', '${foodData.item.fat.toInt()}g'),
+              _buildDetailRow('Carbs', '${foodData.item.carbs.toInt()}g'),
+              _buildDetailRow('Protein', '${foodData.item.protein.toInt()}g'),
+              // _buildDetailRow(
+              //     'Water Quantity', '${foodData.item.waterQuantity}L'),
+              // _buildDetailRow('Exercise Time', '${foodData.item.exercise} hrs'),
+              _buildDetailRow('Health Score', '${foodData.item.healthScore}/5'),
+              Divider(),
+
+              // Display vitamins
+              _buildSectionTitle("Vitamins (% DV)"),
+              ..._buildNutrientList(foodData.item.vitamins),
+              Divider(),
+
+              // Display minerals
+              _buildSectionTitle("Minerals (% DV)"),
+              ..._buildNutrientList(foodData.item.minerals),
+              Divider(),
+
+              // Display additional nutrients
+              _buildSectionTitle("Additional Nutrients"),
+              ..._buildAdditionalNutrientList(
+                  foodData.item.additionalNutrients),
+              Divider(),
+
+              // Display allergens
+              _buildSectionTitle("Allergens"),
+              _buildList(foodData.item.allergens),
+              Divider(),
+
+              // Display diet compatibility
+              _buildSectionTitle("Diet Compatibility"),
+              _buildList(foodData.item.dietCompatibility),
+              Divider(),
+
+              // Display warnings
+              _buildSectionTitle("Warnings"),
+              _buildList(foodData.item.warnings),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          child: Text('Close'),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Text(
+        title,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label + ':', style: TextStyle(fontWeight: FontWeight.w600)),
+          SizedBox(width: 10),
+          Expanded(child: Text(value, textAlign: TextAlign.end)),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _buildNutrientList(Map<String, String> nutrients) {
+    return nutrients.entries.map((entry) {
+      return _buildDetailRow(entry.key, entry.value);
+    }).toList();
+  }
+
+  List<Widget> _buildAdditionalNutrientList(Map<String, double> nutrients) {
+    return nutrients.entries.map((entry) {
+      return _buildDetailRow(entry.key, '${entry.value.toInt()} mg');
+    }).toList();
+  }
+
+  Widget _buildList(List<String> items) {
+    if (items.isEmpty) {
+      return Text('None');
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: items.map((item) => Text('- $item')).toList(),
+    );
+  }
 }

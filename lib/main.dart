@@ -1,3 +1,5 @@
+import 'package:calories_detector/app/data/day_base.dart';
+import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
 import 'package:calories_detector/firebase_options.dart';
 import 'package:camera/camera.dart';
@@ -13,9 +15,6 @@ import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async {
-  // Ensure that widget bindings are initialized
-      // _initializeCamera();
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -49,7 +48,10 @@ void main() async {
     // DeviceOrientation.landscapeRight,
   ]);
   // Initialize the database before running the app
+  DatabaseHelper().deleteDatabaseFile;
+  DatabaseHelper2().deleteDatabaseFile;
   await DatabaseHelper().database;
+  await DatabaseHelper2().database;
   runApp(
     MyApp(),
 
@@ -86,7 +88,6 @@ class MyApp extends StatelessWidget {
       initialRoute: AppPages.INITIAL,
       // initialRoute: AppPages.CHECK,
       getPages: AppPages.routes,
-      
     );
   }
 }

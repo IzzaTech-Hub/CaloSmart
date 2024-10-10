@@ -397,7 +397,7 @@ class HistoryResponseView extends GetView<HistoryResponseController> {
                                   Icon(Icons.circle, size: 8),
                                   Text(
                                     // '  $waterQ',
-                                    '  Drink ${controller.foodData.value!.item.waterquantity} ltr(s) of water',
+                                    '  Drink ${controller.foodData.value!.item.waterQuantity} ltr(s) of water',
                                     style: TextStyle(height: 0),
                                   ),
                                 ]),

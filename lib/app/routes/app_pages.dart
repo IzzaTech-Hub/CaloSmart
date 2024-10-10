@@ -22,8 +22,13 @@ import '../modules/home/views/home_view.dart';
 import '../modules/home/views/splash_view.dart';
 import '../modules/intro_screens/bindings/intro_screens_binding.dart';
 import '../modules/intro_screens/views/intro_screens_view.dart';
+import '../modules/liquidloading/bindings/liquidloading_binding.dart';
+import '../modules/liquidloading/views/liquidloading_view.dart';
 import '../modules/navbar/bindings/navbar_binding.dart';
 import '../modules/navbar/views/navbar_view.dart';
+import '../modules/settings/bindings/settings_binding.dart';
+import '../modules/settings/views/settings_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -94,6 +99,16 @@ class AppPages {
       name: _Paths.NAVBAR,
       page: () => const NavbarView(),
       binding: NavbarBinding(),
+    ),
+    GetPage(
+      name: _Paths.LIQUIDLOADING,
+      page: () => LiquidloadingView(),
+      binding: LiquidloadingBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTINGS,
+      page: () => SettingsView(),
+      binding: SettingsBinding(),
     ),
   ];
 }

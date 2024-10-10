@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:calories_detector/app/modules/home/views/cameraView.dart';
+import 'package:calories_detector/app/modules/navbar/controllers/navbar_controller.dart';
 import 'package:get/get.dart';
 import 'package:camera/camera.dart';
 import 'dart:typed_data';
@@ -75,7 +76,8 @@ class CameraViewController extends GetxController {
 
     await saveCroppedImage();
     print("Temp Path: ${savedCroppedImage!.path}");
-    HomeController homeController=Get.find();
+    NavbarController homeController = Get.find();
+    Get.back();
     await homeController.sendImageToGoogleAI(savedCroppedImage!);
 
     // Get.to(() => ImageDisplayScreen(imageData: croppedImageData.value!));
@@ -95,7 +97,6 @@ class CameraViewController extends GetxController {
 
       await savedCroppedImage!.writeAsBytes(croppedImageData.value!);
 
-
       print("New cropped image saved successfully at $filePath.");
     } catch (e) {
       print("Error saving cropped image: $e");
@@ -111,10 +112,10 @@ class CameraViewController extends GetxController {
 
     try {
       // Send the saved file to Google AI via HomeController
-    HomeController homeController=Get.find();
+      NavbarController homeController = Get.find();
 
       await homeController.sendImageToGoogleAI(savedCroppedImage!);
-
+      Get.back();
       print("Cropped image sent successfully.");
       // await deleteCroppedImage();
     } catch (e) {

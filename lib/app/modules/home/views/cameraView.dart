@@ -8,6 +8,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
 class Cameraview extends GetView<CameraViewController> {
   Cameraview({super.key});
 
@@ -86,8 +87,10 @@ class Cameraview extends GetView<CameraViewController> {
                 ),
               ),
               Container(
+                // height: 50,
+                // width: 50,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(100),
                   color: Colors.white,
                 ),
                 child: IconButton(

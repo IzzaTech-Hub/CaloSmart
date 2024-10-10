@@ -168,6 +168,52 @@ Container appThemeAppBar(context, String title) {
       ],
     ),
     child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // IconButton(
+        //   icon: Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+        //   onPressed: () {
+        //     // Menu button action
+        //     Get.back();
+        //   },
+        // ),
+
+        Text(
+          title,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        // SizedBox()
+        // IconButton(
+        //   icon: Icon(Icons.notifications, color: Colors.transparent),
+        //   onPressed: () {
+        //     // Notification button action
+        //   },
+        // ),
+      ],
+    ),
+  );
+}
+
+Container appThemeAppBar2(context, String title) {
+  return Container(
+    padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+    height: 80.0, // Height of AppBar
+    decoration: BoxDecoration(
+      // color: Colors.blue, // Background color
+      gradient: AppThemeColors.primaryGradient1,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          blurRadius: 10.0,
+          offset: Offset(0, 5),
+        ),
+      ],
+    ),
+    child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
@@ -177,6 +223,7 @@ Container appThemeAppBar(context, String title) {
             Get.back();
           },
         ),
+
         Text(
           title,
           style: TextStyle(

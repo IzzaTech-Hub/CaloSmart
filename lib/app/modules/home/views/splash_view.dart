@@ -22,6 +22,8 @@ class SplashView extends GetView<SplashController> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return
         // debugShowCheckedModeBanner: false,
         Scaffold(

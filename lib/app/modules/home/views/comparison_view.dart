@@ -27,7 +27,7 @@ class ComparisonView extends GetView<ComparisonController> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(80),
-          child: appThemeAppBar(context, controller.name.value!)),
+          child: appThemeAppBar2(context, controller.name.value!)),
       // backgroundColor: ,
       body: Container(
         decoration: BoxDecoration(gradient: AppThemeColors.bgGradient),
