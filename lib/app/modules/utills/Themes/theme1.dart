@@ -18,11 +18,10 @@ class ThemeColors {
   static const logoColor = darkBlue;
   // static const graph1 = Color(0xffA259FF);
   // static const graph1 = Color(0xff3466AF);
-  static const graph1 =
-      Color.fromARGB(255, 74, 122, 226); // static const graph2 = dark2;
-  static const graph2 = Colors.green;
+  static const graph1 = Colors.indigo; // static const graph2 = dark2;
+  static const graph2 = Color.fromRGBO(56, 142, 60, 1);
   // static const graph3 = Color(0xffD32F2F);
-  static const graph3 = Color.fromARGB(255, 209, 53, 53);
+  static const graph3 = Colors.red;
   // static const graph3 = Color.fromARGB(255, 228, 76, 76);
 }
 

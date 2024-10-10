@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
 import 'package:calories_detector/sizeConfig.dart';
+import 'package:google_fonts/google_fonts.dart';
+// import 'package:shimmer/shimmer.dart';
 import '../controllers/response_screen_controller.dart';
 import '../../../routes/app_pages.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -164,6 +166,10 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                               SizeConfig.blockSizeHorizontal * 5),
                           bottomRight: Radius.circular(
                               SizeConfig.blockSizeHorizontal * 5))),
+                          // bottomLeft: Radius.circular(
+                          //     SizeConfig.blockSizeHorizontal * 5),
+                          // bottomRight: Radius.circular(
+                          //     SizeConfig.blockSizeHorizontal * 5))),
                   child: FittedBox(
                     fit: BoxFit.cover,
                     // child: controller.imageFile.value,
