@@ -29,7 +29,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    // SizeConfig().init(context);
+    SizeConfig().init(context);
     return Scaffold(
       // backgroundColor: AppThemeColors.primarycolor,
       body: Container(

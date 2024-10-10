@@ -20,10 +20,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 final ImagePicker _picker = ImagePicker();
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
   @override
   void onInit() {
-    // TODO: implement onInit
     handlePushNotification();
     super.onInit();
   }

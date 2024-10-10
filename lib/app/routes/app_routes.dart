@@ -14,6 +14,7 @@ abstract class Routes {
   static const AGE_SCREEN = _Paths.AGE_SCREEN;
   static const HISTORY_RESPONSE = _Paths.HISTORY_RESPONSE;
   static const CAMERA_SCREEN = _Paths.CAMERA_SCREEN;
+  static const NAVBAR = _Paths.NAVBAR;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const HISTORY_VIEW_SCREEN = '/history_show.dart';
   static const COMPARISON_VIEW_SCREEN = '/comparison_view.dart';
   static const HISTORY_RESPONSE = '/history-response';
+  static const NAVBAR = '/navbar';
 }

@@ -93,8 +93,8 @@ flutter:
   #         weight: 700
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/bg_img.png
-  #   - images/a_dot_ham.jpeg
+    - assets/images/bg_img.png
+    - assets/images/iconscan.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

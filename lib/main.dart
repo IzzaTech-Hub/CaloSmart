@@ -86,6 +86,7 @@ class MyApp extends StatelessWidget {
       initialRoute: AppPages.INITIAL,
       // initialRoute: AppPages.CHECK,
       getPages: AppPages.routes,
+      
     );
   }
 }
