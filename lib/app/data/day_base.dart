@@ -123,9 +123,12 @@ class DatabaseHelper2 {
       print(
           'No existing entry found for $tdate. Creating a new OneDay instance.');
       final prefs = await SharedPreferences.getInstance();
+      print(prefs.getString('selected_button'));
       String goal = prefs.getString('selected_button') ?? 'Gain Weight';
       await prefs.setString('selected_button', goal);
       DietPlan setplan = generateDietPlan(goal);
+      print('Creating new day');
+      print(setplan.carbsTarget);
       OneDay newDay = OneDay(
         date: tdate,
         caloriestarget: setplan.foodTarget,
@@ -276,7 +279,7 @@ class DatabaseHelper2 {
       where: 'date = ?',
       whereArgs: [oneDay.date],
     );
-    HomeController().updatehomedata();
+    HomeController(false).updatehomedata();
   }
 
   Future<void> deleteDatabaseFile() async {
@@ -320,11 +323,11 @@ DietPlan generateDietPlan(String goal) {
 
   double exerciseHours;
   if (goal.toLowerCase() == 'gain weight') {
-    exerciseHours = 0.5; // Light exercise
+    exerciseHours = 0.5;
   } else if (goal.toLowerCase() == 'lose weight') {
-    exerciseHours = 1.5; // More exercise
+    exerciseHours = 1.5;
   } else {
-    exerciseHours = 1.0; // Moderate exercise for maintaining
+    exerciseHours = 1.0;
   }
 
   // 4. Macronutrient breakdown based on calorie target

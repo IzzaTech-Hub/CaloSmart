@@ -1,8 +1,6 @@
 import 'package:calories_detector/app/data/day_base.dart';
-import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
 import 'package:calories_detector/firebase_options.dart';
-import 'package:camera/camera.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -48,8 +46,8 @@ void main() async {
     // DeviceOrientation.landscapeRight,
   ]);
   // Initialize the database before running the app
-  DatabaseHelper().deleteDatabaseFile;
-  DatabaseHelper2().deleteDatabaseFile;
+  // DatabaseHelper().deleteDatabaseFile;
+  // DatabaseHelper2().deleteDatabaseFile;
   await DatabaseHelper().database;
   await DatabaseHelper2().database;
   runApp(

@@ -1,13 +1,11 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:calories_detector/app/modules/home/controllers/splash_Controller.dart';
-import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'dart:ui';
-import 'package:flutter/material.dart';
 
 double screenHeight = SizeConfig.screenHeight;
 double screenWidtht = SizeConfig.screenWidth;
@@ -93,11 +91,11 @@ class BlurryCircle extends StatelessWidget {
   final double size;
 
   const BlurryCircle({
-    Key? key,
+    super.key,
     required this.color,
     required this.blurSigma,
     required this.size,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

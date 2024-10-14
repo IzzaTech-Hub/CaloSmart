@@ -26,10 +26,10 @@ RxBool isrespnse = false.obs;
 Uint8List? imageFile2;
 
 Rxn<FoodItem> compairFood2 = Rxn<FoodItem>();
+RxBool checkFirst = true.obs;
 
 class ResponseScreenController extends GetxController {
   Rxn<FoodItem> compairFood1 = Rxn<FoodItem>();
-  RxBool checkFirst = true.obs;
   // void Comparefunction(BuildContext context) {
   //   showDialog(
   //     context: context,
@@ -359,7 +359,7 @@ class ResponseScreenController extends GetxController {
 
   void logFeed(FoodData foodData) async {
     final dbHelper = DatabaseHelper(); // Create an instance of DatabaseHelper
-
+    print(checkFirst.value);
     if (checkFirst.value) {
       // dbHelper.deleteDatabaseFile();
       // if (0 == 0) {
@@ -397,6 +397,11 @@ class ResponseScreenController extends GetxController {
   }
 
   void transfercallFunction(FoodData response, Uint8List img) {
+    print(checkFirst.value);
+    if (!checkFirst.value) {
+      checkFirst.toggle();
+      print('checkFirstChanged');
+    }
     foodData.value = response;
     print('response in');
     compairFood1.value = response.item;
@@ -427,7 +432,7 @@ class ResponseScreenController extends GetxController {
 class FoodDetailsDialog extends StatelessWidget {
   final FoodData foodData;
 
-  FoodDetailsDialog({required this.foodData});
+  const FoodDetailsDialog({super.key, required this.foodData});
 
   @override
   Widget build(BuildContext context) {
@@ -515,7 +520,7 @@ class FoodDetailsDialog extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label + ':', style: TextStyle(fontWeight: FontWeight.w600)),
+          Text('$label:', style: TextStyle(fontWeight: FontWeight.w600)),
           SizedBox(width: 10),
           Expanded(child: Text(value, textAlign: TextAlign.end)),
         ],

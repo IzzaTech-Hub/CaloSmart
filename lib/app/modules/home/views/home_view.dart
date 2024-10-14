@@ -1,4 +1,3 @@
-import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/modules/navbar/controllers/navbar_controller.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -27,7 +26,7 @@ double convertToGlasses(int quantity, String unit) {
 }
 
 class HomeView extends GetView<HomeController> {
-  HomeView({super.key});
+  const HomeView({super.key});
   // GetxController controlller = HomeController();
 
   @override
@@ -112,7 +111,7 @@ class HomeView extends GetView<HomeController> {
                               ],
                             ),
                             SizedBox(),
-                            Container(
+                            SizedBox(
                               height: size - padsize,
                               child: Column(
                                 mainAxisAlignment:
@@ -166,12 +165,12 @@ class HomeView extends GetView<HomeController> {
                                                 CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                '${caloriesProgress}',
+                                                '$caloriesProgress',
                                                 style: TextStyle(
                                                     fontSize: 18, height: 1),
                                               ),
                                               Text(
-                                                '/${caloriestarget}',
+                                                '/$caloriestarget',
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.black38,
@@ -223,7 +222,7 @@ class HomeView extends GetView<HomeController> {
                                                     fontSize: 18, height: 1),
                                               ),
                                               Text(
-                                                '/${watertarget}',
+                                                '/$watertarget',
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.black38,
@@ -339,7 +338,7 @@ class HomeView extends GetView<HomeController> {
                                       ),
                                     ),
                                   ),
-                                  Text('${carbsProgress}/${carbstarget}')
+                                  Text('$carbsProgress/$carbstarget')
                                 ],
                               ),
                             ),
@@ -377,7 +376,7 @@ class HomeView extends GetView<HomeController> {
                                       ),
                                     ),
                                   ),
-                                  Text('${protienProgress}/${protientarget}')
+                                  Text('$protienProgress/$protientarget')
                                 ],
                               ),
                             ),
@@ -414,7 +413,7 @@ class HomeView extends GetView<HomeController> {
                                       ),
                                     ),
                                   ),
-                                  Text('${fatProgress}/${fattarget}')
+                                  Text('$fatProgress/$fattarget')
                                 ],
                               ),
                             ),

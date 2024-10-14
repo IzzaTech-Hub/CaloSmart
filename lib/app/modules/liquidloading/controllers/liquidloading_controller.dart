@@ -53,10 +53,6 @@ class LiquidloadingController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {
@@ -229,11 +225,11 @@ class BlurryCircle extends StatelessWidget {
   final double size;
 
   const BlurryCircle({
-    Key? key,
+    super.key,
     required this.color,
     required this.blurSigma,
     required this.size,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

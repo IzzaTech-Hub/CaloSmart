@@ -5,7 +5,7 @@
     <application
         android:label="AI Calories Scanner"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/icon">
         
 
         <activity

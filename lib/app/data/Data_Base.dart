@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:calories_detector/app/data/day_base.dart';
+import 'package:calories_detector/app/modules/home/controllers/history_show_controller.dart';
 import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -139,6 +140,7 @@ class DatabaseHelper {
 
     await DatabaseHelper2().updateOneDay(toDay!);
     print('after update oneday');
+    HistoryShowController().getdata();
   }
 
   Future<FoodData?> fetchFoodDataByIndex(int index) async {

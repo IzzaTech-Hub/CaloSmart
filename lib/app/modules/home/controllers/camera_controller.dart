@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
-import 'package:calories_detector/app/modules/home/views/cameraView.dart';
 import 'package:calories_detector/app/modules/navbar/controllers/navbar_controller.dart';
 import 'package:get/get.dart';
 import 'package:camera/camera.dart';

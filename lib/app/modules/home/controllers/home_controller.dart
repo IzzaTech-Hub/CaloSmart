@@ -1,27 +1,17 @@
 import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/data/oneday.dart';
-import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
 import 'package:calories_detector/main.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:math';
 
 // import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter/services.dart';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:intl/intl.dart';
 // import 'dart:convert';
-import '../../../routes/app_pages.dart';
 
-import 'dart:convert';
-import '../../../data/food_item.dart';
-import 'package:shared_preferences/shared_preferences.dart';
- 
 double padbetween = 0;
 // double carbsPercentage = 0.3;
 // double protienPercentage = 0.7;
@@ -68,15 +58,16 @@ RxDouble fatPercentage = 0.0.obs;
 RxDouble progress1 = 0.0.obs;
 RxDouble progress2 = 0.0.obs;
 RxDouble progress3 = 0.0.obs;
-  RxInt test = 1.obs;
+RxInt test = 1.obs;
 
 class HomeController extends GetxController {
-  
-  String nowDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
+  final bool checkForDialog;
+  HomeController(this.checkForDialog);
 
+  String nowDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
   @override
   void onInit() async {
-    test!.value = 10;
+    test.value = 10;
     try {
       print('Initializing database');
 
@@ -135,55 +126,75 @@ class HomeController extends GetxController {
     protienProgress?.value = toDay!.proteinProgress.value;
     carbsProgress?.value = toDay!.carbsProgress.value;
     double tempcarbs = toDay!.carbsProgress / toDay!.carbstarget.value;
-double tempprotien = toDay!.proteinProgress / toDay!.protientarget.value;
-double tempfat = toDay!.fatProgress / toDay!.fattarget.value;
-double tempp1 = toDay!.caloriesProgress / toDay!.caloriestarget.value;
-double tempp2 = toDay!.waterProgress / toDay!.watertarget.value;
-double tempp3 = toDay!.exerciseProgress / toDay!.exercisetarget.value;
+    double tempprotien = toDay!.proteinProgress / toDay!.protientarget.value;
+    double tempfat = toDay!.fatProgress / toDay!.fattarget.value;
+    double tempp1 = toDay!.caloriesProgress / toDay!.caloriestarget.value;
+    double tempp2 = toDay!.waterProgress / toDay!.watertarget.value;
+    double tempp3 = toDay!.exerciseProgress / toDay!.exercisetarget.value;
 
 // Carbs percentage (progress over target)
-if (tempcarbs <= 1) {
-  carbsPercentage.value = tempcarbs;  // Carbs progress is within target
-} else {
-  carbsPercentage.value = 1;  // Max out at 100%
-}
+    if (tempcarbs <= 1) {
+      carbsPercentage.value = tempcarbs; // Carbs progress is within target
+    } else {
+      carbsPercentage.value = 1; // Max out at 100%
+    }
 
 // Protein percentage (progress over target)
-if (tempprotien <= 1) {
-  protienPercentage.value = tempprotien;
-} else {
-  protienPercentage.value = 1;
-}
+    if (tempprotien <= 1) {
+      protienPercentage.value = tempprotien;
+    } else {
+      protienPercentage.value = 1;
+    }
 
 // Fat percentage (progress over target)
-if (tempfat <= 1) {
-  fatPercentage.value = tempfat;
-} else {
-  fatPercentage.value = 1;
-}
+    if (tempfat <= 1) {
+      fatPercentage.value = tempfat;
+    } else {
+      fatPercentage.value = 1;
+    }
 
 // Calories percentage (progress over target)
-if (tempp1 <= 1) {
-  progress1.value = tempp1;
-} else {
-  progress1.value = 1;
-}
+    if (tempp1 <= 1) {
+      progress1.value = tempp1;
+    } else {
+      progress1.value = 1;
+    }
 
 // Water percentage (progress over target)
-if (tempp2 <= 1) {
-  progress2.value = tempp2;
-} else {
-  progress2.value = 1;
-}
+    if (tempp2 <= 1) {
+      progress2.value = tempp2;
+    } else {
+      progress2.value = 1;
+    }
 
 // Exercise percentage (progress over target)
-if (tempp3 <= 1) {
-  progress3.value = tempp3;
-} else {
-  progress3.value = 1;
-}
+    if (tempp3 <= 1) {
+      progress3.value = tempp3;
+    } else {
+      progress3.value = 1;
+    }
+
+    if (checkForDialog) {
+      Get.dialog(
+        AlertDialog(
+          title: Text('Disclaimer'),
+          content: Text(
+              textAlign: TextAlign.justify,
+              'The nutritional information provided by this app is intended for informational purposes only and should not be considered a substitute for professional dietary advice. While we strive to offer accurate estimates of calories and nutrients based on the food images provided, the data may not always be 100% accurate due to variations in food preparation, portion sizes, and other factors. Users should use this information as a general guide and consult a healthcare professional for precise dietary recommendations.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.back(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
 
     handlePushNotification();
+
     super.onInit();
   }
 
@@ -204,54 +215,54 @@ if (tempp3 <= 1) {
     fatProgress!.value = toDay!.fatProgress.value;
     protienProgress!.value = toDay!.proteinProgress.value;
     carbsProgress!.value = toDay!.carbsProgress.value;
-   double tempcarbs = toDay!.carbsProgress / toDay!.carbstarget.value;
-double tempprotien = toDay!.proteinProgress / toDay!.protientarget.value;
-double tempfat = toDay!.fatProgress / toDay!.fattarget.value;
-double tempp1 = toDay!.caloriesProgress / toDay!.caloriestarget.value;
-double tempp2 = toDay!.waterProgress / toDay!.watertarget.value;
-double tempp3 = toDay!.exerciseProgress / toDay!.exercisetarget.value;
+    double tempcarbs = toDay!.carbsProgress / toDay!.carbstarget.value;
+    double tempprotien = toDay!.proteinProgress / toDay!.protientarget.value;
+    double tempfat = toDay!.fatProgress / toDay!.fattarget.value;
+    double tempp1 = toDay!.caloriesProgress / toDay!.caloriestarget.value;
+    double tempp2 = toDay!.waterProgress / toDay!.watertarget.value;
+    double tempp3 = toDay!.exerciseProgress / toDay!.exercisetarget.value;
 
 // Carbs percentage (progress over target)
-if (tempcarbs <= 1) {
-  carbsPercentage.value = tempcarbs;  // Carbs progress is within target
-} else {
-  carbsPercentage.value = 1;  // Max out at 100%
-}
+    if (tempcarbs <= 1) {
+      carbsPercentage.value = tempcarbs; // Carbs progress is within target
+    } else {
+      carbsPercentage.value = 1; // Max out at 100%
+    }
 
 // Protein percentage (progress over target)
-if (tempprotien <= 1) {
-  protienPercentage.value = tempprotien;
-} else {
-  protienPercentage.value = 1;
-}
+    if (tempprotien <= 1) {
+      protienPercentage.value = tempprotien;
+    } else {
+      protienPercentage.value = 1;
+    }
 
 // Fat percentage (progress over target)
-if (tempfat <= 1) {
-  fatPercentage.value = tempfat;
-} else {
-  fatPercentage.value = 1;
-}
+    if (tempfat <= 1) {
+      fatPercentage.value = tempfat;
+    } else {
+      fatPercentage.value = 1;
+    }
 
 // Calories percentage (progress over target)
-if (tempp1 <= 1) {
-  progress1.value = tempp1;
-} else {
-  progress1.value = 1;
-}
+    if (tempp1 <= 1) {
+      progress1.value = tempp1;
+    } else {
+      progress1.value = 1;
+    }
 
 // Water percentage (progress over target)
-if (tempp2 <= 1) {
-  progress2.value = tempp2;
-} else {
-  progress2.value = 1;
-}
+    if (tempp2 <= 1) {
+      progress2.value = tempp2;
+    } else {
+      progress2.value = 1;
+    }
 
 // Exercise percentage (progress over target)
-if (tempp3 <= 1) {
-  progress3.value = tempp3;
-} else {
-  progress3.value = 1;
-}
+    if (tempp3 <= 1) {
+      progress3.value = tempp3;
+    } else {
+      progress3.value = 1;
+    }
 
     print('$progress1');
     print('${caloriesProgress!.value}');
@@ -465,6 +476,4 @@ class CircularProgressPainter extends CustomPainter {
   bool shouldRepaint(CircularProgressPainter oldDelegate) {
     return oldDelegate.progress != progress; // Repaint if progress changes
   }
-
-
 }

@@ -3,10 +3,16 @@ import 'package:calories_detector/app/data/food_item.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
-class HistoryShowController extends GetxController {
-  RxList<FoodData> historyData = <FoodData>[].obs;
-  RxList<String> historyDate = <String>[].obs;
+RxList<FoodData> historyData = <FoodData>[].obs;
+RxList<String> historyDate = <String>[].obs;
+// void UpdateHistoryData() {
+//   historyData = <FoodData>[].obs;
+//   historyDate = <String>[].obs;
+//   print('historydataupdated');
+//   print(historyData.length);
+// }
 
+class HistoryShowController extends GetxController {
   void showResponse(int index) {
     Get.toNamed(Routes.HISTORY_RESPONSE, arguments: [historyData[index]]);
     print(historyData[index]);

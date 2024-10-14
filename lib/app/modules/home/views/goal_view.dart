@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:calories_detector/app/modules/home/controllers/goal_controller.dart';
-import 'package:calories_detector/app/modules/home/views/history_show.dart';
+import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+Size size = Size(
+    SizeConfig.blockSizeHorizontal * 90, SizeConfig.blockSizeHorizontal * 50);
 
 class goalView extends GetView<GoalController> {
   @override
@@ -128,9 +131,14 @@ class goalView extends GetView<GoalController> {
 
                         // Save a value
                         await prefs.setString('selected_button', 'Lose Weight');
+                        print('set to ${prefs.getString('selected_button')}');
+
                         String selectedButton =
                             prefs.getString('selected_button') ?? 'None';
                         print("Selected button: $selectedButton");
+                        Get.put<HomeController>(
+                          HomeController(true),
+                        );
                         Get.offAllNamed(Routes.NAVBAR);
                         // Get.toNamed(Routes.GENDER_SCREEN);
                       },
@@ -167,9 +175,14 @@ class goalView extends GetView<GoalController> {
 
                         // Save a value
                         await prefs.setString('selected_button', 'Gain Weight');
+                        print('set to ${prefs.getString('selected_button')}');
+
                         String selectedButton =
                             prefs.getString('selected_button') ?? 'None';
                         print("Selected button: $selectedButton");
+                        Get.put<HomeController>(
+                          HomeController(true),
+                        );
                         Get.offAllNamed(Routes.NAVBAR);
                         // Get.toNamed(Routes.GENDER_SCREEN);
                       },
@@ -207,9 +220,13 @@ class goalView extends GetView<GoalController> {
                         // Save a value
                         await prefs.setString(
                             'selected_button', 'Maintain Weight');
+                        print('set to ${prefs.getString('selected_button')}');
                         String selectedButton =
                             prefs.getString('selected_button') ?? 'None';
                         print("Selected button: $selectedButton");
+                        Get.put<HomeController>(
+                          HomeController(true),
+                        );
                         Get.offAllNamed(Routes.NAVBAR);
                         // Get.toNamed(Routes.GENDER_SCREEN);
                       },

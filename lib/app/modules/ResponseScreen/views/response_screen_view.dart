@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 // import 'package:shimmer/shimmer.dart';
 import '../controllers/response_screen_controller.dart';
 import '../../../routes/app_pages.dart';
-import 'package:google_fonts/google_fonts.dart';
 // import 'package:shimmer/shimmer.dart';
 
 class ResponseScreenView extends GetView<ResponseScreenController> {

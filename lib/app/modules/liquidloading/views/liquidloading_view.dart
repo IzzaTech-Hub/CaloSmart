@@ -1,6 +1,4 @@
-import 'dart:ui';
 
-import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -8,7 +6,7 @@ import 'package:get/get.dart';
 import '../controllers/liquidloading_controller.dart';
 
 class LiquidloadingView extends GetView<LiquidloadingController> {
-  LiquidloadingView({super.key});
+  const LiquidloadingView({super.key});
   // GetxController thiscontroller = LiquidloadingController();
   @override
   Widget build(BuildContext context) {
@@ -81,7 +79,6 @@ class LiquidloadingView extends GetView<LiquidloadingController> {
                 )))
       ],
     );
-    ;
   }
 }
 

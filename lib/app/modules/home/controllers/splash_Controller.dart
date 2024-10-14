@@ -1,5 +1,3 @@
-import 'package:calories_detector/app/data/Data_Base.dart';
-import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
@@ -14,9 +12,6 @@ class SplashController extends GetxController {
     // DatabaseHelper2().deleteDatabaseFile;
     // await DatabaseHelper().database;
     // await DatabaseHelper2().database;
-    Get.put<HomeController>(
-      HomeController(),
-    );
 
     // DatabaseHelper().deleteDatabaseFile();
     // DatabaseHelper2().deleteDatabaseFile();
@@ -36,10 +31,14 @@ class SplashController extends GetxController {
       await prefs.setBool('isFirstLaunch', false);
       Get.offNamed(Routes.GOAL_SCREEN);
       print("Navigated to Goal Route");
+     
     } else {
       Get.offNamed(Routes.NAVBAR);
       // Get.offNamed(Routes.GOAL_SCREEN);
       print("Went to Home");
+      Get.put<HomeController>(
+        HomeController(false),
+      );
     }
   }
 }

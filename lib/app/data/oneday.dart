@@ -83,28 +83,28 @@ class OneDay {
   }
 
   void update(OneDay newDay) {
-    this.date = newDay.date;
-    this.caloriestarget.value = newDay.caloriestarget.value;
-    this.watertarget.value = newDay.watertarget.value;
-    this.exercisetarget.value = newDay.exercisetarget.value;
-    this.fattarget.value = newDay.fattarget.value;
-    this.protientarget.value = newDay.protientarget.value;
-    this.carbstarget.value = newDay.carbstarget.value;
+    date = newDay.date;
+    caloriestarget.value = newDay.caloriestarget.value;
+    watertarget.value = newDay.watertarget.value;
+    exercisetarget.value = newDay.exercisetarget.value;
+    fattarget.value = newDay.fattarget.value;
+    protientarget.value = newDay.protientarget.value;
+    carbstarget.value = newDay.carbstarget.value;
 
-    this.caloriesProgress.value = newDay.caloriesProgress.value;
-    this.waterProgress.value = newDay.waterProgress.value;
-    this.exerciseProgress.value = newDay.exerciseProgress.value;
-    this.fatProgress.value = newDay.fatProgress.value;
-    this.proteinProgress.value = newDay.proteinProgress.value;
-    this.carbsProgress.value = newDay.carbsProgress.value;
+    caloriesProgress.value = newDay.caloriesProgress.value;
+    waterProgress.value = newDay.waterProgress.value;
+    exerciseProgress.value = newDay.exerciseProgress.value;
+    fatProgress.value = newDay.fatProgress.value;
+    proteinProgress.value = newDay.proteinProgress.value;
+    carbsProgress.value = newDay.carbsProgress.value;
 
-    this.caloriesRemaining.value = newDay.caloriesRemaining.value;
-    this.waterRemaining.value = newDay.waterRemaining.value;
-    this.exerciseRemaining.value = newDay.exerciseRemaining.value;
-    this.fatRemaining.value = newDay.fatRemaining.value;
-    this.proteinRemaining.value = newDay.proteinRemaining.value;
-    this.carbsRemaining.value = newDay.carbsRemaining.value;
+    caloriesRemaining.value = newDay.caloriesRemaining.value;
+    waterRemaining.value = newDay.waterRemaining.value;
+    exerciseRemaining.value = newDay.exerciseRemaining.value;
+    fatRemaining.value = newDay.fatRemaining.value;
+    proteinRemaining.value = newDay.proteinRemaining.value;
+    carbsRemaining.value = newDay.carbsRemaining.value;
 
-    this.indexes = List.from(newDay.indexes);
+    indexes = List.from(newDay.indexes);
   }
 }

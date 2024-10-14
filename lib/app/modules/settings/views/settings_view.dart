@@ -1,13 +1,12 @@
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:flutter/material.dart';
-
+import 'package:launch_review/launch_review.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:share_plus/share_plus.dart';
 import '../controllers/settings_controller.dart';
 
 class SettingsView extends GetView<SettingsController> {
-  SettingsView({super.key});
+  const SettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +39,10 @@ class SettingsView extends GetView<SettingsController> {
                           if (newValue != null) {
                             controller.saveSelectedGoal(newValue);
                           }
+                          print('Changed');
+                          Get.snackbar('Notice',
+                              'Changes will apply to your diet from Tomorrow',
+                              snackPosition: SnackPosition.BOTTOM);
                         },
                         items: <String>[
                           'Gain Weight',
@@ -64,7 +67,10 @@ class SettingsView extends GetView<SettingsController> {
           GestureDetector(
             onTap: () {
               // Logic to rate the app
-              Get.snackbar('Info', 'Navigate to Rate Us');
+              // Get.snackbar('Info', 'Navigate to Rate Us');
+              LaunchReview.launch(
+                androidAppId: "com.ai.caloriescanner.calorietracker",
+              );
             },
             child: Container(
               height: 60, // Fixed height for uniformity
@@ -98,7 +104,9 @@ class SettingsView extends GetView<SettingsController> {
           GestureDetector(
             onTap: () {
               // Logic to share the app
-              Get.snackbar('Info', 'Share this app with others');
+              // Get.snackbar('Info', 'Share this app with others');
+              Share.share(
+                  "Consider downloading this exceptional app, available on the Google Play Store at the following link: https://play.google.com/store/apps/details?id=com.ai.caloriescanner.calorietracker");
             },
             child: Container(
               height: 60, // Fixed height for uniformity

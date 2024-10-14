@@ -1,13 +1,10 @@
-import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:calories_detector/app/modules/history_response/controllers/history_response_controller.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
-import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import '../../../routes/app_pages.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryResponseView extends GetView<HistoryResponseController> {
   const HistoryResponseView({super.key});
@@ -20,7 +17,8 @@ class HistoryResponseView extends GetView<HistoryResponseController> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(80),
-          child: appThemeAppBar(context, controller.foodData.value!.item.name)),
+          child:
+              appThemeAppBar2(context, controller.foodData.value!.item.name)),
       // backgroundColor: AppColors.onSecondaryColor,
       // backgroundColor: primaryColor,
       body: Container(
@@ -458,6 +456,7 @@ class HistoryResponseView extends GetView<HistoryResponseController> {
               children: [
                 AppThemeButton(
                         onPressed: () {
+                          // Get.put(ResponseScreenController());
                           controller.Comparefunction(context);
                         },
                         text: 'Compare')

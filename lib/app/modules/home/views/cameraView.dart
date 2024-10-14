@@ -1,8 +1,5 @@
-import 'dart:typed_data';
 
 import 'package:calories_detector/app/modules/home/controllers/camera_controller.dart';
-import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
-import 'package:calories_detector/main.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class Cameraview extends GetView<CameraViewController> {
-  Cameraview({super.key});
+  const Cameraview({super.key});
 
   @override
   Widget build(BuildContext context) {
