@@ -58,7 +58,7 @@ dependencies:
   shimmer: ^3.0.0
   auto_size_text: ^3.0.0
   share_plus: ^10.0.3
-  launch_review: ^3.0.1
+  # launch_review: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -98,7 +98,6 @@ flutter_launcher_icons:
     generate: true
     image_path: "assets/icon/icon.png"
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -108,7 +107,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-# flutter:
+  # flutter:
   # fonts:
   #   - family: Inter
   #     fonts:
