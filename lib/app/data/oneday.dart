@@ -28,6 +28,7 @@ class OneDay {
   RxInt carbsRemaining;
 
   List<int> indexes = [];
+  List<FoodItem> fooditems = [];
 
   OneDay({
     required this.date,
@@ -66,20 +67,19 @@ class OneDay {
     carbsProgress.value += fooditem.carbs.toInt();
     carbsRemaining.value = carbstarget.value - carbsProgress.value;
     indexes.add(index);
+    fooditems.add(fooditem);
   }
 
-  void AddWater(double Water) async{
+  void AddWater(double Water) async {
     waterProgress.value += Water;
     waterRemaining.value = watertarget.value - waterProgress.value;
     await DatabaseHelper2().updateOneDay(toDay!);
-
   }
 
-  void AddExercise(double exeTime) async{
+  void AddExercise(double exeTime) async {
     exerciseProgress.value += exeTime;
     exerciseRemaining.value = exercisetarget.value - exerciseProgress.value;
     await DatabaseHelper2().updateOneDay(toDay!);
-
   }
 
   void update(OneDay newDay) {
@@ -106,5 +106,6 @@ class OneDay {
     carbsRemaining.value = newDay.carbsRemaining.value;
 
     indexes = List.from(newDay.indexes);
+    fooditems = List.from(newDay.fooditems);
   }
 }

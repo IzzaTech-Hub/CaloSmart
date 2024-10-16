@@ -195,6 +195,38 @@ class DatabaseHelper {
       ),
     );
   }
+  Future<FoodItem?> fetchFoodIemByIndex(int index) async {
+    final db = await database;
+
+    // Query the specific row by index
+    final List<Map<String, dynamic>> maps = await db.query(
+      'food_data',
+      where: 'id = ?',
+      whereArgs: [index],
+    );
+
+    // If no result is found, return null
+    if (maps.isEmpty) return null;
+
+    // Convert the row into a FoodData object and return it
+    return FoodItem(
+        name: maps[0]['itemName'],
+        quantity: maps[0]['itemQuantity'],
+        fat: (maps[0]['itemFat'] as num).toDouble(),
+        carbs: (maps[0]['itemCarbs'] as num).toDouble(),
+        protein: (maps[0]['itemProtein'] as num).toDouble(),
+        waterQuantity: (maps[0]['itemWaterQuantity'] as num).toDouble(),
+        exercise: (maps[0]['itemExercise'] as num).toDouble(),
+        vitamins: _parseMap(maps[0]['itemVitamins']),
+        minerals: _parseMap(maps[0]['itemMinerals']),
+        additionalNutrients:
+            _parseAdditionalNutrients(maps[0]['itemAdditionalNutrients']),
+        allergens: _parseList(maps[0]['itemAllergens']),
+        dietCompatibility: _parseList(maps[0]['itemDietCompatibility']),
+        warnings: _parseList(maps[0]['itemWarnings']),
+        healthScore: maps[0]['itemHealthScore'] ?? 0,
+    );
+  }
 
   Future<List<FoodData>> fetchFoodData() async {
     final db = await database;
@@ -279,4 +311,79 @@ class DatabaseHelper {
     }
     return List<String>.from(json.decode(jsonString));
   }
+
+
+
+
+
+
+    Future<void> insertFakeFoodData(FoodData foodData,String nowDate) async {
+    String nowDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
+
+    final db = await database;
+    int id = await db.insert('food_data', {
+      'date': nowDate,
+      'description': foodData.description,
+
+      // Main item fields
+      'itemName': foodData.item.name,
+      'itemQuantity': foodData.item.quantity,
+      'itemFat': foodData.item.fat,
+      'itemCarbs': foodData.item.carbs,
+      'itemProtein': foodData.item.protein,
+      'itemWaterQuantity': foodData.item.waterQuantity,
+      'itemExercise': foodData.item.exercise,
+      'itemVitamins':
+          jsonEncode(foodData.item.vitamins), // Convert Map to JSON string
+      'itemMinerals':
+          jsonEncode(foodData.item.minerals), // Convert Map to JSON string
+      'itemAdditionalNutrients': jsonEncode(
+          foodData.item.additionalNutrients), // Convert Map to JSON string
+      'itemAllergens':
+          jsonEncode(foodData.item.allergens), // Convert List to JSON string
+      'itemDietCompatibility': jsonEncode(
+          foodData.item.dietCompatibility), // Convert List to JSON string
+      'itemWarnings':
+          jsonEncode(foodData.item.warnings), // Convert List to JSON string
+      'itemHealthScore': foodData.item.healthScore,
+
+      // Alternate 1 fields
+      'alternate1Name': foodData.alternate1.name,
+      'alternate1Quantity': foodData.alternate1.quantity,
+      'alternate1Fat': foodData.alternate1.fat,
+      'alternate1Carbs': foodData.alternate1.carbs,
+      'alternate1Protein': foodData.alternate1.protein,
+      'alternate1WaterQuantity': foodData.alternate1.waterQuantity,
+      'alternate1Exercise': foodData.alternate1.exercise,
+      'alternate1Vitamins': jsonEncode(
+          foodData.alternate1.vitamins), // Convert Map to JSON string
+      'alternate1Minerals': jsonEncode(
+          foodData.alternate1.minerals), // Convert Map to JSON string
+      'alternate1AdditionalNutrients': jsonEncode(foodData
+          .alternate1.additionalNutrients), // Convert Map to JSON string
+      'alternate1Allergens': jsonEncode(
+          foodData.alternate1.allergens), // Convert List to JSON string
+      'alternate1DietCompatibility': jsonEncode(
+          foodData.alternate1.dietCompatibility), // Convert List to JSON string
+      'alternate1Warnings': jsonEncode(
+          foodData.alternate1.warnings), // Convert List to JSON string
+      'alternate1HealthScore': foodData.alternate1.healthScore,
+    });
+    print('after insert in id = $id');
+
+    // await HomeController().toDay!.AddFoodItem(id);
+    if (toDay != null) {
+      await toDay!.AddFoodItem(id);
+      print('it is not null');
+    } else {
+      print('it is null');
+    }
+    print('hhh${toDay!.caloriestarget}');
+    print('after adding food');
+
+    await DatabaseHelper2().updateOneDay(toDay!);
+    print('after update oneday');
+    HistoryShowController().getdata();
+  }
+
 }

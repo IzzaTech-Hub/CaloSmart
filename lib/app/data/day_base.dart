@@ -1,3 +1,5 @@
+import 'package:calories_detector/app/data/Data_Base.dart';
+import 'package:calories_detector/app/data/food_item.dart';
 import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -212,7 +214,6 @@ class DatabaseHelper2 {
   Future<List<OneDay>> fetchAllOneDays() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('one_day');
-
     return List.generate(maps.length, (i) {
       final map = maps[i];
       return OneDay(
@@ -240,6 +241,55 @@ class DatabaseHelper2 {
     });
   }
 
+
+Future<List<OneDay>> fetchAllOneDaysWithFoodItems() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('one_day');
+    
+    List<OneDay> oneDayList = [];
+
+    for (var map in maps) {
+      // Create a OneDay object
+      OneDay oneDay = OneDay(
+        date: map['date'],
+        caloriestarget: map['caloriestarget'],
+        watertarget: map['watertarget'],
+        exercisetarget: map['exercisetarget'],
+        fattarget: map['fattarget'],
+        protientarget: map['protientarget'],
+        carbstarget: map['carbstarget'],
+      )
+        ..caloriesProgress = map['caloriesProgress']
+        ..waterProgress = map['waterProgress']
+        ..exerciseProgress = map['exerciseProgress']
+        ..fatProgress = map['fatProgress']
+        ..proteinProgress = map['proteinProgress']
+        ..carbsProgress = map['carbsProgress']
+        ..caloriesRemaining = map['caloriesRemaining']
+        ..waterRemaining = map['waterRemaining']
+        ..exerciseRemaining = map['exerciseRemaining']
+        ..fatRemaining = map['fatRemaining']
+        ..proteinRemaining = map['proteinRemaining']
+        ..carbsRemaining = map['carbsRemaining']
+        ..indexes = map['indexes'].split(',').map(int.parse).toList();
+
+      // Create a list to hold food items
+      List<FoodItem> foodItems = [];
+      
+      // Iterate through indexes to fetch food items
+      for (int index in oneDay.indexes) {
+        FoodItem? foodItem = await DatabaseHelper().fetchFoodIemByIndex(index);
+        foodItems.add(foodItem!);
+      }
+
+      // Assign food items to the OneDay object
+      oneDay.fooditems = foodItems; // Assuming `foodItems` is a property in OneDay
+      
+      oneDayList.add(oneDay);
+    }
+    
+    return oneDayList;
+  }
   Future<int> getIndexByDate(String date) async {
     List<OneDay> days = await fetchAllOneDays();
     for (int i = 0; i < days.length; i++) {

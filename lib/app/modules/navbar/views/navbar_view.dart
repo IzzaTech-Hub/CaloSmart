@@ -1,3 +1,4 @@
+import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -175,11 +176,15 @@ class NavbarView extends GetView<NavbarController> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    TempDataAddinDataBase();
                     print('index=3');
-                    controller.index.value = 3;
-                    controller.resetFunction();
                   },
+                  // onTap: () {
+                  //   print('index=3');
+                  //   controller.index.value = 3;
+                  //   controller.resetFunction();
+                  // },
                   child: SizedBox(
                     width: 50,
                     child: Column(

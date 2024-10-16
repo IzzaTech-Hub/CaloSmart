@@ -358,7 +358,7 @@ class ResponseScreenController extends GetxController {
   }
 
   void logFeed(FoodData foodData) async {
-    final dbHelper = DatabaseHelper(); // Create an instance of DatabaseHelper
+    final dbHelper = DatabaseHelper();
     print(checkFirst.value);
     if (checkFirst.value) {
       // dbHelper.deleteDatabaseFile();

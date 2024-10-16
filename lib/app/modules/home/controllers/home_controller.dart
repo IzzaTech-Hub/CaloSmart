@@ -32,7 +32,7 @@ double size2 = size - (thickness + padbetween) * 1;
 double size3 = size - (thickness + padbetween) * 2;
 OneDay? toDay = OneDay(
   date: '06/10/2024',
-  caloriestarget: 3000,
+  caloriestarget: 2200,
   watertarget: 4,
   exercisetarget: 150,
   fattarget: 44,
