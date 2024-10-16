@@ -1,4 +1,4 @@
-package com.ai.caloriescanner.calorietracker
+package com.ai.caloriecounter.scanner
 
 import io.flutter.embedding.android.FlutterActivity
 

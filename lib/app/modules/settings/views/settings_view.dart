@@ -1,6 +1,6 @@
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:launch_review/launch_review.dart';
+// import 'package:launch_review/launch_review.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import '../controllers/settings_controller.dart';
@@ -68,9 +68,9 @@ class SettingsView extends GetView<SettingsController> {
             onTap: () {
               // Logic to rate the app
               // Get.snackbar('Info', 'Navigate to Rate Us');
-              LaunchReview.launch(
-                androidAppId: "com.ai.caloriescanner.calorietracker",
-              );
+              // LaunchReview.launch(
+              //   androidAppId: "com.ai.caloriescanner.calorietracker",
+              // );
             },
             child: Container(
               height: 60, // Fixed height for uniformity

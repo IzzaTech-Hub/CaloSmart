@@ -51,28 +51,28 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCQ1moqwuSg737mgpQB5dPwoL05Bj0E0-Q',
-    appId: '1:828532925773:android:4f39df4e65dfe884bb8304',
-    messagingSenderId: '828532925773',
-    projectId: 'calories-scanner-2772d',
-    storageBucket: 'calories-scanner-2772d.appspot.com',
+    apiKey: 'AIzaSyA5c60X84XIdCJInofC6bLclMDgEFT0b_I',
+    appId: '1:523828690061:android:5fae6a81a525fd92e176c4',
+    messagingSenderId: '523828690061',
+    projectId: 'calorie-finder-6464a',
+    storageBucket: 'calorie-finder-6464a.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAD7-Ws-pge9gDENEvxGufxNxxNQY-hJNU',
-    appId: '1:828532925773:ios:fabf3e95daa845cdbb8304',
-    messagingSenderId: '828532925773',
-    projectId: 'calories-scanner-2772d',
-    storageBucket: 'calories-scanner-2772d.appspot.com',
-    iosBundleId: 'com.ai.caloriescanner.calorietracker',
+    apiKey: 'AIzaSyAMe8LYCc7YlaWUtSHMMffmCIP1gMzOyE8',
+    appId: '1:523828690061:ios:b20d5a5853892c6fe176c4',
+    messagingSenderId: '523828690061',
+    projectId: 'calorie-finder-6464a',
+    storageBucket: 'calorie-finder-6464a.appspot.com',
+    iosBundleId: 'com.ai.caloriecounter.scanner',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAD7-Ws-pge9gDENEvxGufxNxxNQY-hJNU',
-    appId: '1:828532925773:ios:46cbe27090faf4a3bb8304',
-    messagingSenderId: '828532925773',
-    projectId: 'calories-scanner-2772d',
-    storageBucket: 'calories-scanner-2772d.appspot.com',
+    apiKey: 'AIzaSyAMe8LYCc7YlaWUtSHMMffmCIP1gMzOyE8',
+    appId: '1:523828690061:ios:3bfb9cdf8dd18083e176c4',
+    messagingSenderId: '523828690061',
+    projectId: 'calorie-finder-6464a',
+    storageBucket: 'calorie-finder-6464a.appspot.com',
     iosBundleId: 'com.example.caloriesDetector',
   );
 
