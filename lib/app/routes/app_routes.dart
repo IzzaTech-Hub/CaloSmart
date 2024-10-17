@@ -17,6 +17,7 @@ abstract class Routes {
   static const NAVBAR = _Paths.NAVBAR;
   static const LIQUIDLOADING = _Paths.LIQUIDLOADING;
   static const SETTINGS = _Paths.SETTINGS;
+  static const WEBVIEW = _Paths.WEBVIEW;
 }
 
 abstract class _Paths {
@@ -35,4 +36,5 @@ abstract class _Paths {
   static const NAVBAR = '/navbar';
   static const LIQUIDLOADING = '/liquidloading';
   static const SETTINGS = '/settings';
+  static const WEBVIEW = '/webview';
 }

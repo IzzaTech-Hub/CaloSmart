@@ -195,6 +195,7 @@ class DatabaseHelper {
       ),
     );
   }
+
   Future<FoodItem?> fetchFoodIemByIndex(int index) async {
     final db = await database;
 
@@ -210,21 +211,21 @@ class DatabaseHelper {
 
     // Convert the row into a FoodData object and return it
     return FoodItem(
-        name: maps[0]['itemName'],
-        quantity: maps[0]['itemQuantity'],
-        fat: (maps[0]['itemFat'] as num).toDouble(),
-        carbs: (maps[0]['itemCarbs'] as num).toDouble(),
-        protein: (maps[0]['itemProtein'] as num).toDouble(),
-        waterQuantity: (maps[0]['itemWaterQuantity'] as num).toDouble(),
-        exercise: (maps[0]['itemExercise'] as num).toDouble(),
-        vitamins: _parseMap(maps[0]['itemVitamins']),
-        minerals: _parseMap(maps[0]['itemMinerals']),
-        additionalNutrients:
-            _parseAdditionalNutrients(maps[0]['itemAdditionalNutrients']),
-        allergens: _parseList(maps[0]['itemAllergens']),
-        dietCompatibility: _parseList(maps[0]['itemDietCompatibility']),
-        warnings: _parseList(maps[0]['itemWarnings']),
-        healthScore: maps[0]['itemHealthScore'] ?? 0,
+      name: maps[0]['itemName'],
+      quantity: maps[0]['itemQuantity'],
+      fat: (maps[0]['itemFat'] as num).toDouble(),
+      carbs: (maps[0]['itemCarbs'] as num).toDouble(),
+      protein: (maps[0]['itemProtein'] as num).toDouble(),
+      waterQuantity: (maps[0]['itemWaterQuantity'] as num).toDouble(),
+      exercise: (maps[0]['itemExercise'] as num).toDouble(),
+      vitamins: _parseMap(maps[0]['itemVitamins']),
+      minerals: _parseMap(maps[0]['itemMinerals']),
+      additionalNutrients:
+          _parseAdditionalNutrients(maps[0]['itemAdditionalNutrients']),
+      allergens: _parseList(maps[0]['itemAllergens']),
+      dietCompatibility: _parseList(maps[0]['itemDietCompatibility']),
+      warnings: _parseList(maps[0]['itemWarnings']),
+      healthScore: maps[0]['itemHealthScore'] ?? 0,
     );
   }
 
@@ -312,15 +313,11 @@ class DatabaseHelper {
     return List<String>.from(json.decode(jsonString));
   }
 
-
-
-
-
-
-    Future<void> insertFakeFoodData(FoodData foodData,String nowDate) async {
-    String nowDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
+  Future<void> insertFakeFoodData(FoodData foodData, String nowDate) async {
+    // String nowDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
 
     final db = await database;
+    print('inserting in db');
     int id = await db.insert('food_data', {
       'date': nowDate,
       'description': foodData.description,
@@ -385,5 +382,4 @@ class DatabaseHelper {
     print('after update oneday');
     HistoryShowController().getdata();
   }
-
 }

@@ -4,9 +4,11 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:calories_detector/app/data/Data_Base.dart';
+import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/data/food_item.dart';
 import 'package:calories_detector/app/modules/ResponseScreen/controllers/response_screen_controller.dart';
 import 'package:calories_detector/app/modules/ResponseScreen/views/response_screen_view.dart';
+import 'package:calories_detector/app/modules/home/controllers/history_show_controller.dart';
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
 import 'package:calories_detector/app/modules/home/views/home_view.dart';
 import 'package:calories_detector/app/modules/liquidloading/views/liquidloading_view.dart';
@@ -872,18 +874,24 @@ TempDataAddinDataBase() async {
     ),
   ];
   var dbh = DatabaseHelper();
-  await dbh.insertFakeFoodData(foodDataList[0], '10/10/24');
-  await dbh.insertFakeFoodData(foodDataList[1], '10/10/24');
-  await dbh.insertFakeFoodData(foodDataList[2], '10/10/24');
-  await dbh.insertFakeFoodData(foodDataList[3], '10/11/24');
-  await dbh.insertFakeFoodData(foodDataList[4], '10/11/24');
-  await dbh.insertFakeFoodData(foodDataList[5], '10/11/24');
-  await dbh.insertFakeFoodData(foodDataList[6], '10/11/24');
-  await dbh.insertFakeFoodData(foodDataList[7], '10/13/24');
-  await dbh.insertFakeFoodData(foodDataList[8], '10/14/24');
-  await dbh.insertFakeFoodData(foodDataList[9], '10/14/24');
-  await dbh.insertFakeFoodData(foodDataList[10], '10/15/24');
-  await dbh.insertFakeFoodData(foodDataList[11], '10/16/24');
-  await dbh.insertFakeFoodData(foodDataList[12], '10/16/24');
-  await dbh.insertFakeFoodData(foodDataList[13], '10/16/24');
+  await dbh.insertFakeFoodData(foodDataList[0], '10/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[1], '10/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[2], '11/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[3], '11/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[4], '11/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[5], '11/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[6], '12/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[7], '12/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[8], '13/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[9], '14/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[10], '14/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[11], '14/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[12], '15/10/2024');
+  await dbh.insertFakeFoodData(foodDataList[13], '16/10/2024');
+  HistoryShowController().getdata();
+}
+
+Deletedatabases() async {
+  await DatabaseHelper().deleteDatabaseFile();
+  await DatabaseHelper2().deleteDatabaseFile();
 }

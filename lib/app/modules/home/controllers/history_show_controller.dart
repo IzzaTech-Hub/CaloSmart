@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 RxList<OneDay> allDays = <OneDay>[].obs;
 RxList<FoodData> historyData = <FoodData>[].obs;
 RxList<String> historyDate = <String>[].obs;
+RxBool checkempty = false.obs;
 
 class HistoryShowController extends GetxController {
   void showResponse(int index) {
@@ -26,13 +27,18 @@ class HistoryShowController extends GetxController {
     try {
       List<FoodData> data = await DatabaseHelper().fetchFoodData();
       List<String> date = await DatabaseHelper().fetchDate();
-      List<OneDay> alldays = await DatabaseHelper2().fetchAllOneDays();
+      // List<OneDay> alldays = await DatabaseHelper2().fetchAllOneDays();
       // date.reversed;
       // data.reversed;
       historyData.value = data.reversed.toList();
       historyDate.value = date.reversed.toList();
     } catch (e) {
       print('Error fetching data: $e');
+    }
+    if (historyData.isEmpty) {
+      checkempty.value = true;
+    } else {
+      checkempty.value = false;
     }
   }
 }

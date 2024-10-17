@@ -1,4 +1,5 @@
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
+import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 // import 'package:launch_review/launch_review.dart';
 import 'package:get/get.dart';
@@ -65,12 +66,13 @@ class SettingsView extends GetView<SettingsController> {
           ),
           // Rate Us List Item with Icon Behind Text and Right Arrow
           GestureDetector(
-            onTap: () {
+            onTap: () async {
               // Logic to rate the app
               // Get.snackbar('Info', 'Navigate to Rate Us');
               // LaunchReview.launch(
               //   androidAppId: "com.ai.caloriescanner.calorietracker",
               // );
+              controller.openPlayStoreReview();
             },
             child: Container(
               height: 60, // Fixed height for uniformity
@@ -117,10 +119,42 @@ class SettingsView extends GetView<SettingsController> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.share, color: Colors.blue), // Share Icon
+                      Icon(Icons.share, color: Colors.green), // Share Icon
                       SizedBox(width: 10),
                       Text(
                         'Share',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                  Icon(Icons.arrow_forward_ios,
+                      color: Colors.grey), // Right Arrow
+                ],
+              ),
+            ),
+          ),
+          Divider(
+            height: 20,
+          ),
+          GestureDetector(
+            onTap: () async {
+              // controller.openPrivacyPolicy();
+              Get.toNamed(Routes.WEBVIEW);
+            },
+            child: Container(
+              height: 60, // Fixed height for uniformity
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.privacy_tip,
+                          color: Colors.blue), // Rate Us Icon
+                      SizedBox(width: 10),
+                      Text(
+                        'Privacy Policy',
                         style: TextStyle(fontSize: 16),
                       ),
                     ],

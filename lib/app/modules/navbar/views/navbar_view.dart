@@ -176,26 +176,27 @@ class NavbarView extends GetView<NavbarController> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () async {
-                    TempDataAddinDataBase();
-                    print('index=3');
-                  },
-                  // onTap: () {
+                  // onTap: () async {
+                  //   TempDataAddinDataBase();
+                  //   // Deletedatabases();
                   //   print('index=3');
-                  //   controller.index.value = 3;
-                  //   controller.resetFunction();
                   // },
+                  onTap: () {
+                    print('index=3');
+                    controller.index.value = 3;
+                    controller.resetFunction();
+                  },
                   child: SizedBox(
                     width: 50,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.person,
+                        Icon(Icons.settings,
                             size: controller.index.value == 3 ? 30 : 25,
                             color: controller.index.value == 3
                                 ? Colors.green
                                 : Colors.grey),
-                        Text('Me',
+                        Text('Setting',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: controller.index.value == 3
