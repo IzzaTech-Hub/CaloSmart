@@ -56,22 +56,20 @@ class SettingsController extends GetxController {
     // Define the URI for the privacy policy document
     // final Uri privacyPolicyUri = Uri.parse(
     //     'https://play.google.com/store/apps/details?id=com.ai.caloriescanner.calorietracker');
-    final Uri privacyPolicyUri = Uri.parse('https://www.google.com');
-    // final Uri privacyPolicyUri = Uri.parse(
-    //     'https://docs.google.com/document/d/1p3TlpUixPKvev9rMR-bo3tv-8yOvf6n3/edit?usp=drive_link&ouid=116035705295374336742&rtpof=true&sd=true');
+    // final Uri privacyPolicyUri = Uri.parse('https://www.google.com');
+    final Uri privacyPolicyUri = Uri.parse(
+        'https://docs.google.com/document/d/1p3TlpUixPKvev9rMR-bo3tv-8yOvf6n3/edit?usp=drive_link&ouid=116035705295374336742&rtpof=true&sd=true');
 
     print('URI created: $privacyPolicyUri');
 
     // Check if the URL can be launched
     if (await canLaunchUrl(privacyPolicyUri)) {
       // Launch the URL
-      await launchUrl(privacyPolicyUri);
+      await launchUrl(privacyPolicyUri, mode: LaunchMode.externalApplication);
       print('Launching privacy policy URL...');
     } else {
       // Throw an error if the URL cannot be launched
       throw 'Could not launch $privacyPolicyUri';
     }
   }
-
-
 }

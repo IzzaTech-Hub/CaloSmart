@@ -138,8 +138,8 @@ class SettingsView extends GetView<SettingsController> {
           ),
           GestureDetector(
             onTap: () async {
-              // controller.openPrivacyPolicy();
-              Get.toNamed(Routes.WEBVIEW);
+              controller.openPrivacyPolicy();
+              // Get.toNamed(Routes.WEBVIEW);
             },
             child: Container(
               height: 60, // Fixed height for uniformity
