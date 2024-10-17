@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:in_app_review/in_app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 class SettingsController extends GetxController {
   var selectedGoal = ''.obs;
 
@@ -70,6 +69,18 @@ class SettingsController extends GetxController {
     } else {
       // Throw an error if the URL cannot be launched
       throw 'Could not launch $privacyPolicyUri';
+    }
+  }
+
+  void openExternalLink() async {
+    final Uri url = Uri.parse('https://youtube.com/');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
