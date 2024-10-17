@@ -1,6 +1,7 @@
 import 'package:calories_detector/app/modules/liquidloading/views/liquidloading_view.dart';
 import 'package:calories_detector/app/modules/navbar/controllers/navbar_controller.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
+import 'package:calories_detector/app/modules/utills/remoteConfigVariables.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +28,9 @@ Uint8List? imageFile2;
 
 Rxn<FoodItem> compairFood2 = Rxn<FoodItem>();
 RxBool checkFirst = true.obs;
+Rxn<FoodItem> compairFood1 = Rxn<FoodItem>();
 
 class ResponseScreenController extends GetxController {
-  Rxn<FoodItem> compairFood1 = Rxn<FoodItem>();
   // void Comparefunction(BuildContext context) {
   //   showDialog(
   //     context: context,
@@ -217,7 +218,7 @@ class ResponseScreenController extends GetxController {
 
     final model = GenerativeModel(
       model: 'gemini-1.5-flash',
-      apiKey: 'AIzaSyD4cCpD7lP-Q9raPF59L8npR8H5NF3pLIo',
+      apiKey: RCVariables.GemeniAPIKey.value,
     );
     String goal = 'gain Weight';
     final prefs = await SharedPreferences.getInstance();

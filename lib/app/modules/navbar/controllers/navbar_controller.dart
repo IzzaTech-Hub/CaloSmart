@@ -14,6 +14,7 @@ import 'package:calories_detector/app/modules/home/views/home_view.dart';
 import 'package:calories_detector/app/modules/liquidloading/views/liquidloading_view.dart';
 import 'package:calories_detector/app/modules/settings/views/settings_view.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
+import 'package:calories_detector/app/modules/utills/remoteConfigVariables.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -169,7 +170,7 @@ class NavbarController extends GetxController {
 
     final model = GenerativeModel(
       model: 'gemini-1.5-flash',
-      apiKey: 'AIzaSyD4cCpD7lP-Q9raPF59L8npR8H5NF3pLIo',
+      apiKey: RCVariables.GemeniAPIKey.value,
     );
     final prefs = await SharedPreferences.getInstance();
     print(prefs.getString('selected_button') ?? 'None');

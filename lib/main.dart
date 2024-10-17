@@ -1,5 +1,6 @@
 import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
+import 'package:calories_detector/app/services/remoteconfig_services.dart';
 import 'package:calories_detector/firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -50,6 +51,7 @@ void main() async {
   // DatabaseHelper2().deleteDatabaseFile;
   await DatabaseHelper().database;
   await DatabaseHelper2().database;
+  await RemoteConfigService().initialize();
   runApp(
     MyApp(),
 

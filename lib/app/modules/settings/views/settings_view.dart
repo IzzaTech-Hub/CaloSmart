@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import '../controllers/settings_controller.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
+// import 'package:flutter_web_browser/flutter_web_browser.dart';
 
 class SettingsView extends GetView<SettingsController> {
   const SettingsView({super.key});
@@ -109,7 +109,7 @@ class SettingsView extends GetView<SettingsController> {
               // Logic to share the app
               // Get.snackbar('Info', 'Share this app with others');
               Share.share(
-                  "Consider downloading this exceptional app, available on the Google Play Store at the following link: https://play.google.com/store/apps/details?id=com.ai.caloriescanner.calorietracker");
+                  "Consider downloading this exceptional app, available on the Google Play Store at the following link: https://play.google.com/store/apps/details?id=com.ai.caloriecounter.scanner");
             },
             child: Container(
               height: 60, // Fixed height for uniformity
@@ -139,30 +139,8 @@ class SettingsView extends GetView<SettingsController> {
           ),
           GestureDetector(
             onTap: () async {
-              // controller.openExternalLink();
+              controller.openPrivacyPolicy();
               // Get.toNamed(Routes.WEBVIEW);
-              FlutterWebBrowser.openWebPage(
-                url:
-                    "https://docs.google.com/document/d/1p3TlpUixPKvev9rMR-bo3tv-8yOvf6n3/edit?usp=drive_link&ouid=116035705295374336742&rtpof=true&sd=true",
-                customTabsOptions: const CustomTabsOptions(
-                  colorScheme: CustomTabsColorScheme.dark,
-                  toolbarColor: Colors.deepPurple,
-                  secondaryToolbarColor: Colors.green,
-                  navigationBarColor: Colors.amber,
-                  shareState: CustomTabsShareState.on,
-                  instantAppsEnabled: true,
-                  showTitle: true,
-                  urlBarHidingEnabled: true,
-                ),
-                safariVCOptions: const SafariViewControllerOptions(
-                  barCollapsingEnabled: true,
-                  preferredBarTintColor: Colors.green,
-                  preferredControlTintColor: Colors.amber,
-                  dismissButtonStyle:
-                      SafariViewControllerDismissButtonStyle.close,
-                  modalPresentationCapturesStatusBarAppearance: true,
-                ),
-              );
             },
             child: Container(
               height: 60, // Fixed height for uniformity
