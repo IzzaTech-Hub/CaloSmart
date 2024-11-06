@@ -2,6 +2,7 @@ import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
 import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/app/premium/trailbase.dart';
+import 'package:calories_detector/app/providers/applovin_ads_provider.dart';
 import 'package:calories_detector/app/services/remoteconfig_services.dart';
 import 'package:calories_detector/firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
+import 'dart:developer' as developer;
 
 void main() async {
   // Premium().isPremium.value = true;
@@ -67,6 +69,7 @@ void main() async {
   print('6');
   await Premium.instance.initialize();
   print('7');
+  AppLovinProvider.instance.init();
 
   runApp(
     MyApp(),
