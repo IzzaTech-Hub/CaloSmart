@@ -28,16 +28,15 @@ class SplashController extends GetxController {
 
     // if (0==0) {
     if (isFirstLaunch) {
-      await prefs.setBool('isFirstLaunch', false);
+      // await prefs.setBool('isFirstLaunch', false);
       Get.offNamed(Routes.GOAL_SCREEN);
       print("Navigated to Goal Route");
-     
     } else {
       Get.offNamed(Routes.NAVBAR);
       // Get.offNamed(Routes.GOAL_SCREEN);
       print("Went to Home");
       Get.put<HomeController>(
-        HomeController(false),
+        HomeController(),
       );
     }
   }

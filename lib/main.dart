@@ -1,5 +1,7 @@
 import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
+import 'package:calories_detector/app/premium/premium.dart';
+import 'package:calories_detector/app/premium/trailbase.dart';
 import 'package:calories_detector/app/services/remoteconfig_services.dart';
 import 'package:calories_detector/firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -14,6 +16,7 @@ import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async {
+  // Premium().isPremium.value = true;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -49,9 +52,22 @@ void main() async {
   // Initialize the database before running the app
   // DatabaseHelper().deleteDatabaseFile;
   // DatabaseHelper2().deleteDatabaseFile;
-  await DatabaseHelper().database;
-  await DatabaseHelper2().database;
+  print('1');
   await RemoteConfigService().initialize();
+  print('1.5');
+
+  await StreakManager.initializeStreak();
+  print('2');
+  await DatabaseHelper().database;
+  print('3');
+  await DatabaseHelper2().database;
+  print('4');
+  // await TrailbaseHelper.instance.database;
+  print('5');
+  print('6');
+  await Premium.instance.initialize();
+  print('7');
+
   runApp(
     MyApp(),
 

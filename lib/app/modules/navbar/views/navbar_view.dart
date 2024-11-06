@@ -1,5 +1,7 @@
 import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
+import 'package:calories_detector/app/premium/premium.dart';
+import 'package:calories_detector/app/premium/trailbase.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
@@ -185,6 +187,9 @@ class NavbarView extends GetView<NavbarController> {
                     print('index=3');
                     controller.index.value = 3;
                     controller.resetFunction();
+                    StreakManager.reset(0);
+                    // TrailbaseHelper.instance.deleteDatabaseFile();
+                    // Get.toNamed(Routes.SPLASH_SCREEN);
                   },
                   child: SizedBox(
                     width: 50,
@@ -272,28 +277,84 @@ class NavbarView extends GetView<NavbarController> {
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 35),
-                  child: SizedBox(
-                    height: 70,
-                    width: 70,
-                    child: FloatingActionButton(
-                        heroTag: 'tag3',
-                        onPressed: () {
-                          controller.showButtons.toggle();
-                        },
-                        backgroundColor: Colors.green,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35),
-                        ),
-                        child: GestureDetector(
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 35),
+                      child: SizedBox(
+                        height: 70,
+                        width: 100,
+                        child: Center(
                           child: SizedBox(
-                            height: 50,
-                            width: 50,
-                            child: Image.asset(AppImages.iconscan),
+                            height: 70,
+                            width: 70,
+                            child: FloatingActionButton(
+                                heroTag: 'tag3',
+                                onPressed: () {
+                                  if (Premium.instance.apple!.value >=
+                                      PremiumTheme.scanPrice) {
+                                    controller.showButtons.toggle();
+                                  } else {
+                                    Get.toNamed(Routes.PAYWALL);
+                                  }
+                                },
+                                backgroundColor: Colors.green,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                child: SizedBox(
+                                  height: 50,
+                                  width: 50,
+                                  child: Image.asset(AppImages.iconscan),
+                                )),
                           ),
-                        )),
-                  ),
+                        ),
+                      ),
+                    ),
+                    // Positioned(
+                    //   top: 0,
+                    //   right: 0,
+                    // child: SizedBox(
+                    //   width: 45,
+                    //   child: Center(
+                    //     child: Container(
+                    //       // height: 20,
+                    //       // width: 50,
+                    //       decoration: BoxDecoration(
+                    //           color: Colors.red,
+                    //           borderRadius: BorderRadius.circular(100)
+                    //           // shape: BoxShape.circle
+                    //           ),
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.all(3.0),
+                    //         child: Text(
+                    //             // '1000',
+                    //             '${Premium.instance.trail}',
+                    //             style: TextStyle(
+                    //                 color: Colors.white, height: 1)),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ))
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 60,
+                right: 30,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.asset(
+                      AppImages.apple2,
+                      height: 40,
+                      color: PremiumTheme.appleColor,
+                    ),
+                    Text(
+                      '${PremiumTheme.scanPrice}',
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    )
+                  ],
                 ),
               ),
             ],

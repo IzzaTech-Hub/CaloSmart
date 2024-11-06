@@ -43,7 +43,9 @@ class RemoteConfigService {
       ));
 
       await remoteConfig.setDefaults(const {
-        "GemeniAPIKey": "sdkkdksd",
+        "GemeniAPIKey": "AIzaSyD4cCpD7lP-Q9raPF59L8npR8H5NF3pLIo",
+        "PrivacyPolicyLink":
+            "https://docs.google.com/document/d/1p3TlpUixPKvev9rMR-bo3tv-8yOvf6n3/edit?usp=drive_link&ouid=116035705295374336742&rtpof=true&sd=true",
       });
 
       await remoteConfig.fetchAndActivate();
@@ -55,7 +57,8 @@ class RemoteConfigService {
 
   Future SetRemoteConfig() async {
     RCVariables.GemeniAPIKey.value = remoteConfig.getString('GemeniAPIKey');
-
+    RCVariables.PrivacyPolicyLink.value =
+        remoteConfig.getString('PrivacyPolicyLink');
     dp.log("Fetched Key: ${RCVariables.GemeniAPIKey.value}");
   }
 }

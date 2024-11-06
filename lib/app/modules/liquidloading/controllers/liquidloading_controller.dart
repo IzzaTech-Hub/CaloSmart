@@ -53,7 +53,6 @@ class LiquidloadingController extends GetxController {
     super.onInit();
   }
 
-
   @override
   void onClose() {
     // timer?.cancel();
@@ -140,7 +139,7 @@ class _MovingContainerState extends State<MovingContainer>
         return Transform.translate(
           offset: Offset(_animation.value, 0), // Moving vertically
           child: BlurryCircle(
-            color: Color(0xff002907),
+            color: Color(0xff000000),
             blurSigma: smallblureffect,
             size: smallsize,
           ),
@@ -209,7 +208,7 @@ class _MovingContainerState2 extends State<MovingContainer2>
         return Transform.translate(
           offset: Offset(_animation.value, 0), // Moving vertically
           child: BlurryCircle(
-            color: Color(0xff002907),
+            color: Color(0xff000000),
             blurSigma: smallblureffect,
             size: middlesize,
           ),

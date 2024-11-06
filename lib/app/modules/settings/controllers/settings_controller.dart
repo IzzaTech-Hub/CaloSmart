@@ -1,8 +1,10 @@
+import 'package:calories_detector/app/modules/utills/remoteConfigVariables.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:in_app_review/in_app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 class SettingsController extends GetxController {
   var selectedGoal = ''.obs;
 
@@ -56,8 +58,7 @@ class SettingsController extends GetxController {
     // final Uri privacyPolicyUri = Uri.parse(
     //     'https://play.google.com/store/apps/details?id=com.ai.caloriescanner.calorietracker');
     // final Uri privacyPolicyUri = Uri.parse('https://www.google.com');
-    final Uri privacyPolicyUri = Uri.parse(
-        'https://docs.google.com/document/d/1p3TlpUixPKvev9rMR-bo3tv-8yOvf6n3/edit?usp=drive_link&ouid=116035705295374336742&rtpof=true&sd=true');
+    final Uri privacyPolicyUri = Uri.parse(RCVariables.PrivacyPolicyLink.value);
 
     print('URI created: $privacyPolicyUri');
 

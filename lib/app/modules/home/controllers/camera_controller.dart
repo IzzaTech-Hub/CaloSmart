@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:calories_detector/app/modules/navbar/controllers/navbar_controller.dart';
+import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:camera/camera.dart';
 import 'dart:typed_data';
@@ -23,14 +24,45 @@ class CameraViewController extends GetxController {
   }
 
   Future<void> initializeCamera() async {
-    cameras.value = await availableCameras();
-    cameraController = CameraController(
-      cameras[currentCameraIndex.value],
-      ResolutionPreset.high,
-    );
+    try {
+      cameras.value = await availableCameras();
+      print('camera is available');
+      cameraController = CameraController(
+        cameras[currentCameraIndex.value],
+        ResolutionPreset.high,
+      );
+      print('START INITIALIZIN');
 
-    await cameraController?.initialize();
-    isCameraInitialized.value = true;
+      cameraController?.initialize().then((_) {
+        isCameraInitialized.value = true;
+        print('camera is INITIALIZE');
+      }).catchError((Object e) {
+        if (e is CameraException) {
+          print('CameraException');
+
+          Get.offAllNamed(Routes.NAVBAR, arguments: [true]);
+          // Get.snackbar('Error', 'Permission denied');
+
+          // Get.back();
+          switch (e.code) {
+            case 'CameraAccessDenied':
+              // Handle access errors here.
+              print('camera is CameraAccessDenied');
+
+              break;
+            default:
+              // Handle other errors here.
+              print('camera Other Error');
+
+              break;
+          }
+        }
+      });
+    } catch (e) {
+      print('snack catch');
+      Get.snackbar('Error', 'Permission denied');
+      Get.back();
+    }
   }
 
   Future<void> captureImage() async {

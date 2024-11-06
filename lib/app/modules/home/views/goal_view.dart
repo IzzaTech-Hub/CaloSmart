@@ -137,7 +137,7 @@ class goalView extends GetView<GoalController> {
                             prefs.getString('selected_button') ?? 'None';
                         print("Selected button: $selectedButton");
                         Get.put<HomeController>(
-                          HomeController(true),
+                          HomeController(),
                         );
                         Get.offAllNamed(Routes.NAVBAR);
                         // Get.toNamed(Routes.GENDER_SCREEN);
@@ -181,7 +181,7 @@ class goalView extends GetView<GoalController> {
                             prefs.getString('selected_button') ?? 'None';
                         print("Selected button: $selectedButton");
                         Get.put<HomeController>(
-                          HomeController(true),
+                          HomeController(),
                         );
                         Get.offAllNamed(Routes.NAVBAR);
                         // Get.toNamed(Routes.GENDER_SCREEN);
@@ -225,7 +225,7 @@ class goalView extends GetView<GoalController> {
                             prefs.getString('selected_button') ?? 'None';
                         print("Selected button: $selectedButton");
                         Get.put<HomeController>(
-                          HomeController(true),
+                          HomeController(),
                         );
                         Get.offAllNamed(Routes.NAVBAR);
                         // Get.toNamed(Routes.GENDER_SCREEN);

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:calories_detector/app/modules/home/controllers/splash_Controller.dart';
+import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,7 @@ class LiquidEffect extends StatelessWidget {
             // Blurred Black Circles
             Center(
               child: BlurryCircle(
-                color: Color(0xff002907),
+                color: Color(0xff000000),
                 blurSigma: largeblureffect,
                 size: largesize,
               ),
@@ -79,7 +80,27 @@ class LiquidEffect extends StatelessWidget {
             ),
           ),
         ),
-        Logo_Text()
+        Positioned(
+          child: Container(
+            width: 3000,
+            height: 3000,
+            // color: Colors.white.withOpacity(1), // Light source
+            foregroundDecoration: BoxDecoration(
+              color: AppThemeColors.splashColor,
+              // color: Color(0xffff0000),
+              backgroundBlendMode:
+                  BlendMode.lighten, // Approximation of Color Dodge
+            ),
+          ),
+        ),
+        // Logo_Text()
+        Center(
+          child: Text('CaloSmart',
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white)),
+        )
       ],
     );
   }
@@ -191,7 +212,7 @@ class _MovingContainerState extends State<MovingContainer>
         return Transform.translate(
           offset: Offset(0, _animation.value), // Moving vertically
           child: BlurryCircle(
-            color: Color(0xff002907),
+            color: Color(0xff000000),
             blurSigma: smallblureffect,
             size: smallsize,
           ),

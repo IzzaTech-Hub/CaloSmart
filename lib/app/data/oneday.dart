@@ -26,6 +26,7 @@ class OneDay {
   RxInt fatRemaining;
   RxInt proteinRemaining;
   RxInt carbsRemaining;
+  RxBool isRewardCollected=false.obs;
 
   List<int> indexes = [];
   List<FoodItem> fooditems = [];
@@ -38,6 +39,7 @@ class OneDay {
     required int fattarget,
     required int protientarget,
     required int carbstarget,
+    // required bool isRewardCollected,
   })  : caloriestarget = caloriestarget.obs,
         watertarget = watertarget.obs,
         exercisetarget = exercisetarget.obs,
@@ -50,6 +52,8 @@ class OneDay {
         fatRemaining = fattarget.obs,
         proteinRemaining = protientarget.obs,
         carbsRemaining = carbstarget.obs;
+  // isRewardCollected = isRewardCollected.obs;
+  // isRewardCollected;
 
   Future<void> AddFoodItem(int index) async {
     FoodItem fooditem =

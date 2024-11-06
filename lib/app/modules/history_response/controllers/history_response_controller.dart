@@ -136,6 +136,12 @@ class HistoryResponseController extends GetxController {
         sendImageToGoogleAI(imageFile); // Send image to Gemini
       }
     } catch (e) {
+      Get.snackbar('Permission denied',
+          "Unable to Scan from camera. now finding image from gallery",
+          snackPosition: SnackPosition.BOTTOM);
+      print('after snackbar');
+      await Future.delayed(Duration(seconds: 2));
+      pickImageFromGallery();
       print('Failed to pick image: $e');
     }
   }

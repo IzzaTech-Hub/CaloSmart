@@ -18,6 +18,8 @@ abstract class Routes {
   static const LIQUIDLOADING = _Paths.LIQUIDLOADING;
   static const SETTINGS = _Paths.SETTINGS;
   static const WEBVIEW = _Paths.WEBVIEW;
+  static const PAYWALL = _Paths.PAYWALL;
+  static const STREAK = _Paths.STREAK;
 }
 
 abstract class _Paths {
@@ -37,4 +39,6 @@ abstract class _Paths {
   static const LIQUIDLOADING = '/liquidloading';
   static const SETTINGS = '/settings';
   static const WEBVIEW = '/webview';
+  static const PAYWALL = '/paywall';
+  static const STREAK = '/streak';
 }

@@ -4,10 +4,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:calories_detector/SizeConfig.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
+import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:path/path.dart';
 import '../controllers/home_controller.dart';
 
 double convertToGlasses(int quantity, String unit) {
@@ -467,154 +469,7 @@ class HomeView extends GetView<HomeController> {
                                     padding: const EdgeInsets.only(right: 12.0),
                                     child: IconButton(
                                         onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return Dialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15), // Rounded corners
-                                                ),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    // gradient: LinearGradient(
-                                                    //   colors: [Colors.lightBlueAccent, Colors.blueAccent],
-                                                    //   begin: Alignment.topLeft,
-                                                    //   end: Alignment.bottomRight,
-                                                    // ),
-                                                    gradient: AppThemeColors
-                                                        .buttonColor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15), // Keep gradient rounded
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            20.0),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Text(
-                                                          'Compare Your Item',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                            fontSize: 22,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors
-                                                                .white, // Make title stand out on gradient
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: 15),
-                                                        Text(
-                                                          'Would you like to select an item from your gallery or take a new picture?',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                            fontSize: 15,
-                                                            color: Colors.black,
-                                                            // color: Colors.white,
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: 25),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceEvenly,
-                                                          children: [
-                                                            ElevatedButton.icon(
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                                NavbarController()
-                                                                    .pickImageFromGallery();
-                                                              },
-                                                              style:
-                                                                  ElevatedButton
-                                                                      .styleFrom(
-                                                                backgroundColor:
-                                                                    // Colors.green, // Gallery button background
-                                                                    Colors
-                                                                        .white,
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        vertical:
-                                                                            12,
-                                                                        horizontal:
-                                                                            20),
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                              ),
-                                                              icon: Icon(
-                                                                  Icons.photo,
-                                                                  color: AppThemeColors
-                                                                      .onPrimary1),
-                                                              label: Text(
-                                                                  'Gallery',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .black)),
-                                                            ),
-                                                            SizedBox(),
-                                                            ElevatedButton.icon(
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                                // pickImageFromCamera();
-                                                                Get.toNamed(Routes
-                                                                    .CAMERA_SCREEN);
-                                                              },
-                                                              style:
-                                                                  ElevatedButton
-                                                                      .styleFrom(
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .white, // Camera button background
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        vertical:
-                                                                            12,
-                                                                        horizontal:
-                                                                            20),
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                              ),
-                                                              icon: Icon(
-                                                                  Icons
-                                                                      .camera_alt,
-                                                                  color: AppThemeColors
-                                                                      .onPrimary1),
-                                                              label: Text(
-                                                                  'Camera',
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .black)),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          );
+                                          dialogueforfood(context);
                                         },
                                         icon: Icon(
                                           Icons.add_circle,
@@ -671,245 +526,7 @@ class HomeView extends GetView<HomeController> {
                                     padding: const EdgeInsets.only(right: 12.0),
                                     child: IconButton(
                                         onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              // Initial values for the number picker and unit dropdown
-                                              RxInt selectedQuantity =
-                                                  2.obs; // Initially set to 1
-                                              RxString selectedUnit =
-                                                  'liters'.obs;
-
-                                              return Dialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15), // Rounded corners
-                                                ),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    gradient: AppThemeColors
-                                                        .buttonColor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15), // Keep gradient rounded
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            20.0),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Text(
-                                                          'Enter Water Intake',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                            fontSize: 22,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors
-                                                                .white, // Make title stand out on gradient
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: 15),
-
-                                                        // Row for number picker and dropdown unit picker
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceEvenly,
-                                                          children: [
-                                                            // Number picker for water quantity
-                                                            Column(
-                                                              children: [
-                                                                Text(
-                                                                  "Quantity",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          16),
-                                                                ),
-                                                                Container(
-                                                                  height: 50,
-                                                                  width: 110,
-                                                                  padding: EdgeInsets
-                                                                      .symmetric(
-                                                                          horizontal:
-                                                                              10),
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: Colors
-                                                                        .white, // Add white background
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(5),
-                                                                  ),
-                                                                  child: Center(
-                                                                    child: Obx(
-                                                                      () =>
-                                                                          NumberPicker(
-                                                                        minValue:
-                                                                            1,
-                                                                        maxValue:
-                                                                            21,
-                                                                        value: selectedQuantity
-                                                                            .value, // Set initial value to 1
-                                                                        onChanged:
-                                                                            (newValue) {
-                                                                          selectedQuantity.value =
-                                                                              newValue;
-                                                                        },
-                                                                        itemHeight:
-                                                                            40,
-                                                                        textStyle:
-                                                                            TextStyle(color: Colors.black),
-                                                                        selectedTextStyle: TextStyle(
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontSize: 18),
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          border:
-                                                                              Border(
-                                                                            top:
-                                                                                BorderSide(color: Colors.grey, width: 1.5),
-                                                                            bottom:
-                                                                                BorderSide(color: Colors.grey, width: 1.5),
-                                                                          ),
-                                                                        ), // Add borders to center the picker value
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(width: 20),
-
-                                                            // Dropdown for selecting the unit
-                                                            Column(
-                                                              children: [
-                                                                Text(
-                                                                  "Unit",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          16),
-                                                                ),
-                                                                Container(
-                                                                  height: 50,
-                                                                  width: 110,
-                                                                  padding: EdgeInsets
-                                                                      .symmetric(
-                                                                          horizontal:
-                                                                              10),
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: Colors
-                                                                        .white, // Add white background
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(5),
-                                                                  ),
-                                                                  child: Obx(
-                                                                    () => DropdownButton<
-                                                                        String>(
-                                                                      value: selectedUnit
-                                                                          .value,
-                                                                      onChanged:
-                                                                          (String?
-                                                                              newValue) {
-                                                                        if (newValue !=
-                                                                            null) {
-                                                                          selectedUnit.value =
-                                                                              newValue;
-                                                                        }
-                                                                      },
-                                                                      items: <String>[
-                                                                        'liters',
-                                                                        'cups',
-                                                                        'glasses'
-                                                                      ].map<
-                                                                          DropdownMenuItem<
-                                                                              String>>((String
-                                                                          value) {
-                                                                        return DropdownMenuItem<
-                                                                            String>(
-                                                                          value:
-                                                                              value,
-                                                                          child:
-                                                                              Text(value),
-                                                                        );
-                                                                      }).toList(),
-                                                                      underline:
-                                                                          SizedBox(),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(height: 25),
-
-                                                        // Submit button to confirm the input
-                                                        ElevatedButton.icon(
-                                                          onPressed: () {
-                                                            // Convert water quantity based on selected unit
-                                                            double
-                                                                waterInLiters =
-                                                                convertToGlasses(
-                                                                    selectedQuantity
-                                                                            .value -
-                                                                        1,
-                                                                    selectedUnit
-                                                                        .value);
-
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop(
-                                                                    waterInLiters);
-                                                            toDay!.AddWater(
-                                                                waterInLiters);
-                                                          },
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            backgroundColor:
-                                                                Colors.white,
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    vertical:
-                                                                        12,
-                                                                    horizontal:
-                                                                        20),
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                            ),
-                                                          ),
-                                                          icon: Icon(
-                                                              Icons.check,
-                                                              color: AppThemeColors
-                                                                  .onPrimary1),
-                                                          label: Text('Submit',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black)),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          );
+                                          dialogueforwater(context);
                                         },
                                         icon: Icon(
                                           Icons.add_circle,
@@ -966,174 +583,7 @@ class HomeView extends GetView<HomeController> {
                                     padding: const EdgeInsets.only(right: 12.0),
                                     child: IconButton(
                                         onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              // Initial value for the exercise time in minutes
-                                              RxInt selectedMinutes = 2
-                                                  .obs; // Initially set to 1 minute
-
-                                              return Dialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15), // Rounded corners
-                                                ),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    gradient: AppThemeColors
-                                                        .buttonColor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15), // Keep gradient rounded
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            20.0),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Text(
-                                                          'Enter Exercise Time',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                            fontSize: 22,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors
-                                                                .white, // Make title stand out on gradient
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: 15),
-
-                                                        // Row for number picker for exercise time in minutes
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceEvenly,
-                                                          children: [
-                                                            // Number picker for exercise time in minutes
-                                                            Column(
-                                                              children: [
-                                                                Text(
-                                                                  "Minutes",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          16),
-                                                                ),
-                                                                Container(
-                                                                  height: 50,
-                                                                  width: 110,
-                                                                  padding: EdgeInsets
-                                                                      .symmetric(
-                                                                          horizontal:
-                                                                              10),
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: Colors
-                                                                        .white, // Add white background
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(5),
-                                                                  ),
-                                                                  child: Center(
-                                                                    child: Obx(
-                                                                      () =>
-                                                                          NumberPicker(
-                                                                        minValue:
-                                                                            1,
-                                                                        maxValue:
-                                                                            121, // Setting a range from 1 to 120 minutes
-                                                                        value: selectedMinutes
-                                                                            .value, // Set initial value to 1
-                                                                        onChanged:
-                                                                            (newValue) {
-                                                                          selectedMinutes.value =
-                                                                              newValue;
-                                                                        },
-                                                                        itemHeight:
-                                                                            40,
-                                                                        textStyle:
-                                                                            TextStyle(color: Colors.black),
-                                                                        selectedTextStyle: TextStyle(
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontSize: 18),
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          border:
-                                                                              Border(
-                                                                            top:
-                                                                                BorderSide(color: Colors.grey, width: 1.5),
-                                                                            bottom:
-                                                                                BorderSide(color: Colors.grey, width: 1.5),
-                                                                          ),
-                                                                        ), // Add borders to center the picker value
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(height: 25),
-
-                                                        // Submit button to confirm the input
-                                                        ElevatedButton.icon(
-                                                          onPressed: () {
-                                                            int exerciseTimeInMinutes =
-                                                                selectedMinutes
-                                                                    .value;
-
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop(
-                                                                    exerciseTimeInMinutes);
-                                                            toDay!.AddExercise(
-                                                                (exerciseTimeInMinutes -
-                                                                        1) /
-                                                                    60);
-                                                          },
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            backgroundColor:
-                                                                Colors.white,
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    vertical:
-                                                                        12,
-                                                                    horizontal:
-                                                                        20),
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                            ),
-                                                          ),
-                                                          icon: Icon(
-                                                              Icons.check,
-                                                              color: AppThemeColors
-                                                                  .onPrimary1),
-                                                          label: Text('Submit',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black)),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          );
+                                          dialogueforexercise(context);
                                         },
                                         icon: Icon(
                                           Icons.add_circle,
@@ -1309,4 +759,652 @@ class HomeViewAppBar extends GetView<HomeController> {
     SizeConfig().init(context);
     return appThemeAppBar(context, 'Home');
   }
+}
+
+dialogueforfood(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Rounded corners
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: AppThemeColors.buttonColor,
+            borderRadius: BorderRadius.circular(15), // Keep gradient rounded
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Select an Option',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white, // Make title stand out on gradient
+                  ),
+                ),
+                SizedBox(height: 15),
+                Text(
+                  'Would you like to enter data manually or scan an item?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(height: 25),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        dialogueformanualdata(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Text('Manual Data',
+                          style: TextStyle(color: Colors.black)),
+                    ),
+                    SizedBox(),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        dialogueforscan(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Text('Scan', style: TextStyle(color: Colors.black)),
+                          SizedBox(width: 5),
+                          Container(
+                            // height: 20,
+                            // width: 50,
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(100)
+                                // shape: BoxShape.circle
+                                ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Text(
+                                  // '1000',
+                                  '${Premium.instance.apple!.value}',
+                                  style: TextStyle(
+                                      color: Colors.white, height: 1)),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+dialogueforscan(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Rounded corners
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: AppThemeColors.buttonColor,
+            borderRadius: BorderRadius.circular(15), // Keep gradient rounded
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Compare Your Item',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white, // Make title stand out on gradient
+                  ),
+                ),
+                SizedBox(height: 15),
+                Text(
+                  'Would you like to select an item from your gallery or take a new picture?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(height: 25),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        NavbarController().pickImageFromGallery();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      icon: Icon(Icons.photo, color: AppThemeColors.onPrimary1),
+                      label: Text('Gallery',
+                          style: TextStyle(color: Colors.black)),
+                    ),
+                    SizedBox(),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Get.toNamed(Routes.CAMERA_SCREEN);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      icon: Icon(Icons.camera_alt,
+                          color: AppThemeColors.onPrimary1),
+                      label:
+                          Text('Camera', style: TextStyle(color: Colors.black)),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+dialogueformanualdata(BuildContext context) {
+  RxBool showNutrients = false.obs;
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Rounded corners
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: AppThemeColors.buttonColor,
+            borderRadius: BorderRadius.circular(15), // Keep gradient rounded
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: StatefulBuilder(
+              builder: (context, setState) {
+                String foodName = '';
+                String calories = '';
+                String carbs = '';
+                String protein = '';
+                String fat = '';
+
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Enter Manual Data',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                    TextField(
+                      onChanged: (value) {
+                        foodName = value; // Capture food name input
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Food Item Name',
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    TextField(
+                      onChanged: (value) {
+                        calories = value; // Capture calories input
+                      },
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: 'Calories',
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    // Obx(() {
+                    //   return
+                    GestureDetector(
+                        onTap: () {
+                          showNutrients.toggle();
+                        },
+                        child: Obx(
+                          () => Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Nutrients (Optional)'),
+                              if (!showNutrients.value)
+                                Icon(Icons.arrow_drop_down)
+                              else
+                                Icon(Icons.arrow_drop_up)
+                            ],
+                          ),
+                        )),
+                    // return DropdownButton<String>(
+                    //   value: showNutrients.value
+                    //       ? 'Hide Nutrients'
+                    //       : 'Show Nutrients',
+                    //   onChanged: (String? newValue) {
+                    //     showNutrients.value = !showNutrients
+                    //         .value; // Toggle nutrient input fields
+                    //   },
+                    //   items: <String>['Show Nutrients', 'Hide Nutrients']
+                    //       .map<DropdownMenuItem<String>>((String value) {
+                    //     return DropdownMenuItem<String>(
+                    //       value: value,
+                    //       child: Text(value),
+                    //     );
+                    //   }).toList(),
+                    // );
+                    // }),
+                    Divider(color: Colors.white),
+                    Obx(() {
+                      if (showNutrients.value) {
+                        return Column(
+                          children: [
+                            SizedBox(height: 10),
+                            TextField(
+                              onChanged: (value) {
+                                carbs = value; // Capture carbs input
+                              },
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: 'Carbs (g)',
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            TextField(
+                              onChanged: (value) {
+                                protein = value; // Capture protein input
+                              },
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: 'Protein (g)',
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            TextField(
+                              onChanged: (value) {
+                                fat = value; // Capture fat input
+                              },
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: 'Fat (g)',
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                      return SizedBox
+                          .shrink(); // Return an empty widget if not shown
+                    }),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Add functionality to handle the submitted data
+                        print('Food Item: $foodName');
+                        print('Calories: $calories');
+                        print('Carbs: $carbs');
+                        print('Protein: $protein');
+                        print('Fat: $fat');
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child:
+                          Text('Submit', style: TextStyle(color: Colors.black)),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+dialogueforwater(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // Initial values for the number picker and unit dropdown
+      RxInt selectedQuantity = 2.obs; // Initially set to 1
+      RxString selectedUnit = 'liters'.obs;
+
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Rounded corners
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: AppThemeColors.buttonColor,
+            borderRadius: BorderRadius.circular(15), // Keep gradient rounded
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Enter Water Intake',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white, // Make title stand out on gradient
+                  ),
+                ),
+                SizedBox(height: 15),
+
+                // Row for number picker and dropdown unit picker
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    // Number picker for water quantity
+                    Column(
+                      children: [
+                        Text(
+                          "Quantity",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        Container(
+                          height: 50,
+                          width: 110,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Add white background
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Center(
+                            child: Obx(
+                              () => NumberPicker(
+                                minValue: 1,
+                                maxValue: 21,
+                                value: selectedQuantity
+                                    .value, // Set initial value to 1
+                                onChanged: (newValue) {
+                                  selectedQuantity.value = newValue;
+                                },
+                                itemHeight: 40,
+                                textStyle: TextStyle(color: Colors.black),
+                                selectedTextStyle: TextStyle(
+                                    color: Colors.black, fontSize: 18),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                        color: Colors.grey, width: 1.5),
+                                    bottom: BorderSide(
+                                        color: Colors.grey, width: 1.5),
+                                  ),
+                                ), // Add borders to center the picker value
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 20),
+
+                    // Dropdown for selecting the unit
+                    Column(
+                      children: [
+                        Text(
+                          "Unit",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        Container(
+                          height: 50,
+                          width: 110,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Add white background
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Obx(
+                            () => DropdownButton<String>(
+                              value: selectedUnit.value,
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  selectedUnit.value = newValue;
+                                }
+                              },
+                              items: <String>[
+                                'liters',
+                                'cups',
+                                'glasses'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              underline: SizedBox(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 25),
+
+                // Submit button to confirm the input
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Convert water quantity based on selected unit
+                    double waterInLiters = convertToGlasses(
+                        selectedQuantity.value - 1, selectedUnit.value);
+
+                    Navigator.of(context).pop(waterInLiters);
+                    toDay!.AddWater(waterInLiters);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  icon: Icon(Icons.check, color: AppThemeColors.onPrimary1),
+                  label: Text('Submit', style: TextStyle(color: Colors.black)),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+dialogueforexercise(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // Initial value for the exercise time in minutes
+      RxInt selectedMinutes = 2.obs; // Initially set to 1 minute
+
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Rounded corners
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: AppThemeColors.buttonColor,
+            borderRadius: BorderRadius.circular(15), // Keep gradient rounded
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Enter Exercise Time',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white, // Make title stand out on gradient
+                  ),
+                ),
+                SizedBox(height: 15),
+
+                // Row for number picker for exercise time in minutes
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    // Number picker for exercise time in minutes
+                    Column(
+                      children: [
+                        Text(
+                          "Minutes",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        Container(
+                          height: 50,
+                          width: 110,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Add white background
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Center(
+                            child: Obx(
+                              () => NumberPicker(
+                                minValue: 1,
+                                maxValue:
+                                    121, // Setting a range from 1 to 120 minutes
+                                value: selectedMinutes
+                                    .value, // Set initial value to 1
+                                onChanged: (newValue) {
+                                  selectedMinutes.value = newValue;
+                                },
+                                itemHeight: 40,
+                                textStyle: TextStyle(color: Colors.black),
+                                selectedTextStyle: TextStyle(
+                                    color: Colors.black, fontSize: 18),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                        color: Colors.grey, width: 1.5),
+                                    bottom: BorderSide(
+                                        color: Colors.grey, width: 1.5),
+                                  ),
+                                ), // Add borders to center the picker value
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 25),
+
+                // Submit button to confirm the input
+                ElevatedButton.icon(
+                  onPressed: () {
+                    int exerciseTimeInMinutes = selectedMinutes.value;
+
+                    Navigator.of(context).pop(exerciseTimeInMinutes);
+                    toDay!.AddExercise((exerciseTimeInMinutes - 1) / 60);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  icon: Icon(Icons.check, color: AppThemeColors.onPrimary1),
+                  label: Text('Submit', style: TextStyle(color: Colors.black)),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }

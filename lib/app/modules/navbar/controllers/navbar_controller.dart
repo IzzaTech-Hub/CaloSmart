@@ -9,12 +9,14 @@ import 'package:calories_detector/app/data/food_item.dart';
 import 'package:calories_detector/app/modules/ResponseScreen/controllers/response_screen_controller.dart';
 import 'package:calories_detector/app/modules/ResponseScreen/views/response_screen_view.dart';
 import 'package:calories_detector/app/modules/home/controllers/history_show_controller.dart';
+import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
 import 'package:calories_detector/app/modules/home/views/home_view.dart';
 import 'package:calories_detector/app/modules/liquidloading/views/liquidloading_view.dart';
 import 'package:calories_detector/app/modules/settings/views/settings_view.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/remoteConfigVariables.dart';
+import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,10 @@ Uint8List? navImg;
 final ImagePicker _picker = ImagePicker();
 
 class NavbarController extends GetxController {
+  // RxBool isPermissionDenied;
+
+  // final bool checkForDialog;
+  // NavbarController(this.checkForDialog);
   void resetFunction() {
     currentBody = bodyList[index.value];
     currentAppBar = appBarList[index.value];
@@ -56,7 +62,38 @@ class NavbarController extends GetxController {
 
   final count = 0.obs;
   @override
-  void onInit() {
+  void onInit() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
+    if (isFirstLaunch) {
+      await prefs.setBool('isFirstLaunch', false);
+      Get.dialog(
+          AlertDialog(
+            title: Text('Disclaimer'),
+            content: Text(
+                textAlign: TextAlign.justify,
+                'The nutritional information provided by this app is intended for informational purposes only and should not be considered a substitute for professional dietary advice. While we strive to offer accurate estimates of calories and nutrients based on the food images provided, the data may not always be 100% accurate due to variations in food preparation, portion sizes, and other factors. Users should use this information as a general guide and consult a healthcare professional for precise dietary recommendations.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.back(); // Close the dialog
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ),
+          barrierDismissible: false);
+    }
+    if (Get.arguments != null && Get.arguments[0] is bool) {
+      bool isPermissionDenied = Get.arguments[0] as bool;
+      if (isPermissionDenied) {
+        Get.snackbar('Permission denied',
+            "Unable to Scan from camera. now finding image from gallery",
+            snackPosition: SnackPosition.BOTTOM);
+        await Future.delayed(Duration(seconds: 2));
+        pickImageFromGallery();
+      }
+    }
     // HomeController().updateInitial();
     // Widget currentBody = bodyList[index.value];
     // Widget currentAppBar = appBarList[index.value];
@@ -78,68 +115,20 @@ class NavbarController extends GetxController {
     }
   }
 
+  Future<void> pickImageFromCamera() async {
+    try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+      if (image != null) {
+        File imageFile = File(image.path);
+        print('Image Path: ${image.path}');
+        sendImageToGoogleAI(imageFile); // Send image to Gemini
+      }
+    } catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
   Future<void> sendImageToGoogleAI(File imgFile) async {
-    // Get.back();
-    // Get.dialog(
-    //   Container(
-    //     color: AppThemeColors.secondery1
-    //         .withOpacity(0.6), // Semi-transparent background
-    //     child: Center(
-    //       child: Container(
-    //         padding: EdgeInsets.all(20),
-    //         decoration: BoxDecoration(
-    //           color: Colors.white, // Background for the dialog content
-    //           borderRadius: BorderRadius.circular(20),
-    //           boxShadow: [
-    //             BoxShadow(
-    //               color: Colors.black.withOpacity(0.2),
-    //               blurRadius: 10,
-    //               offset: Offset(0, 4),
-    //             ),
-    //           ],
-    //         ),
-    //         width: SizeConfig.screenWidth * 0.8,
-    //         child: Column(
-    //           mainAxisSize:
-    //               MainAxisSize.min, // Shrinks the column to fit content
-    //           crossAxisAlignment: CrossAxisAlignment.center,
-    //           children: [
-    //             Text(
-    //               'Analyzing your image...',
-    //               textAlign: TextAlign.center,
-    //               style: TextStyle(
-    //                 // fontFamily: 'Inter', // Inter font family
-    //                 fontSize: 18,
-    //                 fontWeight: FontWeight.bold,
-    //                 color: Colors.black54, // color: AppThemeColors.onPrimary1,
-    //                 decoration: TextDecoration.none,
-    //               ),
-    //             ),
-    //             SizedBox(height: 30),
-    //             LinearProgressIndicator(
-    //               valueColor: AlwaysStoppedAnimation<Color>(
-    //                   AppThemeColors.onPrimary1), // Custom progress bar color
-    //               backgroundColor: AppThemeColors.secondery1.withOpacity(0.2),
-    //               minHeight: 8, // Thickness of the loading bar
-    //             ),
-    //             SizedBox(height: 20),
-    //             // Text(
-    //             //   'Please wait while we process your image...',
-    //             //   textAlign: TextAlign.center,
-    //             //   style: TextStyle(
-    //             //     // fontFamily: 'Inter', // Inter font family
-    //             //     fontSize: 14,
-    //             //     color: Colors.grey[600],
-    //             //     decoration: TextDecoration.none,
-    //             //   ),
-    //             // ),
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    //   barrierDismissible: false, // Prevent dismissing by tapping outside
-    // );
     Get.dialog(
       Container(
         color: AppThemeColors.secondery1.withOpacity(0.6),
@@ -297,27 +286,6 @@ class NavbarController extends GetxController {
 '''
         'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
 
-//         {
-//   "item": {
-//     "name": "<string>",\n
-//     "quantity": "<string>",\n
-//     "fat": <int>,\n
-//     "carbs": <int>,\n
-//     "protein": <int>,\n
-//     "waterquantity": <float>,\n
-//     "exercise": <float>\n
-//   },\n
-//   "alternate1": {
-//     "name": "<string>",\n
-//     "quantity": "<string>",\n
-//     "fat": <int>,\n
-//     "carbs": <int>,\n
-//     "protein": <int>,\n
-//     "waterquantity": <float>,\n
-//     "exercise": <float>\n
-//   },\n
-//   "description":<string>\n
-// }
     print(prompt);
     Uint8List imageBytes = await imgFile.readAsBytes();
 
@@ -329,33 +297,38 @@ class NavbarController extends GetxController {
     //     Map<String, dynamic> jsonMap = jsonDecode(response.text?? '');
 
     // FoodData foodData = FoodData.fromJson(jsonMap);
-    try {
-      final response = await model.generateContent(content);
-      // Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
-      // FoodData foodData = FoodData.fromJson(jsonMap);
-
-      // FoodData foodData = await parseFoodData();
-      // Close the loading dialog
-      print(response.text);
-      // tempprompt.value = response.text!;
-      // print(foodData.item.name);
-
-      Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
-      // print(jsonMap['item']);
-      FoodData foodData = FoodData.fromJson(jsonMap);
+    if (!(Premium.instance.apple!.value >= PremiumTheme.scanPrice)) {
       Get.back();
-      goToREsponse(foodData, imageBytes);
-    } catch (e) {
-      // Close the loading dialog
-      Get.back();
+    } else {
+      try {
+        final response = await model.generateContent(content);
+        // Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
+        // FoodData foodData = FoodData.fromJson(jsonMap);
 
-      // Handle the error
-      Get.snackbar(
-        'Error',
-        // 'Failed to get response: $e',
-        'There is something Wrong with your image',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+        // FoodData foodData = await parseFoodData();
+        // Close the loading dialog
+        print(response.text);
+        // tempprompt.value = response.text!;
+        // print(foodData.item.name);
+
+        Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
+        // print(jsonMap['item']);
+        FoodData foodData = FoodData.fromJson(jsonMap);
+        Get.back();
+        Premium.instance.reduce1(PremiumTheme.scanPrice);
+        goToREsponse(foodData, imageBytes);
+      } catch (e) {
+        // Close the loading dialog
+        Get.back();
+
+        // Handle the error
+        Get.snackbar(
+          'Error',
+          // 'Failed to get response: $e',
+          'There is something Wrong with your image',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
     }
   }
 

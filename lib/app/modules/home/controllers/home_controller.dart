@@ -61,8 +61,7 @@ RxDouble progress3 = 0.0.obs;
 RxInt test = 1.obs;
 
 class HomeController extends GetxController {
-  final bool checkForDialog;
-  HomeController(this.checkForDialog);
+
 
   String nowDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
   @override
@@ -172,25 +171,6 @@ class HomeController extends GetxController {
       progress3.value = tempp3;
     } else {
       progress3.value = 1;
-    }
-
-    if (checkForDialog) {
-      Get.dialog(
-        AlertDialog(
-          title: Text('Disclaimer'),
-          content: Text(
-              textAlign: TextAlign.justify,
-              'The nutritional information provided by this app is intended for informational purposes only and should not be considered a substitute for professional dietary advice. While we strive to offer accurate estimates of calories and nutrients based on the food images provided, the data may not always be 100% accurate due to variations in food preparation, portion sizes, and other factors. Users should use this information as a general guide and consult a healthcare professional for precise dietary recommendations.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Get.back(); // Close the dialog
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
     }
 
     handlePushNotification();

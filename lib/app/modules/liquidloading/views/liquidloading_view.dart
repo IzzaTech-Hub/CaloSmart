@@ -1,4 +1,4 @@
-
+import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -33,7 +33,7 @@ class LiquidloadingView extends GetView<LiquidloadingController> {
             // Blurred Black Circles
             Center(
               child: BlurryCircle(
-                color: Color(0xff002907),
+                color: Color(0xff000000),
                 blurSigma: largeblureffect,
                 size: largesize,
               ),
@@ -61,6 +61,18 @@ class LiquidloadingView extends GetView<LiquidloadingController> {
               color: Colors.black.withOpacity(1),
               backgroundBlendMode:
                   BlendMode.colorBurn, // Approximation of Color Dodge
+            ),
+          ),
+        ),
+        Positioned(
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            // color: Colors.white.withOpacity(1), // Light source
+            foregroundDecoration: BoxDecoration(
+              color: AppThemeColors.splashColor,
+              backgroundBlendMode:
+                  BlendMode.lighten, // Approximation of Color Dodge
             ),
           ),
         ),

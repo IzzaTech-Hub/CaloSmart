@@ -1,5 +1,7 @@
+import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:calories_detector/app/modules/navbar/controllers/navbar_controller.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
+import 'package:calories_detector/app/premium/premium.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
@@ -165,10 +167,10 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                               SizeConfig.blockSizeHorizontal * 5),
                           bottomRight: Radius.circular(
                               SizeConfig.blockSizeHorizontal * 5))),
-                          // bottomLeft: Radius.circular(
-                          //     SizeConfig.blockSizeHorizontal * 5),
-                          // bottomRight: Radius.circular(
-                          //     SizeConfig.blockSizeHorizontal * 5))),
+                  // bottomLeft: Radius.circular(
+                  //     SizeConfig.blockSizeHorizontal * 5),
+                  // bottomRight: Radius.circular(
+                  //     SizeConfig.blockSizeHorizontal * 5))),
                   child: FittedBox(
                     fit: BoxFit.cover,
                     // child: controller.imageFile.value,
@@ -264,6 +266,18 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                                     padding: const EdgeInsets.only(right: 30),
                                     child: GestureDetector(
                                       onTap: () {
+                                        // if (!Premium
+                                        //     .instance.isPremium!.value) {
+                                        //   showDialog(
+                                        //     context: context,
+                                        //     builder: (BuildContext context) {
+                                        //       return FoodDetailsDialog(
+                                        //           foodData: foodData.value!);
+                                        //     },
+                                        //   );
+                                        // } else {
+                                        //   Get.toNamed(Routes.PAYWALL);
+                                        // }
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
@@ -835,7 +849,8 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                                       controller.Comparefunction(context);
                                     },
                                     text: 'Compare')
-                                .smallButton(),
+                                .smallButtonwithprice(
+                                    PremiumTheme.comparisonPrice),
                             AppThemeButton(
                                     onPressed: () {
                                       Get.toNamed(Routes.COMPARISON_VIEW_SCREEN,
@@ -847,7 +862,8 @@ class ResponseScreenView extends GetView<ResponseScreenController> {
                                           ]);
                                     },
                                     text: 'Alternative')
-                                .smallButton(),
+                                .smallButtonwithprice(
+                                    PremiumTheme.alternatePrice),
                           ],
                         ),
                         SizedBox(height: SizeConfig.screenWidth * 0.03),
