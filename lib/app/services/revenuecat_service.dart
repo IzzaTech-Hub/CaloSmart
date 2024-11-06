@@ -1,5 +1,6 @@
 import 'dart:developer' as dp;
 
+import 'package:calories_detector/app/premium/premium.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:ai_chatbot/app/modules/routes/app_pages.dart';
@@ -37,8 +38,10 @@ class RevenueCatService {
 
     if (isAdRemoved) {
       RevenueCatService().currentEntitlement.value = Entitlement.paid;
+      // Premium.instance.isPremium!.value = true;
     } else {
       RevenueCatService().currentEntitlement.value = Entitlement.free;
+      // Premium.instance.isPremium!.value = false;
     }
     dp.log("IsAdRemoved: $isAdRemoved");
     dp.log(
