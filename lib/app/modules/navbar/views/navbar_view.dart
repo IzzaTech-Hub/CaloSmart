@@ -2,6 +2,7 @@ import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/app/premium/trailbase.dart';
+import 'package:calories_detector/app/providers/applovin_ads_provider.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
