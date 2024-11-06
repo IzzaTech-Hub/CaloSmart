@@ -34,6 +34,12 @@ class Premium {
     updatePremium();
   }
 
+  increaseapple(int tovalue) async {
+    // await TrailbaseHelper.instance.decrementTrial();
+    AppleManager.increaseApple(tovalue);
+    updatePremium();
+  }
+
   rewardCollected() async {
     await DatabaseHelper2()
         .toggleRewardCollected(DateFormat('dd/MM/yyyy').format(DateTime.now()));
@@ -67,20 +73,9 @@ class Premium {
 class PremiumTheme {
   // static const appleColor = Colors.grey;
   static const appleColor = Colors.red;
-  // static const freeToken1 = 5;
-  // static const freeToken2 = 6;
-  // static const freeToken3 = 8;
-  // static const freeToken4 = 10;
-  // static const freeToken5 = 12;
-  // static const freeToken6 = 15;
-  // static const freeToken7 = 18;
-  // static const paidToken1 = 20;
-  // static const paidToken2 = 25;
-  // static const paidToken3 = 30;
-  // static const paidToken4 = 35;
-  // static const paidToken5 = 40;
-  // static const paidToken6 = 45;
-  // static const paidToken7 = 50;
+
+  static const List<int> basefreeTokens = [5, 6, 8, 10, 12, 15, 18];
+  static const List<int> basepaidTokens = [20, 25, 30, 35, 40, 45, 50];
   static const List<int> freeTokens = [5, 6, 8, 10, 12, 15, 18];
   static const List<int> paidTokens = [20, 25, 30, 35, 40, 45, 50];
 

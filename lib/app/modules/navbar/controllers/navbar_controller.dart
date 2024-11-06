@@ -15,6 +15,7 @@ import 'package:calories_detector/app/modules/home/views/home_view.dart';
 import 'package:calories_detector/app/modules/liquidloading/views/liquidloading_view.dart';
 import 'package:calories_detector/app/modules/settings/views/settings_view.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
+import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/modules/utills/remoteConfigVariables.dart';
 import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/sizeConfig.dart';
@@ -65,7 +66,8 @@ class NavbarController extends GetxController {
   void onInit() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
-    if (isFirstLaunch) {
+    // if (isFirstLaunch) {
+    if (0 == 0) {
       await prefs.setBool('isFirstLaunch', false);
       Get.dialog(
           AlertDialog(
@@ -83,7 +85,61 @@ class NavbarController extends GetxController {
             ],
           ),
           barrierDismissible: false);
+      Get.dialog(
+        Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15), // Rounded corners
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: AppThemeColors.buttonColor,
+              borderRadius: BorderRadius.circular(15), // Keep gradient rounded
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Welcome Reward',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // Make title stand out on gradient
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    children: [
+                      Image.asset(AppImages.applecenter),
+                      Text('X 30')
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  ElevatedButton.icon(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    icon: Icon(Icons.check, color: AppThemeColors.onPrimary1),
+                    label:
+                        Text('Collect', style: TextStyle(color: Colors.black)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        barrierDismissible: false,
+      );
     }
+
     if (Get.arguments != null && Get.arguments[0] is bool) {
       bool isPermissionDenied = Get.arguments[0] as bool;
       if (isPermissionDenied) {
@@ -316,7 +372,9 @@ class NavbarController extends GetxController {
         FoodData foodData = FoodData.fromJson(jsonMap);
         Get.back();
         Premium.instance.reduce1(PremiumTheme.scanPrice);
+        // HomeController().updatehomedata();
         goToREsponse(foodData, imageBytes);
+        // HomeController().updatehomedata();
       } catch (e) {
         // Close the loading dialog
         Get.back();

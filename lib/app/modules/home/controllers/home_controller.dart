@@ -61,8 +61,6 @@ RxDouble progress3 = 0.0.obs;
 RxInt test = 1.obs;
 
 class HomeController extends GetxController {
-
-
   String nowDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
   @override
   void onInit() async {
@@ -178,10 +176,12 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-  void updatehomedata() {
+  void updatehomedata() async {
     // test!.value = 100;
     print('update function call');
     print('${toDay!.caloriesProgress.value}');
+    // toDay = await DatabaseHelper2().fetchOneDay(nowDate);
+
     caloriestarget!.value = toDay!.caloriestarget.value;
     watertarget!.value = toDay!.watertarget.value.toInt();
     exercisetarget!.value = toDay!.exercisetarget.value;

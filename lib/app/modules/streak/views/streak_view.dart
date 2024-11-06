@@ -478,7 +478,15 @@ Padding StreakRewardView() {
                             color: AppThemeColors.onPrimary1,
                             width: 4,
                             strokeAlign: BorderSide.strokeAlignOutside)),
-                    child: Center(child: Text('0')),
+                    child: Center(
+                      // child: Text('0')
+                      child: Image.asset(
+                        AppImages.icongift,
+                        height: 18,
+                        width: 18,
+                        color: Colors.deepOrange,
+                      ),
+                    ),
                   ),
                   Container(
                     height: SizeConfig.screenWidth * 0.08,
@@ -501,7 +509,87 @@ Padding StreakRewardView() {
                   )))
             ],
           ),
-          Milestone(20, Container(), Container()),
+          Milestone(
+            20,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('Daily Reward',
+                    style: TextStyle(
+                        color: Colors.green, fontWeight: FontWeight.bold)),
+                // Text('+1', style: TextStyle(color: Colors.indigo)),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.asset(
+                      AppImages.apple2,
+                      height: 30,
+                      color: PremiumTheme.appleColor,
+                    ),
+                    Text(
+                      '+1',
+                      style: TextStyle(
+                          height: 1,
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('${PremiumTheme.basefreeTokens[6]}'),
+                    Icon(Icons.arrow_right_alt),
+                    Text(
+                      '${PremiumTheme.basefreeTokens[6] + 1}',
+                      style: TextStyle(color: Colors.indigo),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('Daily Reward',
+                    style: TextStyle(
+                        color: Colors.green, fontWeight: FontWeight.bold)),
+                // Text('+1', style: TextStyle(color: Colors.indigo)),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.asset(
+                      AppImages.apple2,
+                      height: 30,
+                      color: PremiumTheme.appleColor,
+                    ),
+                    Text(
+                      '+2',
+                      style: TextStyle(
+                          height: 1,
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('${PremiumTheme.basepaidTokens[6]}'),
+                    Icon(Icons.arrow_right_alt),
+                    Text(
+                      '${PremiumTheme.basepaidTokens[6] + 2}',
+                      style: TextStyle(color: Colors.amber),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
           Milestone(20, Container(), Container()),
           Milestone(20, Container(), Container()),
         ],

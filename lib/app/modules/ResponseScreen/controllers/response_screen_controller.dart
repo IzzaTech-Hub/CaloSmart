@@ -1,3 +1,4 @@
+import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:calories_detector/app/modules/liquidloading/views/liquidloading_view.dart';
 import 'package:calories_detector/app/modules/navbar/controllers/navbar_controller.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
@@ -372,6 +373,7 @@ class ResponseScreenController extends GetxController {
       // if (0 == 0) {
       try {
         await dbHelper.insertFoodData(foodData);
+        HomeController().updatehomedata();
         // Insert FoodData into the database
         // checkFirst.value == false;
         checkFirst.toggle();

@@ -1278,6 +1278,7 @@ dialogueforwater(BuildContext context) {
 
                     Navigator.of(context).pop(waterInLiters);
                     toDay!.AddWater(waterInLiters);
+                    HomeController().updatehomedata();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -1389,6 +1390,7 @@ dialogueforexercise(BuildContext context) {
 
                     Navigator.of(context).pop(exerciseTimeInMinutes);
                     toDay!.AddExercise((exerciseTimeInMinutes - 1) / 60);
+                    HomeController().updatehomedata();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,

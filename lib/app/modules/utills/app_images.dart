@@ -14,4 +14,5 @@ class AppImages {
   static const apple2 = 'assets/images/apple2.png';
   static const iconAdVedio = 'assets/images/iconadvedio.png';
   static const rewardapplesbox = 'assets/images/rewardapples.png';
+  static const icongift = 'assets/images/icongift.png';
 }
