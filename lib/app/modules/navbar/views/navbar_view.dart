@@ -1,4 +1,5 @@
 import 'package:calories_detector/app/data/Data_Base.dart';
+import 'package:calories_detector/app/modules/utills/app_ads.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/app/premium/trailbase.dart';
@@ -7,6 +8,7 @@ import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../controllers/navbar_controller.dart';
 
@@ -53,8 +55,9 @@ class NavbarView extends GetView<NavbarController> {
             () => Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                GestureDetector(
+                InkWell(
                   onTap: () {
+                    AdsHandler().pageShufflead();
                     print('index=0');
                     controller.index.value = 0;
                     controller.resetFunction();
@@ -82,8 +85,9 @@ class NavbarView extends GetView<NavbarController> {
                     ),
                   ),
                 ),
-                GestureDetector(
+                InkWell(
                   onTap: () {
+                    AdsHandler().pageShufflead();
                     print('index=1');
                     controller.index.value = 1;
                     controller.resetFunction();
@@ -112,21 +116,21 @@ class NavbarView extends GetView<NavbarController> {
                   ),
                 ),
                 SizedBox(width: 60), // Space for center button
-                GestureDetector(
+                InkWell(
                   onTap: () async {
                     // HomeController().updatehomedata();
                     // test!.value++;
-                    controller.index.value = 2;
+                    AdsHandler().pageShufflead();
+                    // controller.index.value = 2;
                     // controller.resetFunction();
                     print('index=2');
+                    Get.toNamed(Routes.AICHAT);
 
                     // await DatabaseHelper().deleteDatabaseFile();
                     // await DatabaseHelper2().deleteDatabaseFile();
                     // print('${test}');
-
                     // print('$tempprompt');
                     // HomeController().updateInitial();
-
                     // Get.dialog(
                     //   Container(
                     //     color: AppThemeColors.secondery1.withOpacity(0.6),
@@ -160,12 +164,14 @@ class NavbarView extends GetView<NavbarController> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.grading_sharp,
+                        Icon(
+                            // Icons.grading_sharp,
+                            Icons.chat,
                             size: controller.index.value == 2 ? 30 : 25,
                             color: controller.index.value == 2
                                 ? Colors.green
                                 : Colors.grey),
-                        Text('Responce',
+                        Text('Ai Chat',
                             style: TextStyle(
                                 fontSize: 9,
                                 fontWeight: controller.index.value == 2
@@ -178,19 +184,20 @@ class NavbarView extends GetView<NavbarController> {
                     ),
                   ),
                 ),
-                GestureDetector(
+                InkWell(
                   // onTap: () async {
                   //   TempDataAddinDataBase();
                   //   // Deletedatabases();
                   //   print('index=3');
                   // },
                   onTap: () {
+                    AdsHandler().pageShufflead();
                     print('index=3');
                     controller.index.value = 3;
                     controller.resetFunction();
-                    StreakManager.reset(0);
+                    // Deletedatabases();
                     // TrailbaseHelper.instance.deleteDatabaseFile();
-                    // Get.toNamed(Routes.SPLASH_SCREEN);
+                    // Get.toNamed(Routes.PAYWALL);
                   },
                   child: SizedBox(
                     width: 50,
@@ -296,7 +303,7 @@ class NavbarView extends GetView<NavbarController> {
                                       PremiumTheme.scanPrice) {
                                     controller.showButtons.toggle();
                                   } else {
-                                    Get.toNamed(Routes.PAYWALL);
+                                    Get.toNamed(Routes.STREAK);
                                   }
                                 },
                                 backgroundColor: Colors.green,

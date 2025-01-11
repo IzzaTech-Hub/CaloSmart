@@ -8,6 +8,7 @@ import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/data/food_item.dart';
 import 'package:calories_detector/app/modules/ResponseScreen/controllers/response_screen_controller.dart';
 import 'package:calories_detector/app/modules/ResponseScreen/views/response_screen_view.dart';
+import 'package:calories_detector/app/modules/aichat/views/aichat_view.dart';
 import 'package:calories_detector/app/modules/home/controllers/history_show_controller.dart';
 import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
@@ -18,6 +19,7 @@ import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/modules/utills/remoteConfigVariables.dart';
 import 'package:calories_detector/app/premium/premium.dart';
+import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +41,11 @@ class NavbarController extends GetxController {
   void resetFunction() {
     currentBody = bodyList[index.value];
     currentAppBar = appBarList[index.value];
-    print('${index.value}');
+    print('index is ${index.value}');
+  }
+
+  void changeindex(int tothis) {
+    index.value = tothis;
   }
 
   RxBool showButtons = false.obs;
@@ -48,13 +54,17 @@ class NavbarController extends GetxController {
   List<Widget> bodyList = <Widget>[
     HomeView(),
     HistoryShow(),
-    ResponseScreenView(),
+    // ResponseScreenView(),
+    // AichatView(),
+    SettingsView(),
     SettingsView()
   ];
   List<Widget> appBarList = <Widget>[
     HomeViewAppBar(),
     HistoryShowAppBar(),
-    ResponseScreenAppBar(),
+    // ResponseScreenAppBar(),
+    // AichatViewAppBar(),
+    SettingsViewAppBar(),
     SettingsViewAppBar()
   ];
 
@@ -66,8 +76,8 @@ class NavbarController extends GetxController {
   void onInit() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
-    // if (isFirstLaunch) {
-    if (0 == 0) {
+    if (isFirstLaunch) {
+      // if (0 == 0) {
       await prefs.setBool('isFirstLaunch', false);
       Get.dialog(
           AlertDialog(
@@ -78,66 +88,77 @@ class NavbarController extends GetxController {
             actions: [
               TextButton(
                 onPressed: () {
-                  Get.back(); // Close the dialog
+                  Get.back();
+                  Get.dialog(
+                    Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(15), // Rounded corners
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: AppThemeColors.buttonColor,
+                          borderRadius: BorderRadius.circular(
+                              15), // Keep gradient rounded
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Welcome Reward',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors
+                                      .white, // Make title stand out on gradient
+                                ),
+                              ),
+                              SizedBox(height: 15),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(AppImages.applecenter),
+                                  Text('X ${PremiumTheme.welcomeReward}')
+                                ],
+                              ),
+                              SizedBox(height: 15),
+                              Text('Can only be used today'),
+                              SizedBox(height: 15),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  Get.back();
+                                  Premium.instance.increaseapple(
+                                      PremiumTheme.welcomeReward);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 20),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                icon: Icon(Icons.check,
+                                    color: AppThemeColors.onPrimary1),
+                                label: Text('Collect',
+                                    style: TextStyle(color: Colors.black)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    barrierDismissible: false,
+                  );
                 },
                 child: Text('OK'),
               ),
             ],
           ),
           barrierDismissible: false);
-      Get.dialog(
-        Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15), // Rounded corners
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: AppThemeColors.buttonColor,
-              borderRadius: BorderRadius.circular(15), // Keep gradient rounded
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Welcome Reward',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white, // Make title stand out on gradient
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  Row(
-                    children: [
-                      Image.asset(AppImages.applecenter),
-                      Text('X 30')
-                    ],
-                  ),
-                  SizedBox(height: 15),
-                  ElevatedButton.icon(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    icon: Icon(Icons.check, color: AppThemeColors.onPrimary1),
-                    label:
-                        Text('Collect', style: TextStyle(color: Colors.black)),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        barrierDismissible: false,
-      );
     }
 
     if (Get.arguments != null && Get.arguments[0] is bool) {
@@ -164,7 +185,7 @@ class NavbarController extends GetxController {
       if (image != null) {
         File imageFile = File(image.path);
         print('Image Path: ${image.path}');
-        sendImageToGoogleAI(imageFile); // Send image to Gemini
+        sendImageToGoogleAI(imageFile);
       }
     } catch (e) {
       print('Failed to pick image: $e');
@@ -212,14 +233,266 @@ class NavbarController extends GetxController {
       ),
       barrierDismissible: false, // Prevent dismissing by tapping outside
     );
+    final prefs = await SharedPreferences.getInstance();
+    final prompt =
+        'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items with name, mass in kg no. of scoops, no. of litres or anything else suitable for that food. then tell 1 best and healthy alternates for it to consume instead of them if i want to ${prefs.getString('selected_button') ?? 'None'}. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these in waterquantity and how much exercise should be done(in hours).Values of vitamins and minerals in DV.Dietary Labels:Vegan,Vegetarian,Paleo,Keto,Gluten-Free,Dairy-Free,Low-Fat,Low-Carb,High-Fiber,Allergens:Gluten,Dairy,Eggs,Nuts,Soy,Shellfish,Warnings/Alerts:High in Sugar,High in Sodium,High in Saturated Fat,Contains Additives (e.g., preservatives, colorants) or you can tell none if there is not any in health score give it rating from five stars .At last give a short description about why should i consume the alternate how it is better than original. provide a response in JSON format with the following structure:\n';
 
     final model = GenerativeModel(
       model: 'gemini-1.5-flash',
       apiKey: RCVariables.GemeniAPIKey.value,
+      generationConfig: GenerationConfig(
+        temperature: 1,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 8000,
+        responseMimeType: 'application/json',
+        responseSchema: Schema(
+          SchemaType.object,
+          enumValues: [],
+          requiredProperties: ["item"],
+          properties: {
+            "item": Schema(
+              SchemaType.object,
+              enumValues: [],
+              requiredProperties: [
+                "name",
+                "quantity",
+                "calories",
+                "macronutrients",
+                "micronutrients",
+                "additionalNutrients",
+                "allergens",
+                "dietCompatibility",
+                "warnings",
+                "healthScore",
+                "waterquantity",
+                "exercise"
+              ],
+              properties: {
+                "name": Schema(
+                  SchemaType.string,
+                ),
+                "quantity": Schema(
+                  SchemaType.string,
+                ),
+                "calories": Schema(
+                  SchemaType.integer,
+                ),
+                "macronutrients": Schema(
+                  SchemaType.object,
+                  enumValues: [],
+                  requiredProperties: [
+                    "fat",
+                    "carbs",
+                    "protein",
+                    "fiber",
+                    "sugars",
+                    "saturatedFats",
+                    "unsaturatedFats",
+                    "transFats"
+                  ],
+                  properties: {
+                    "fat": Schema(
+                      SchemaType.number,
+                    ),
+                    "carbs": Schema(
+                      SchemaType.number,
+                    ),
+                    "protein": Schema(
+                      SchemaType.number,
+                    ),
+                    "fiber": Schema(
+                      SchemaType.number,
+                    ),
+                    "sugars": Schema(
+                      SchemaType.number,
+                    ),
+                    "saturatedFats": Schema(
+                      SchemaType.number,
+                    ),
+                    "unsaturatedFats": Schema(
+                      SchemaType.number,
+                    ),
+                    "transFats": Schema(
+                      SchemaType.number,
+                    ),
+                  },
+                ),
+                "micronutrients": Schema(
+                  SchemaType.object,
+                  enumValues: [],
+                  requiredProperties: ["vitamins", "minerals"],
+                  properties: {
+                    "vitamins": Schema(
+                      SchemaType.object,
+                      enumValues: [],
+                      requiredProperties: [
+                        "vitaminA",
+                        "vitaminC",
+                        "vitaminD",
+                        "vitaminE",
+                        "vitaminK",
+                        "vitaminB1",
+                        "vitaminB2",
+                        "vitaminB3",
+                        "vitaminB5",
+                        "vitaminB6",
+                        "vitaminB7",
+                        "vitaminB9",
+                        "vitaminB12"
+                      ],
+                      properties: {
+                        "vitaminA": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminC": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminD": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminE": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminK": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminB1": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminB2": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminB3": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminB5": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminB6": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminB7": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminB9": Schema(
+                          SchemaType.string,
+                        ),
+                        "vitaminB12": Schema(
+                          SchemaType.string,
+                        ),
+                      },
+                    ),
+                    "minerals": Schema(
+                      SchemaType.object,
+                      enumValues: [],
+                      requiredProperties: [
+                        "calcium",
+                        "iron",
+                        "potassium",
+                        "magnesium",
+                        "zinc",
+                        "sodium",
+                        "phosphorus",
+                        "copper",
+                        "manganese",
+                        "selenium"
+                      ],
+                      properties: {
+                        "calcium": Schema(
+                          SchemaType.string,
+                        ),
+                        "iron": Schema(
+                          SchemaType.string,
+                        ),
+                        "potassium": Schema(
+                          SchemaType.string,
+                        ),
+                        "magnesium": Schema(
+                          SchemaType.string,
+                        ),
+                        "zinc": Schema(
+                          SchemaType.string,
+                        ),
+                        "sodium": Schema(
+                          SchemaType.string,
+                        ),
+                        "phosphorus": Schema(
+                          SchemaType.string,
+                        ),
+                        "copper": Schema(
+                          SchemaType.string,
+                        ),
+                        "manganese": Schema(
+                          SchemaType.string,
+                        ),
+                        "selenium": Schema(
+                          SchemaType.string,
+                        ),
+                        "iodine": Schema(
+                          SchemaType.string,
+                        ),
+                      },
+                    ),
+                  },
+                ),
+                "additionalNutrients": Schema(
+                  SchemaType.object,
+                  enumValues: [],
+                  requiredProperties: [
+                    "cholesterol",
+                    "waterContent",
+                    "caffeine"
+                  ],
+                  properties: {
+                    "cholesterol": Schema(
+                      SchemaType.string,
+                    ),
+                    "waterContent": Schema(
+                      SchemaType.string,
+                    ),
+                    "caffeine": Schema(
+                      SchemaType.string,
+                    ),
+                  },
+                ),
+                "allergens": Schema(
+                  SchemaType.array,
+                  items: Schema(
+                    SchemaType.string,
+                  ),
+                ),
+                "dietCompatibility": Schema(
+                  SchemaType.array,
+                  items: Schema(
+                    SchemaType.string,
+                  ),
+                ),
+                "warnings": Schema(
+                  SchemaType.array,
+                  items: Schema(
+                    SchemaType.string,
+                  ),
+                ),
+                "healthScore": Schema(
+                  SchemaType.integer,
+                ),
+                "waterquantity": Schema(
+                  SchemaType.number,
+                ),
+                "exercise": Schema(
+                  SchemaType.number,
+                ),
+              },
+            ),
+          },
+        ),
+      ),
+      systemInstruction: Content.system(prompt),
     );
-    final prefs = await SharedPreferences.getInstance();
+
     print(prefs.getString('selected_button') ?? 'None');
-    final prompt =
+    final promptold =
         'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items with name, mass in kg no. of scoops, no. of litres or anything else suitable for that food. then tell 1 best and healthy alternates for it to consume instead of them if i want to ${prefs.getString('selected_button') ?? 'None'}. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these in waterquantity and how much exercise should be done(in hours).Values of vitamins and minerals in DV.Dietary Labels:Vegan,Vegetarian,Paleo,Keto,Gluten-Free,Dairy-Free,Low-Fat,Low-Carb,High-Fiber,Allergens:Gluten,Dairy,Eggs,Nuts,Soy,Shellfish,Warnings/Alerts:High in Sugar,High in Sodium,High in Saturated Fat,Contains Additives (e.g., preservatives, colorants) or you can tell none if there is not any in health score give it rating from five stars .At last give a short description about why should i consume the alternate how it is better than original. provide a response in JSON format with the following structure:\n'
         '''
 {
@@ -337,16 +610,16 @@ class NavbarController extends GetxController {
   },\n
   "description": "<string>"\n
 }
-
-
 '''
         'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
 
     print(prompt);
+
     Uint8List imageBytes = await imgFile.readAsBytes();
 
     final content = [
-      Content.multi([TextPart(prompt), DataPart('image/jpeg', imageBytes)]),
+      Content.multi(
+          [TextPart("Generate json"), DataPart('image/jpeg', imageBytes)]),
     ];
     //   final response = await model.generateContent(content);
     // print(response.text);
@@ -363,12 +636,19 @@ class NavbarController extends GetxController {
 
         // FoodData foodData = await parseFoodData();
         // Close the loading dialog
-        print(response.text);
+        print('Respons: ${response.text}');
         // tempprompt.value = response.text!;
         // print(foodData.item.name);
 
-        Map<String, dynamic> jsonMap = jsonDecode(response.text ?? '');
+        print('decoding json');
+        Map<String, dynamic> jsonMap1 = jsonDecode(response.text ?? '');
+        Map<String, dynamic> jsonMap = {
+          "item": jsonMap1["item"], // Copy the original "item"
+          "alternate1": jsonMap1["item"], // Duplicate the "item" for alternate1
+          "description": "" // Add an empty description
+        };
         // print(jsonMap['item']);
+        print('decoded json');
         FoodData foodData = FoodData.fromJson(jsonMap);
         Get.back();
         Premium.instance.reduce1(PremiumTheme.scanPrice);
@@ -378,7 +658,7 @@ class NavbarController extends GetxController {
       } catch (e) {
         // Close the loading dialog
         Get.back();
-
+        print('${e.toString()}');
         // Handle the error
         Get.snackbar(
           'Error',
@@ -391,16 +671,19 @@ class NavbarController extends GetxController {
   }
 
   void goToREsponse(FoodData foodData, Uint8List imgFile) {
+    print('inside gotoresponse');
     try {
       navFoodData = foodData;
       navImg = imgFile;
 
-      ResponseScreenController().transfercallFunction(foodData, imgFile);
-      // Get.toNamed(Routes.RESPONSE_SCREEN,
-      //     // arguments: [response.text ?? '',Image.file(imgFile)]
-      //     arguments: [foodData, imgFile]);
-      isrespnse.value = true;
-      index.value = 2;
+      // ResponseScreenController().transfercallFunction(foodData, imgFile);
+      Get.toNamed(Routes.RESPONSE_SCREEN, arguments: [foodData, imgFile]);
+      // arguments: [response.text ?? '',Image.file(imgFile)]
+      // arguments: [foodData, imgFile]);
+      // isrespnse.value = true;
+      // index.value = 2;
+      // NavbarController().resetFunction();
+      // print('index become 2');
     } catch (e) {
       Get.snackbar(
         'Error',
@@ -926,4 +1209,6 @@ TempDataAddinDataBase() async {
 Deletedatabases() async {
   await DatabaseHelper().deleteDatabaseFile();
   await DatabaseHelper2().deleteDatabaseFile();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.clear();
 }

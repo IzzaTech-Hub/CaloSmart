@@ -4,6 +4,7 @@ import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/app/premium/trailbase.dart';
 import 'package:calories_detector/app/providers/applovin_ads_provider.dart';
 import 'package:calories_detector/app/services/remoteconfig_services.dart';
+import 'package:calories_detector/app/services/revenuecat_service.dart';
 import 'package:calories_detector/firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
@@ -23,7 +25,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  RevenueCatService().initialize();
 //? -----------------------------------Push notification Implementation below----------------------------------------//
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
@@ -54,21 +56,21 @@ void main() async {
   // Initialize the database before running the app
   // DatabaseHelper().deleteDatabaseFile;
   // DatabaseHelper2().deleteDatabaseFile;
-  print('1');
+  // print('1');
   await RemoteConfigService().initialize();
-  print('1.5');
+  // print('1.5');
 
   await StreakManager.initializeStreak();
-  print('2');
+  // print('2');
   await DatabaseHelper().database;
-  print('3');
+  // print('3');
   await DatabaseHelper2().database;
-  print('4');
+  // print('4');
   // await TrailbaseHelper.instance.database;
-  print('5');
-  print('6');
+  // print('5');
+  // print('6');
   await Premium.instance.initialize();
-  print('7');
+  // print('7');
   AppLovinProvider.instance.init();
 
   runApp(
@@ -100,6 +102,7 @@ class MyApp extends StatelessWidget {
     analytics.setAnalyticsCollectionEnabled(kReleaseMode);
 
     return GetMaterialApp(
+      builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
       title: "Application",
       navigatorObservers: <NavigatorObserver>[observer],

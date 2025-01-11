@@ -241,13 +241,14 @@ class AppleManager {
 
   static Future<void> RewardCollected() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isPaid = Premium.instance.isPremium!.value;
+    bool isPaid = Premium.instance.isPremium.value;
     int streakCount = await StreakManager.getCurrentStreak();
     int cappedStreak = streakCount.clamp(0, 6);
     int todayCollect = isPaid
         ? PremiumTheme.paidTokens[cappedStreak]
         : PremiumTheme.freeTokens[cappedStreak];
-    await prefs.setInt(_appleKey, todayCollect);
+    int setto = todayCollect + await getCurrentAppleCount();
+    await prefs.setInt(_appleKey, setto);
 
     // Premium.instance.updatePremium();
   }

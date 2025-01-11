@@ -1,4 +1,6 @@
+import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:calories_detector/app/data/day_base.dart';
+import 'package:calories_detector/app/data/food_item.dart';
 import 'package:calories_detector/app/data/oneday.dart';
 import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
 import 'package:calories_detector/main.dart';
@@ -61,6 +63,20 @@ RxDouble progress3 = 0.0.obs;
 RxInt test = 1.obs;
 
 class HomeController extends GetxController {
+  RxInt bodyred = 247.obs;
+  RxInt bodygreen = 222.obs;
+  RxInt bodyblue = 194.obs;
+  RxInt stomred = 236.obs;
+  RxInt stomgreen = 131.obs;
+  RxInt stomblue = 124.obs;
+  RxInt hartred = 221.obs;
+  RxInt hartgreen = 0.obs;
+  RxInt hartblue = 13.obs;
+  RxInt branred = 255.obs;
+  RxInt brangreen = 255.obs;
+  RxInt branblue = 255.obs;
+  RxDouble branopacity = 0.1.obs;
+
   String nowDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
   @override
   void onInit() async {
@@ -244,8 +260,10 @@ class HomeController extends GetxController {
       progress3.value = 1;
     }
 
-    print('$progress1');
-    print('${caloriesProgress!.value}');
+// bodyred.value=
+
+    // print('$progress1');
+    // print('${caloriesProgress!.value}');
   }
 
   // Future<void> pickImageFromCamera() async {
@@ -327,6 +345,38 @@ class HomeController extends GetxController {
     );
 
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  }
+
+  void logFeed(FoodData foodData) async {
+    final dbHelper = DatabaseHelper();
+    // print(checkFirst.value);
+
+    // dbHelper.deleteDatabaseFile();
+    // if (0 == 0) {
+    try {
+      await dbHelper.insertFoodData(foodData);
+      HomeController().updatehomedata();
+      // Insert FoodData into the database
+      // checkFirst.value == false;
+      // checkFirst.toggle();
+
+      // print('value of check ${checkFirst.value}');
+      print('Food data logged successfully.');
+      Get.snackbar(
+        "Saved",
+        // 'Failed to get response:\nThere is something Wrong with your image',
+        '',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } catch (e) {
+      print('Error logging food data: $e');
+      Get.snackbar(
+        "Try again",
+        // 'Failed to get response:\nThere is something Wrong with your image',
+        'Something Went wrong',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 }
 

@@ -19,7 +19,7 @@ class SettingsView extends GetView<SettingsController> {
         children: <Widget>[
           // Set Your Goal List Item
           Obx(() => GestureDetector(
-                onTap: () {}, // Optional: Add functionality if needed
+                onTap: () {},
                 child: Container(
                   height: 60, // Fixed height for uniformity
                   padding: EdgeInsets.symmetric(horizontal: 16),
@@ -66,7 +66,7 @@ class SettingsView extends GetView<SettingsController> {
             height: 20,
           ),
           // Rate Us List Item with Icon Behind Text and Right Arrow
-          GestureDetector(
+          InkWell(
             onTap: () async {
               // Logic to rate the app
               // Get.snackbar('Info', 'Navigate to Rate Us');
@@ -104,7 +104,7 @@ class SettingsView extends GetView<SettingsController> {
           ),
 
           // Share List Item with Icon Behind Text and Right Arrow
-          GestureDetector(
+          InkWell(
             onTap: () {
               // Logic to share the app
               // Get.snackbar('Info', 'Share this app with others');
@@ -137,7 +137,9 @@ class SettingsView extends GetView<SettingsController> {
           Divider(
             height: 20,
           ),
-          GestureDetector(
+          InkWell(
+            // splashColor: Colors.transparent,
+            // highlightColor: Colors.transparent,
             onTap: () async {
               controller.openPrivacyPolicy();
               // Get.toNamed(Routes.WEBVIEW);

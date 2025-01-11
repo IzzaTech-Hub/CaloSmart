@@ -1,3 +1,4 @@
+import 'package:calories_detector/app/modules/ResponseScreen/controllers/response_screen_controller.dart';
 import 'package:calories_detector/app/modules/history_response/controllers/history_response_controller.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:flutter/material.dart';
@@ -451,30 +452,32 @@ class HistoryResponseView extends GetView<HistoryResponseController> {
               ),
             ),
             SizedBox(height: SizeConfig.screenHeight * 0.025),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                AppThemeButton(
-                        onPressed: () {
-                          // Get.put(ResponseScreenController());
-                          controller.Comparefunction(context);
-                        },
-                        text: 'Compare')
-                    .smallButton(),
-                AppThemeButton(
-                        onPressed: () {
-                          Get.toNamed(Routes.COMPARISON_VIEW_SCREEN,
-                              arguments: [
-                                controller.foodData.value!.item,
-                                controller.foodData.value!.alternate1,
-                                'Alternate',
-                                controller.foodData.value!.description,
-                              ]);
-                        },
-                        text: 'Alternative')
-                    .smallButton(),
-              ],
-            ),
+            // if (!(controller.foodData.value!.alternate1.name == 'Manual'))
+            if (0 == 1)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  AppThemeButton(
+                          onPressed: () {
+                            // Get.put(ResponseScreenController());
+                            controller.Comparefunction(context);
+                          },
+                          text: 'Compare')
+                      .smallButton(),
+                  AppThemeButton(
+                          onPressed: () {
+                            Get.toNamed(Routes.COMPARISON_VIEW_SCREEN,
+                                arguments: [
+                                  controller.foodData.value!.item,
+                                  controller.foodData.value!.alternate1,
+                                  'Alternate',
+                                  controller.foodData.value!.description,
+                                ]);
+                          },
+                          text: 'Alternative')
+                      .smallButton(),
+                ],
+              ),
             // SizedBox(height: SizeConfig.screenHeight * 0.005),
             // Center(
             //   child: AppThemeButton(

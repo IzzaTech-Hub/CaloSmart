@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:developer' as dp;
 
 import 'package:calories_detector/app/modules/utills/remoteConfigVariables.dart';
+import 'package:calories_detector/app/premium/premium.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 
@@ -22,17 +23,22 @@ class RemoteConfigService {
 
   Future<void> initialize() async {
     print("Iniitalizing Remote config...");
-    GetRemoteConfig().then((value) {
-      SetRemoteConfig();
-
-      remoteConfig.onConfigUpdated.listen((event) async {
-        print("Remote Updated");
-        //  await remoteConfig.activate();
+    try {
+      GetRemoteConfig().then((value) {
         SetRemoteConfig();
 
-        // Use the new config values here.
+        remoteConfig.onConfigUpdated.listen((event) async {
+          print("Remote Updated");
+          //  await remoteConfig.activate();
+          SetRemoteConfig();
+
+          // Use the new config values here.
+          print('successfully get remote config');
+        });
       });
-    });
+    } catch (e) {
+      print('Cant get remote config');
+    }
   }
 
   Future GetRemoteConfig() async {
@@ -59,6 +65,28 @@ class RemoteConfigService {
     RCVariables.GemeniAPIKey.value = remoteConfig.getString('GemeniAPIKey');
     RCVariables.PrivacyPolicyLink.value =
         remoteConfig.getString('PrivacyPolicyLink');
+    dp.log("trying rc");
+
+// var jsonMap=remoteConfig.getString('Json');
+Map<String, dynamic> jsonData = json.decode(remoteConfig.getString('Json'));
+ PremiumTheme.freeTokens = List<int>.from(jsonData['freeTokens']);
+  PremiumTheme.paidTokens = List<int>.from(jsonData['paidTokens']);
+  
+  Map<String, dynamic> prices = jsonData['prices'];
+  Map<String, dynamic> rewards = jsonData['rewards'];
+
+  PremiumTheme.scanPrice = prices['scanPrice'];
+  PremiumTheme. manualEntryPrice = prices['manualEntryPrice'];
+  PremiumTheme. alternatePrice = prices['alternatePrice'];
+  PremiumTheme. comparisonPrice = prices['comparisonPrice'];
+  PremiumTheme. welcomeReward = rewards['welcomeReward'];
+  PremiumTheme. adReward = rewards['adReward'];
+
+    // var tempstring = remoteConfig.getString('FreeTokenRewards');
+    // dp.log("Get From rc");
+    // PremiumTheme.freeTokens = List<int>.from(json.decode(tempstring));
     dp.log("Fetched Key: ${RCVariables.GemeniAPIKey.value}");
+    // dp.log("Fetched Key: ${PremiumTheme.freeTokens}");
+    // dp.log("Fetched Key: ${PremiumTheme.paidTokens}");
   }
 }

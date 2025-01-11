@@ -2,7 +2,10 @@ import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/Themes/theme1.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/premium/premium.dart';
+import 'package:calories_detector/app/providers/applovin_ads_provider.dart';
+import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:calories_detector/sizeConfig.dart';
+import 'package:path/path.dart';
 import '../controllers/streak_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,16 +41,25 @@ class StreakView extends GetView<StreakController> {
           Obx(() => StreakCount(_scrollController)),
           // Divider(),
           Expanded(
-            child: SingleChildScrollView(
+              child: Obx(
+            () => SingleChildScrollView(
               child: Column(
                 children: [
                   // Text('Daily Rewards')
                   RewardCollector(),
-                  StreakRewardView(),
+                  if (Premium.instance.toDay!.isRewardCollected.value)
+                    AdditionalReward(context),
+                  if (!(Premium.instance.isPremium.value))
+                    GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.PAYWALL);
+                        },
+                        child: Premiumonstreakview(context))
+                  // StreakRewardView(),
                 ],
               ),
             ),
-          ),
+          )),
         ],
       ),
     );
@@ -113,6 +125,9 @@ Container StreakCount(
 
 class RewardCollector extends StatelessWidget {
   // RewardCollector({super.key});
+  collectReward() {
+    Premium.instance.rewardCollected();
+  }
 
   final RxInt currentDay = 2.obs;
 
@@ -126,7 +141,7 @@ class RewardCollector extends StatelessWidget {
   }
 
   // Function to create the container for each day
-  Widget dayContainer(int day) {
+  Widget dayContainer(int day, BuildContext context) {
     return Obx(() => Stack(
           alignment: Alignment.center,
           children: [
@@ -172,7 +187,7 @@ class RewardCollector extends StatelessWidget {
                       Image.asset(AppImages.applecenter,
                           height: SizeConfig.screenWidth * 0.035),
                       Text(
-                        Premium.instance.isPremium!.value
+                        Premium.instance.isPremium.value
                             ? 'X${PremiumTheme.paidTokens[day - 1]}'
                             : 'X${PremiumTheme.freeTokens[day - 1]}',
                         style: TextStyle(
@@ -187,10 +202,71 @@ class RewardCollector extends StatelessWidget {
                       ),
                     ],
                   ),
+                  if (!Premium.instance.isPremium.value)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(AppImages.premiumIcon,
+                            height: SizeConfig.screenWidth * 0.030),
+                        SizedBox(width: 5),
+                        Image.asset(AppImages.applecenter,
+                            height: SizeConfig.screenWidth * 0.030),
+                        Text(
+                          'X${PremiumTheme.paidTokens[day - 1]}',
+
+                          // Premium.instance.isPremium.value
+                          //     ? 'X${PremiumTheme.paidTokens[day - 1]}'
+                          //     : 'X${PremiumTheme.freeTokens[day - 1]}',
+
+                          style: TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            fontSize: SizeConfig.screenWidth * 0.030,
+                            // fontWeight: FontWeight.bold,
+                            color: Colors.grey.shade500,
+
+                            // color: day < currentDay.value
+                            //     ? Colors.grey.shade600
+                            //     : (day == currentDay.value
+                            //         ? Colors.black
+                            //         : Colors.black87),
+                          ),
+                        ),
+                      ],
+                    ),
                   GestureDetector(
-                    onTap: () {
-                      if (!Premium.instance.toDay!.isRewardCollected.value) {
-                        Premium.instance.rewardCollected();
+                    onTap: () async {
+                      if (!Premium.instance.toDay!.isRewardCollected.value &&
+                          day == currentDay.value) {
+                        // if (!Premium.instance.toDay!.isRewardCollected.value) {
+                        // Premium.instance.rewardCollected();
+                        if (await AppLovinProvider.instance
+                            .canShowRewardedAd()) {
+                          AppLovinProvider.instance
+                              .showRewardedAd(collectReward);
+                        } else if (await AppLovinProvider.instance
+                            .canShowInterdAd()) {
+                          AppLovinProvider.instance
+                              .showInterstitial(collectReward);
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Ad Not Ready"),
+                                content: Text(
+                                    "The ad is not ready yet. Please try again later."),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       }
                     },
                     child: rewardbutton(day, currentDay.value),
@@ -220,7 +296,7 @@ class RewardCollector extends StatelessWidget {
         ));
   }
 
-  Widget day7Container(int day) {
+  Widget day7Container(int day, BuildContext context) {
     return Container(
       width: SizeConfig.screenWidth * 0.88,
       height: SizeConfig.screenWidth * 0.28,
@@ -234,12 +310,10 @@ class RewardCollector extends StatelessWidget {
         //           : Colors.green.shade100),
         //   width: 2,
         // ),
-        color: day < currentDay.value
-            ? Colors.black12
-            : (day == currentDay.value
-                // ? ThemeColors.onPrimary1.withOpacity(0.1)
-                ? ThemeColors.onPrimary2.withOpacity(0.3)
-                : Colors.white),
+        color: (day <= currentDay.value
+            // ? ThemeColors.onPrimary1.withOpacity(0.1)
+            ? ThemeColors.onPrimary2.withOpacity(0.3)
+            : Colors.white),
       ),
       child: Stack(
         children: [
@@ -269,9 +343,8 @@ class RewardCollector extends StatelessWidget {
               Text(
                 'Day $day or Above',
                 style: TextStyle(
-                  color: day < currentDay.value
-                      ? Colors.grey.shade600
-                      : (day == currentDay.value ? Colors.green : Colors.black),
+                  color:
+                      (day <= currentDay.value ? Colors.green : Colors.black),
                   fontSize: SizeConfig.screenWidth * 0.04,
                   fontWeight: FontWeight.bold,
                 ),
@@ -282,7 +355,7 @@ class RewardCollector extends StatelessWidget {
                   Image.asset(AppImages.applecenter,
                       height: SizeConfig.screenWidth * 0.035),
                   Text(
-                    Premium.instance.isPremium!.value
+                    Premium.instance.isPremium.value
                         ? 'X${PremiumTheme.paidTokens[day - 1]}'
                         : 'X${PremiumTheme.freeTokens[day - 1]}',
                     style: TextStyle(
@@ -293,9 +366,96 @@ class RewardCollector extends StatelessWidget {
                   ),
                 ],
               ),
-              rewardbutton(day, currentDay.value),
+              if (!Premium.instance.isPremium.value)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(AppImages.premiumIcon,
+                        height: SizeConfig.screenWidth * 0.030),
+                    SizedBox(width: 5),
+                    Image.asset(AppImages.applecenter,
+                        height: SizeConfig.screenWidth * 0.030),
+                    Text(
+                      'X${PremiumTheme.paidTokens[day - 1]}',
+
+                      // Premium.instance.isPremium.value
+                      //     ? 'X${PremiumTheme.paidTokens[day - 1]}'
+                      //     : 'X${PremiumTheme.freeTokens[day - 1]}',
+
+                      style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        fontSize: SizeConfig.screenWidth * 0.030,
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade500,
+
+                        // color: day < currentDay.value
+                        //     ? Colors.grey.shade600
+                        //     : (day == currentDay.value
+                        //         ? Colors.black
+                        //         : Colors.black87),
+                      ),
+                    ),
+                  ],
+                ),
+              GestureDetector(
+                onTap: () async {
+                  // if (0 == 0) {
+                  if (!Premium.instance.toDay!.isRewardCollected.value &&
+                      day <= currentDay.value) {
+                    // Premium.instance.rewardCollected();
+                    if (await AppLovinProvider.instance.canShowRewardedAd()) {
+                      AppLovinProvider.instance.showRewardedAd(collectReward);
+                    } else if (await AppLovinProvider.instance
+                        .canShowInterdAd()) {
+                      AppLovinProvider.instance.showInterstitial(collectReward);
+                    } else {
+                      // Premium.instance.rewardCollected();
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Ad Not Ready"),
+                            content: Text(
+                                "The ad is not ready yet. Please try again later."),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text("OK"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  }
+                },
+                child: rewardbuttonfor7(day, currentDay.value),
+              ),
             ],
           ),
+          if (Premium.instance.isrewardCollected!.value &&
+              day <= currentDay.value)
+            Container(
+              // width: SizeConfig.screenWidth * 0.28,
+              width: SizeConfig.screenWidth * 0.88,
+              height: SizeConfig.screenWidth * 0.28,
+              decoration: BoxDecoration(
+                borderRadius:
+                    BorderRadius.circular(SizeConfig.screenWidth * 0.04),
+                color: Colors.grey.withOpacity(0.3),
+              ),
+            ),
+          if (Premium.instance.isrewardCollected!.value &&
+              day <= currentDay.value)
+            Center(
+              child: Icon(
+                Icons.check_circle_outline_rounded,
+                color: Colors.white,
+                size: SizeConfig.screenWidth * 0.15,
+              ),
+            ),
         ],
       ),
     );
@@ -335,22 +495,22 @@ class RewardCollector extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      dayContainer(1),
-                      dayContainer(2),
-                      dayContainer(3),
+                      dayContainer(1, context),
+                      dayContainer(2, context),
+                      dayContainer(3, context),
                     ],
                   ),
                   SizedBox(height: SizeConfig.screenWidth * 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      dayContainer(4),
-                      dayContainer(5),
-                      dayContainer(6),
+                      dayContainer(4, context),
+                      dayContainer(5, context),
+                      dayContainer(6, context),
                     ],
                   ),
                   SizedBox(height: SizeConfig.screenWidth * 0.02),
-                  day7Container(7),
+                  day7Container(7, context),
                 ],
               ),
             ),
@@ -593,6 +753,125 @@ Padding StreakRewardView() {
           Milestone(20, Container(), Container()),
           Milestone(20, Container(), Container()),
         ],
+      ),
+    ),
+  );
+}
+
+Padding AdditionalReward(BuildContext context) {
+  watchadreward() {
+    Premium.instance.increaseapple(PremiumTheme.adReward);
+  }
+
+  return Padding(
+    padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+    child: Container(
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.04),
+        borderRadius: BorderRadius.circular(SizeConfig.screenWidth * 0.05),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(height: SizeConfig.screenWidth * 0.02),
+          Text(
+            'More Apples',
+            style: TextStyle(
+                // color: Colors.amber,
+                color: AppThemeColors.onPrimary1,
+                fontSize: 22,
+                fontWeight: FontWeight.w500),
+          ),
+          SizedBox(height: SizeConfig.screenWidth * 0.01),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(AppImages.applecenter,
+                  height: SizeConfig.screenWidth * 0.045),
+              Text(
+                ' X ${PremiumTheme.adReward}',
+                style: TextStyle(
+                  fontSize: SizeConfig.screenWidth * 0.035,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: SizeConfig.screenWidth * 0.01),
+          AppThemeButton(
+                  onPressed: () async {
+                    if (await AppLovinProvider.instance.canShowRewardedAd()) {
+                      AppLovinProvider.instance
+                          .showRewardedAd(watchadreward, enforceAd: true);
+                    } else if (await AppLovinProvider.instance
+                        .canShowInterdAd()) {
+                      AppLovinProvider.instance
+                          .showInterstitial(watchadreward, enforceAd: true);
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Ad Not Ready"),
+                            content: Text(
+                                "The ad is not ready yet. Please try again later."),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text("OK"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  text: 'Collect Now')
+              .AdditionalrewardsmallButton(),
+          SizedBox(height: SizeConfig.screenWidth * 0.03),
+        ],
+      ),
+    ),
+  );
+}
+
+Padding Premiumonstreakview(BuildContext context) {
+  watchadreward() {
+    Premium.instance.increaseapple(PremiumTheme.adReward);
+  }
+
+  return Padding(
+    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+    child: Container(
+      height: SizeConfig.screenHeight * 0.1,
+      decoration: BoxDecoration(
+          color: Colors.amber.shade50,
+          // color: Colors.black.withOpacity(0.04),
+          borderRadius: BorderRadius.circular(SizeConfig.screenWidth * 0.03),
+          border: Border.all(color: Colors.amber)),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // SizedBox(width: SizeConfig.screenHeight * 0.025),
+            Image.asset(
+              AppImages.premiumIcon,
+              color: Colors.amber,
+              height: SizeConfig.screenHeight * 0.05,
+            ),
+            SizedBox(width: SizeConfig.screenHeight * 0.025),
+            Text(
+              'Upgrade to Premium\nfor more Rewards',
+              style: TextStyle(
+                  color: Colors.amber,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
       ),
     ),
   );

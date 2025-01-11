@@ -107,7 +107,7 @@ class DatabaseHelper2 {
       where: 'date = ?',
       whereArgs: [tdate],
     );
-      print('Before if');
+    print('Before if');
 
     if (chckmaps.isEmpty) {
       print('if run');
@@ -132,14 +132,15 @@ class DatabaseHelper2 {
       await insertOneDay(newDay);
       print('inserted');
     }
-      print('after if');
+    print('after if');
+    print('$chckmaps');
 
     final List<Map<String, dynamic>> maps = await db.query(
       'one_day',
       where: 'date = ?',
       whereArgs: [tdate],
     );
-      print('map created');
+    print('map created');
 
     final map = maps.first;
 
@@ -151,7 +152,7 @@ class DatabaseHelper2 {
           .where((e) => e != 0)
           .toList();
     }
-      print('before returning');
+    print('before returning');
 
     return OneDay(
       date: map['date'] ?? '',
@@ -177,7 +178,6 @@ class DatabaseHelper2 {
       ..carbsRemaining.value = map['carbsRemaining'] ?? 0
       // ..isRewardCollected.value = map['isRewardCollected'] ?? false
       ..isRewardCollected.value = (map['isRewardCollected'] ?? 0) == 1
-
       ..indexes = indexesList;
   }
 

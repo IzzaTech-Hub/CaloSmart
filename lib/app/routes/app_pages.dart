@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/ResponseScreen/bindings/response_screen_binding.dart';
 import '../modules/ResponseScreen/views/response_screen_view.dart';
+import '../modules/aichat/bindings/aichat_binding.dart';
+import '../modules/aichat/views/aichat_view.dart';
 import '../modules/history_response/bindings/history_response_binding.dart';
 import '../modules/history_response/views/history_response_view.dart';
 import '../modules/home/bindings/age_binding.dart';
@@ -123,6 +125,14 @@ class AppPages {
       name: _Paths.STREAK,
       page: () => StreakView(),
       binding: StreakBinding(),
+    ),
+    GetPage(
+      // name: _Paths.STREAK,
+      // page: () => StreakView(),
+      // binding: StreakBinding(),
+      name: _Paths.AICHAT,
+      page: () => AichatView(),
+      binding: AichatBinding(),
     ),
   ];
 }

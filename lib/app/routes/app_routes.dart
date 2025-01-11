@@ -20,6 +20,7 @@ abstract class Routes {
   static const WEBVIEW = _Paths.WEBVIEW;
   static const PAYWALL = _Paths.PAYWALL;
   static const STREAK = _Paths.STREAK;
+  static const AICHAT = _Paths.AICHAT;
 }
 
 abstract class _Paths {
@@ -41,4 +42,5 @@ abstract class _Paths {
   static const WEBVIEW = '/webview';
   static const PAYWALL = '/paywall';
   static const STREAK = '/streak';
+  static const AICHAT = '/aichat';
 }

@@ -6,6 +6,7 @@ import 'dart:developer' as developer;
 
 import 'package:applovin_max/applovin_max.dart';
 import 'package:calories_detector/app/modules/utills/app_strings.dart';
+import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/app/services/revenuecat_service.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
@@ -71,7 +72,7 @@ class AppLovinProvider {
       //  AppLovinMAX.createMRec(AppStrings.MAX_MREC_ID, AdViewPosition.centered);
       // AppLovinMAX.createBanner(
       //     AppStrings.MAX_BANNER_ID, AdViewPosition.bottomCenter);
-      if (kDebugMode) AppLovinMAX.showMediationDebugger();
+      // if (kDebugMode) AppLovinMAX.showMediationDebugger();
     } else {
       print("SDK null");
     }
@@ -245,11 +246,18 @@ class AppLovinProvider {
     }
   }
 
-  void showInterstitial(Function onInterAdWatched) async {
+  void showInterstitial(Function onInterAdWatched,
+      {bool enforceAd = false}) async {
     // if(Platform.isIOS && isInitialized.value){
     //   print(object)
     //   return;
     // }
+
+    if (!enforceAd && Premium.instance.isPremium.value) {
+      onInterAdWatched();
+      return;
+    }
+
     print("Interstitial ad is show is called");
 
     // if (kDebugMode) return;
@@ -341,11 +349,24 @@ class AppLovinProvider {
   Future<bool> canShowRewardedAd() async {
     bool isReady =
         await AppLovinMAX.isRewardedAdReady(AppStrings.MAX_Reward_ID) ?? false;
+    print('canShowRewardedAd $isReady');
 
     return isReady;
   }
 
-  void showRewardedAd(Function onRewardedAdWatched) async {
+  Future<bool> canShowInterdAd() async {
+    bool isReady =
+        await AppLovinMAX.isInterstitialReady(AppStrings.MAX_INTER_ID) ?? false;
+
+    return isReady;
+  }
+
+  void showRewardedAd(Function onRewardedAdWatched,
+      {bool enforceAd = false}) async {
+    if (!enforceAd && Premium.instance.isPremium.value) {
+      onRewardedAdWatched();
+      return;
+    }
     print("show rewared ads");
     // if (RevenueCatService().currentEntitlement.value == Entitlement.free) {
     bool isReady =

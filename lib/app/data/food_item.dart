@@ -284,8 +284,8 @@ class CommpareItem {
   });
 
   factory CommpareItem.fromJson(Map<String, dynamic> json) {
-    print(json['description']);
-    String descriptiont = json['description'];
+    print(json['comparison_description']);
+    String descriptiont = json['comparison_description'];
 
     FoodItem itemt = FoodItem.fromJson(json['item']);
     print(json['food item done']);
@@ -299,21 +299,21 @@ class CommpareItem {
   Map<String, dynamic> toJson() {
     return {
       'item': item.toJson(),
-      'description': description,
+      'comparison_description': description,
     };
   }
 
   Map<String, dynamic> toMap() {
     return {
       'item': item.toMap(),
-      'description': description,
+      'comparison_description': description,
     };
   }
 
   factory CommpareItem.fromMap(Map<String, dynamic> map) {
     return CommpareItem(
       item: FoodItem.fromMap(map['item']),
-      description: map['description'],
+      description: map['comparison_description'],
     );
   }
 }
