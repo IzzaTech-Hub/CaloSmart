@@ -189,7 +189,9 @@ class HistoryResponseController extends GetxController {
     );
 
     final model = GenerativeModel(
-      model: 'gemini-1.5-flash',
+      model: RCVariables.GemeniAiModel.value,
+      
+      // model: 'gemini-1.5-flash',
       apiKey: RCVariables.GemeniAPIKey.value,
     );
     String goal = 'gain Weight';

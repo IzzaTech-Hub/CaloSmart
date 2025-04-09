@@ -132,7 +132,8 @@ class _ChatWidgetState extends State<ChatWidget> {
   void initState() {
     super.initState();
     _model = GenerativeModel(
-      model: 'gemini-1.5-flash-latest',
+      model: RCVariables.GemeniAiModel.value,
+      // model: 'gemini-1.5-flash-latest',
       apiKey: widget.apiKey,
       generationConfig: GenerationConfig(
         temperature: 1,

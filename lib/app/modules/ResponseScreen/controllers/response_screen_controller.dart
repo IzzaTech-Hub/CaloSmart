@@ -209,7 +209,8 @@ class ResponseScreenController extends GetxController {
         'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
 
     final model = GenerativeModel(
-      model: 'gemini-1.5-flash',
+      model: RCVariables.GemeniAiModel.value,
+      // model: 'gemini-1.5-flash',
       apiKey: RCVariables.GemeniAPIKey.value,
       generationConfig: GenerationConfig(
         temperature: 1,
@@ -654,7 +655,8 @@ class ResponseScreenController extends GetxController {
         'dont give me any text or disclaimer or note your response should start from { bracket of json structure and end with } json bracket';
 
     final model = GenerativeModel(
-      model: 'gemini-1.5-flash',
+      model: RCVariables.GemeniAiModel.value,
+      // model: 'gemini-1.5-flash',
       apiKey: RCVariables.GemeniAPIKey.value,
       generationConfig: GenerationConfig(
         temperature: 1,

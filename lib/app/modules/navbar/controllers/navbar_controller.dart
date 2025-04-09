@@ -238,7 +238,8 @@ class NavbarController extends GetxController {
         'you are an expert dietician. You will be given an image of some food item/items.tell the name/names of the food/foods given in image,and quantity of it/them quantity can be any thing like no. of slice,no.of items with name, mass in kg no. of scoops, no. of litres or anything else suitable for that food. then tell 1 best and healthy alternates for it to consume instead of them if i want to ${prefs.getString('selected_button') ?? 'None'}. Analyze the nutritional content and tell how much water(in liters) should be drank after consuming these in waterquantity and how much exercise should be done(in hours).Values of vitamins and minerals in DV.Dietary Labels:Vegan,Vegetarian,Paleo,Keto,Gluten-Free,Dairy-Free,Low-Fat,Low-Carb,High-Fiber,Allergens:Gluten,Dairy,Eggs,Nuts,Soy,Shellfish,Warnings/Alerts:High in Sugar,High in Sodium,High in Saturated Fat,Contains Additives (e.g., preservatives, colorants) or you can tell none if there is not any in health score give it rating from five stars .At last give a short description about why should i consume the alternate how it is better than original. provide a response in JSON format with the following structure:\n';
 
     final model = GenerativeModel(
-      model: 'gemini-1.5-flash',
+      // model: 'gemini-1.5-flash',
+      model: RCVariables.GemeniAiModel.value,
       apiKey: RCVariables.GemeniAPIKey.value,
       generationConfig: GenerationConfig(
         temperature: 1,

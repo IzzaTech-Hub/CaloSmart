@@ -65,6 +65,8 @@ class RemoteConfigService {
     RCVariables.GemeniAPIKey.value = remoteConfig.getString('GemeniAPIKey');
     RCVariables.PrivacyPolicyLink.value =
         remoteConfig.getString('PrivacyPolicyLink');
+    RCVariables.GemeniAiModel.value =
+        remoteConfig.getString('GemeniAiModel');
     dp.log("trying rc");
 
 // var jsonMap=remoteConfig.getString('Json');
