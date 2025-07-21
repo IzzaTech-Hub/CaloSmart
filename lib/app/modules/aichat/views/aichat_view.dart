@@ -35,6 +35,7 @@
 
 import 'dart:io';
 
+import 'package:api_key_pool/api_key_pool.dart';
 import 'package:calories_detector/app/modules/aichat/controllers/aichat_controller.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/app_colors.dart';
@@ -51,7 +52,8 @@ import 'package:get/get.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:image_picker/image_picker.dart';
 
-final String _apiKey = RCVariables.GemeniAPIKey.value;
+final String _apiKey = ApiKeyPool.getKey();
+// final String _apiKey = RCVariables.GemeniAPIKey.value;
 // const String _apiKey = 'AIzaSyBfsg3ZEwnl0CRPYGBh1r_XhFu9tChvL5o';
 
 // void main() {
@@ -76,7 +78,8 @@ class AichatView extends StatelessWidget {
           preferredSize: Size.fromHeight(80),
           child: appThemeAppBarforaichat(context, 'Ai Chat'),
         ),
-        body: ChatWidget(apiKey: RCVariables.GemeniAPIKey.value),
+        body: ChatWidget(apiKey: ApiKeyPool.getKey()),
+        // body: ChatWidget(apiKey: RCVariables.GemeniAPIKey.value),
       ),
     );
   }

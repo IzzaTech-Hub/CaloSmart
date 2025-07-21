@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:api_key_pool/api_key_pool.dart';
 import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/data/food_item.dart';
@@ -240,7 +241,8 @@ class NavbarController extends GetxController {
     final model = GenerativeModel(
       // model: 'gemini-1.5-flash',
       model: RCVariables.GemeniAiModel.value,
-      apiKey: RCVariables.GemeniAPIKey.value,
+      apiKey: ApiKeyPool.getKey(),
+      // apiKey: RCVariables.GemeniAPIKey.value,
       generationConfig: GenerationConfig(
         temperature: 1,
         topK: 40,

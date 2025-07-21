@@ -1,3 +1,4 @@
+import 'package:api_key_pool/api_key_pool.dart';
 import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
 import 'package:calories_detector/app/premium/premium.dart';
@@ -17,7 +18,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 void main() async {
   // Premium().isPremium.value = true;
@@ -25,6 +26,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await ApiKeyPool.init('CaloSmart');
   RevenueCatService().initialize();
 //? -----------------------------------Push notification Implementation below----------------------------------------//
   FirebaseMessaging messaging = FirebaseMessaging.instance;

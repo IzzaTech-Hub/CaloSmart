@@ -1,3 +1,4 @@
+import 'package:api_key_pool/api_key_pool.dart';
 import 'package:calories_detector/app/modules/liquidloading/views/liquidloading_view.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/remoteConfigVariables.dart';
@@ -192,7 +193,8 @@ class HistoryResponseController extends GetxController {
       model: RCVariables.GemeniAiModel.value,
       
       // model: 'gemini-1.5-flash',
-      apiKey: RCVariables.GemeniAPIKey.value,
+      apiKey: ApiKeyPool.getKey(),
+      // apiKey: RCVariables.GemeniAPIKey.value,
     );
     String goal = 'gain Weight';
     final prefs = await SharedPreferences.getInstance();
