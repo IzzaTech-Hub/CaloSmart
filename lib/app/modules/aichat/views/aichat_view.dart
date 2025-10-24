@@ -33,10 +33,13 @@
 //   }
 // }
 
+import 'dart:convert';
+import 'dart:developer' as dp;
 import 'dart:io';
 
 import 'package:api_key_pool/api_key_pool.dart';
 import 'package:calories_detector/app/modules/aichat/controllers/aichat_controller.dart';
+import 'package:calories_detector/app/modules/home/views/home_view.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
@@ -139,14 +142,52 @@ class _ChatWidgetState extends State<ChatWidget> {
       // model: 'gemini-1.5-flash-latest',
       apiKey: widget.apiKey,
       generationConfig: GenerationConfig(
-        temperature: 1,
-        topK: 40,
-        topP: 0.95,
-        maxOutputTokens: 1000,
-        responseMimeType: 'text/plain',
-      ),
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          // maxOutputTokens: 1000,
+          // responseMimeType: 'text/plain',
+          responseMimeType: 'application/json',
+          responseSchema: Schema.object(properties: {
+            'massage': Schema.string(),
+            'function': Schema.object(properties: {
+              'functionType': Schema.enumString(enumValues: [
+                'foodData',
+                'exerciseData',
+                'waterData',
+                'none'
+              ]),
+              'foodData': Schema.object(properties: {
+                'foodname': Schema.string(description: 'Food name.'),
+                'calories': Schema.number(
+                    description:
+                        'calculate an estimate of how much calories this food could have.'),
+              }, requiredProperties: [
+                'foodname',
+                'calories'
+              ]),
+              'waterData': Schema.object(properties: {
+                'waterquantity': Schema.number(
+                    description:
+                        'Water quantity in no of glasses if they are not in glass than calculate to avgestimate glasses.'),
+              }, requiredProperties: [
+                'waterquantity'
+              ]),
+              'exerciseData': Schema.object(properties: {
+                'exercise':
+                    Schema.number(description: 'Exercise quantity in minutes.'),
+              }, requiredProperties: [
+                'exercise'
+              ]),
+            }, requiredProperties: [
+              'functionType'
+            ]),
+          }, requiredProperties: [
+            'massage',
+            'function'
+          ])),
       systemInstruction: Content.system(
-          'You are an expert dietician. Generate your response as short as posible and to the point. no need to explain every thing only the necessary elements that are being asked'),
+          'You are an expert dietician. Generate your response as short as posible and to the point. no need to explain every thing only the necessary elements that are being asked. if there is something user is asking to do or he is telling that he have eaten something or drank something or having exercise and you are clear about unit than run function as well. if he is chating reply normally and when ever you are certain about details run function to save that data.'),
     );
     _chat = _model.startChat();
   }
@@ -477,6 +518,7 @@ class _ChatWidgetState extends State<ChatWidget> {
 
       var response = await _model.generateContent(content);
       var text = response.text;
+      dp.log(text.toString());
       aichatcontroller.generatedContent.add((
         image: null,
         text: text,
@@ -498,7 +540,12 @@ class _ChatWidgetState extends State<ChatWidget> {
       Premium.instance.reduce1(5);
       print('reduced by 5');
     } catch (e) {
-      _showError(e.toString());
+      // if (e.toString().contains('You exceeded your current quota')) {
+      //   dp.log('You exceeded your current quota');
+      //   _model.;
+      // }
+      _showError('Something went wrong, Please try again later');
+
       setState(() {
         _loading = false;
       });
@@ -534,10 +581,14 @@ class _ChatWidgetState extends State<ChatWidget> {
           isFeedBack: false.obs,
           isGood: false.obs
         ));
-        final response = await _chat.sendMessage(
+        final rawresponse = await _chat.sendMessage(
           Content.text(message),
         );
-        final text = response.text;
+        dp.log(rawresponse.text.toString());
+        final response = jsonDecode(rawresponse.text ?? '');
+        dp.log(response.toString());
+        final text = response['massage'];
+        dp.log(text.toString());
         aichatcontroller.generatedContent.add((
           image: null,
           text: text,
@@ -546,8 +597,28 @@ class _ChatWidgetState extends State<ChatWidget> {
           isGood: false.obs
         ));
 
+        if (response['function']['functionType'] != 'none') {
+          if (response['function']['functionType'] == 'foodData') {
+            dp.log('saving food data');
+            dialogueformanualdata(context,
+                fn: response['function']['foodData']['foodname'],
+                cal: (response['function']['foodData']['calories']).toInt());
+          } else if (response['function']['functionType'] == 'waterData') {
+            dp.log('saving water data');
+            dialogueforwater(context,
+                sg: (response['function']['waterData']['waterquantity'])
+                    .toInt());
+          } else if (response['function']['functionType'] == 'exerciseData') {
+            dp.log('saving exercise data');
+            dialogueforexercise(context,
+                    mins: (response['function']['exerciseData']['exercise'])
+                        .toInt()) 
+                ;
+          }
+        }
+
         if (text == null) {
-          _showError('No response from API.');
+          _showError('No response from AI.');
           return;
         } else {
           setState(() {
@@ -558,7 +629,8 @@ class _ChatWidgetState extends State<ChatWidget> {
         Premium.instance.reduce1(1);
         print('reduced by 1');
       } catch (e) {
-        _showError(e.toString());
+        dp.log(e.toString());
+        _showError('No Response found, Please try again later');
         setState(() {
           _loading = false;
         });
