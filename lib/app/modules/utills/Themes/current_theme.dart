@@ -8,29 +8,86 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 class AppThemeColors {
+  // ==== PRIMARY BRAND COLORS ====
   static const primarycolor = ThemeColors.primaryColor;
+  static const primaryLight = Color(0xFF81C784); // soft green tone
+  static const primaryDark = Color(0xFF2E7D32); // dark green for contrast
   static const splashColor = Colors.green;
+
+  // ==== TEXT COLORS ====
+  static const textPrimary = Color(0xFF212121); // main readable text
+  static const textSecondary = Color(0xFF616161); // less emphasized text
+  static const textOnPrimary = Colors.white;
+  static const textOnAccent = Color(0xFFFAFAFA);
+
+  // ==== EDUCATIONAL TONES ====
+  static const knowledgeBlue = Color(0xFF4A90E2); // trustful, academic blue
+  static const learningYellow = Color(0xFFFFE082); // warm, motivating yellow
+  static const successGreen = Color(0xFF81C784); // success / progress
+  static const alertRed = Color(0xFFE57373); // for errors or attention
+  static const calmPurple = Color(0xFF9575CD); // creative energy
+  static const focusOrange = Color(0xFFFFB74D); // highlights, focus areas
+
+  // ==== ON PRIMARY COLORS ====
   static const onPrimary1 = ThemeColors.onPrimary1;
   static const onPrimary2 = ThemeColors.onPrimary2;
   static const onPrimary2light = Color(0xffD1FF9B);
+
+  // ==== SECONDARY COLORS ====
   static const secondery1 = ThemeColors.secondery1;
   static const secondery2 = ThemeColors.secondery2;
+  static const seconderyLight = Color(0xFFB3E5FC);
+  static const seconderyDark = Color(0xFF0288D1);
+
+  // ==== ACCENTS & ICONS ====
   static const iconColor = Colors.white;
+  static const iconMuted = Color(0xFF9E9E9E);
   static const logoColor = ThemeColors.logoColor;
+
+  // ==== GRAPH COLORS ====
   static const graph1 = ThemeColors.graph1;
   static const graph2 = ThemeColors.graph2;
   static const graph3 = ThemeColors.graph3;
-  // static const iconColor = ThemeColors.iconColor;
+  static const graph4 = Color(0xFF64B5F6);
+  static const graph5 = Color(0xFFFFB74D);
 
-// static const buttonGradient = LinearGradient(colors: [onPrimary1,onPrimary2],begin: Alignment.topLeft,end: Alignment.bottomRight);
+  // ==== GRADIENTS ====
   static const primaryGradient1 = AppGradient.buttonGradient;
   static const secondaryGradient1 = AppGradient.gradient1;
   static const secondaryGradient2 = AppGradient.gradient2;
+  static const successGradient = LinearGradient(
+    colors: [Color(0xFF81C784), Color(0xFF4CAF50)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+  static const warningGradient = LinearGradient(
+    colors: [Color(0xFFFFB74D), Color(0xFFF57C00)],
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+  );
+  static const knowledgeGradient = LinearGradient(
+    // colors: [Color(0xFF4A90E2), Color(0xFF1976D2)],
+    colors: [Color.fromARGB(255, 45, 255, 52), Color.fromARGB(255, 204, 242, 155)],
+    end: Alignment.bottomLeft,
+    begin: Alignment.topRight,
+  );
+
+  // ==== BUTTONS & BACKGROUNDS ====
   static const buttonColor = AppGradient.buttonGradient;
   static const buttonColor1 = secondery1;
   static const bgGradient = AppGradient.bgGradient;
   static const bgColor = ThemeColors.nowhite1;
+  static const bgLight = Color(0xFFF9F9F9);
+  static const cardColor = Color(0xFFFFFFFF);
+  static const shadowColor = Color(0x1A000000);
+
+  // ==== STATUS COLORS ====
+  static const success = Color(0xFF4CAF50);
+  static const warning = Color(0xFFFFC107);
+  static const error = Color(0xFFF44336);
+  static const info = Color(0xFF2196F3);
 }
+
 
 class AppThemeText {
   var headline1 = AppText().headline1;
@@ -1135,6 +1192,150 @@ Container appThemeAppBar3(context, String title) {
             ],
           ),
         )
+      ],
+    ),
+  );
+}
+
+Container appThemeAppBar4(BuildContext context, String title) {
+  return Container(
+    padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+    height: 80.0,
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          AppThemeColors.knowledgeBlue,
+          AppThemeColors.primaryLight,
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.15),
+          blurRadius: 10,
+          offset: Offset(0, 5),
+        ),
+      ],
+    ),
+    child: Stack(
+      children: [
+        /// --- Title ---
+        Center(
+          child: Text(
+            title,
+            style: TextStyle(
+              color: AppThemeColors.textOnPrimary,
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ),
+
+        /// --- Right Side Widgets ---
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // 🔔 Notification Circle (Education badge style)
+              Container(
+                margin: const EdgeInsets.only(right: 12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      AppThemeColors.learningYellow,
+                      AppThemeColors.focusOrange,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.25),
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                width: 30,
+                height: 30,
+                child: Center(
+                  child: Text(
+                    '10',
+                    style: TextStyle(
+                      color: AppThemeColors.textPrimary,
+                      fontSize: 12,
+                      height: 1,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+
+              // 🍎 Apple / Points Container
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: SizedBox(
+                  width: 55,
+                  height: 50,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          height: 20,
+                          width: 42,
+                          decoration: BoxDecoration(
+                            color: AppThemeColors.bgLight,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: AppThemeColors.successGreen,
+                              width: 2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppThemeColors.successGreen
+                                    .withOpacity(0.4),
+                                blurRadius: 10,
+                                spreadRadius: -4,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Center(
+                            child: Obx(
+                              () => Text(
+                                '${Premium.instance.apple!.value}',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  height: 1,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppThemeColors.textPrimary,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Image(
+                          image: AssetImage(AppImages.apple2),
+                          color: PremiumTheme.appleColor,
+                          width: 35,
+                          height: 35,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     ),
   );

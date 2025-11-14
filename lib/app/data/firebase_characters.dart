@@ -63,7 +63,7 @@ class FirebaseCharecter {
         category: json['category'],
         imageUrl: json['imageUrl'],
         priority: json['priority'] ?? 100,
-        historyMessages: json['history'] ?? null,
+        historyMessages: json['history'],
         star1: json['star1'] ?? 1000,
         star2: json['star2'] ?? 2500,
         star3: json['star3'] ?? 5020,

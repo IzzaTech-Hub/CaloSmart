@@ -1,6 +1,3 @@
-import 'package:calories_detector/app/data/Data_Base.dart';
-import 'package:calories_detector/app/data/food_item.dart';
-import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:calories_detector/app/premium/trailbase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

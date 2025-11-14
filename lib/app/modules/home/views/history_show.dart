@@ -113,7 +113,7 @@ class HistoryShow extends GetView<HistoryShowController> {
     return Obx(() => checkempty.value
         ? Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.grey.shade50,
 
               // gradient: LinearGradient(
               //   colors: [Colors.greenAccent.shade100, Colors.green.shade300],
@@ -213,7 +213,7 @@ class HistoryShow extends GetView<HistoryShowController> {
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.3),
@@ -299,7 +299,7 @@ Widget _buildStepCard({
           Text(
             'Step $stepNumber',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
               color: Colors.green,
             ),
@@ -313,11 +313,11 @@ Widget _buildStepCard({
               color: Colors.black87,
             ),
           ),
-          SizedBox(height: 4),
+          SizedBox(height: 6),
           Text(
             stepDescription,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 16,
               color: Colors.grey.shade700,
             ),
           ),

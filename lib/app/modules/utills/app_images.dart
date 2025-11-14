@@ -2,6 +2,8 @@ class AppImages {
   static const bkgImage = 'assets/images/bg_img.png';
   // static const appIcon = 'assets/iconlogo.png';
   static const iconscan = 'assets/images/iconscan.png';
+  static const applescan = 'assets/images/scanning.png';
+  static const manual = 'assets/images/write.png';
   static const iconWater = 'assets/images/iconwat.png';
   static const iconExercise = 'assets/images/iconexe.png';
   static const iconCalories = 'assets/images/iconcal.png';

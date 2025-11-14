@@ -1,7 +1,4 @@
 import 'package:calories_detector/app/premium/premium.dart';
-import 'package:intl/intl.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // class TrailbaseHelper {
@@ -161,9 +158,28 @@ class StreakManager {
     int currentStreak = prefs.getInt(_streakKey) ?? 0;
     String? lastRewardDateString = prefs.getString(_lastRewardDateKey);
     DateTime today = DateTime.now();
-    DateTime lastRewardDate = lastRewardDateString != null
-        ? DateTime.parse(lastRewardDateString)
-        : today.subtract(const Duration(days: 2));
+
+    // Null-safe handling of lastRewardDateString:
+    // - if it's null/empty (first launch), set lastRewardDate to 2 days ago
+    //   so that the streak logic treats it as "broken" and resets to 0.
+    // - if it's present, try parsing it and fall back to 2 days ago on parse error.
+    DateTime lastRewardDate;
+    if (lastRewardDateString == null || lastRewardDateString.isEmpty) {
+      // No stored date found (first run). Use a date in the past to force reset.
+      lastRewardDate = today.subtract(const Duration(days: 2));
+      // Optionally persist an initial lastRewardDate to avoid repeating this branch
+      await prefs.setString(_lastRewardDateKey, lastRewardDate.toIso8601String());
+      print("No last reward date found. Initialized with: $lastRewardDate");
+    } else {
+      try {
+        lastRewardDate = DateTime.parse(lastRewardDateString);
+      } catch (e) {
+        // If stored value is corrupted/unparsable, fallback to a past date
+        print("Error parsing lastRewardDateString: $e");
+        lastRewardDate = today.subtract(const Duration(days: 2));
+        await prefs.setString(_lastRewardDateKey, lastRewardDate.toIso8601String());
+      }
+    }
 
     int daysDifference = today.difference(lastRewardDate).inDays;
 

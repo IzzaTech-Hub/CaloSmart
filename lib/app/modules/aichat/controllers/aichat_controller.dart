@@ -148,15 +148,7 @@ class AichatController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
   void newDefaultPrompts() {
@@ -202,7 +194,7 @@ class AichatController extends GetxController {
                           }
                         },
                       ));
-                }).toList(),
+                }),
                 Obx(() => selectedReason.value == "Other"
                     ? TextField(
                         controller: customReasonController,
@@ -227,7 +219,7 @@ class AichatController extends GetxController {
                 String reportReason = selectedReason.value == "Other"
                     ? customReasonController.text
                     : selectedReason.value;
-                print('$reportReason');
+                print(reportReason);
                 if (reportReason.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("Please select or enter a reason.")),
@@ -242,7 +234,7 @@ class AichatController extends GetxController {
                   // Save report in Firestore
                   await FirebaseFirestore.instance
                       .collection('reported_messages')
-                      .doc('${uniqueid}')
+                      .doc(uniqueid)
                       // .doc('${gender_title.value}_${homeViewCTL.uniqueId}')
                       .set({
                     'message': message,

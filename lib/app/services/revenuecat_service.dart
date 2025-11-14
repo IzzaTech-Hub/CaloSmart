@@ -4,7 +4,6 @@ import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:purchases_flutter/models/store_product_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:ai_chatbot/app/modules/routes/app_pages.dart';
@@ -160,10 +159,6 @@ class RevenueCatService {
     }
     dp.log("Temp Offering: $premiumOffering");
 
-    if (premiumOffering == null) {
-      return [];
-    }
-
     return [];
   }
 
@@ -200,6 +195,7 @@ class RevenueCatService {
       // final purchaserInfo = await Purchases.getCustomerInfo();
       final purchaserInfo = await Purchases.purchaseStoreProduct(product);
 
+      // final entitelments = purchaserInfo.entitlements.active.values.toList();
       final entitelments = purchaserInfo.entitlements.active.values.toList();
 
       // entitlementInfos.active;
@@ -238,6 +234,10 @@ class RevenueCatService {
       // Handle purchase error
     }
   }
+}
+
+extension on PurchaseResult {
+  get entitlements => null;
 }
 
 enum Entitlement { free, paid }

@@ -1,5 +1,4 @@
 import 'package:calories_detector/app/data/Data_Base.dart';
-import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/data/food_item.dart';
 import 'package:calories_detector/app/data/oneday.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';

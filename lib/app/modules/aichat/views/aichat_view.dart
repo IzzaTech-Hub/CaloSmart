@@ -37,16 +37,13 @@ import 'dart:convert';
 import 'dart:developer' as dp;
 import 'dart:io';
 
-import 'package:api_key_pool/api_key_pool.dart';
+// import 'package:api_key_pool/api_key_pool.dart';
 import 'package:calories_detector/app/modules/aichat/controllers/aichat_controller.dart';
 import 'package:calories_detector/app/modules/home/views/home_view.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
-import 'package:calories_detector/app/modules/utills/app_colors.dart';
-import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/modules/utills/remoteConfigVariables.dart';
 import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
-import 'package:calories_detector/app/services/remoteconfig_services.dart';
 import 'package:calories_detector/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -56,6 +53,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:image_picker/image_picker.dart';
 
 final String _apiKey = ApiKeyPool.getKey();
+// final String _apiKey ='';
 // final String _apiKey = RCVariables.GemeniAPIKey.value;
 // const String _apiKey = 'AIzaSyBfsg3ZEwnl0CRPYGBh1r_XhFu9tChvL5o';
 
@@ -81,6 +79,7 @@ class AichatView extends StatelessWidget {
           preferredSize: Size.fromHeight(80),
           child: appThemeAppBarforaichat(context, 'Ai Chat'),
         ),
+        // body: ChatWidget(apiKey: ''),
         body: ChatWidget(apiKey: ApiKeyPool.getKey()),
         // body: ChatWidget(apiKey: RCVariables.GemeniAPIKey.value),
       ),
@@ -206,170 +205,174 @@ class _ChatWidgetState extends State<ChatWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final textFieldDecoration = InputDecoration(
-      contentPadding: const EdgeInsets.all(15),
-      hintText: 'Enter a prompt...',
-      border: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(14),
-        ),
-        borderSide: BorderSide(
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(14),
-        ),
-        borderSide: BorderSide(
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-      ),
-    );
+  final theme = Theme.of(context);
+  final colorScheme = theme.colorScheme;
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: _apiKey.isNotEmpty
-                ? (aichatcontroller.generatedContent.isNotEmpty
-                    ? ListView.builder(
-                        controller: _scrollController,
-                        itemBuilder: (context, idx) {
-                          // content = aichatcontroller.;
-                          final content =
-                              aichatcontroller.generatedContent[idx];
-                          return MessageWidget(
-                            text: content.text,
-                            image: content.image,
-                            isFromUser: content.fromUser,
-                            isFeedBack: content.isFeedBack,
-                            isGood: content.isGood,
-                            index: idx,
-                          );
-                        },
-                        itemCount: aichatcontroller.generatedContent.length,
-                      )
-                    : _buildDefaultPrompts())
-                : ListView(
-                    children: const [
-                      Text(
-                        'No API key found. Please provide an API Key using '
-                        "'--dart-define' to set the 'API_KEY' declaration.",
-                      ),
-                    ],
-                  ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 12,
-              horizontal: 15,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    autofocus: true,
-                    focusNode: _textFieldFocus,
-                    decoration: textFieldDecoration,
-                    controller: _textController,
-                    onSubmitted: _sendChatMessage,
+  final textFieldDecoration = InputDecoration(
+    hintText: 'Type your message...',
+    hintStyle: TextStyle(
+      color: Colors.grey.shade500,
+      fontSize: 15,
+    ),
+    filled: true,
+    fillColor: Colors.grey.shade100,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(16),
+      borderSide: BorderSide.none,
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(16),
+      borderSide: BorderSide(
+        color: colorScheme.primary,
+        width: 1.5,
+      ),
+    ),
+  );
+
+  return Container(
+    color: Colors.grey.shade50,
+    child: Column(
+      children: [
+        Expanded(
+          child: _apiKey.isNotEmpty
+              ? (aichatcontroller.generatedContent.isNotEmpty
+                  ? ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      itemCount: aichatcontroller.generatedContent.length,
+                      itemBuilder: (context, idx) {
+                        final content = aichatcontroller.generatedContent[idx];
+                        return MessageWidget(
+                          text: content.text,
+                          image: content.image,
+                          isFromUser: content.fromUser,
+                          isFeedBack: content.isFeedBack,
+                          isGood: content.isGood,
+                          index: idx,
+                        );
+                      },
+                    )
+                  : _buildDefaultPrompts())
+              : const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Text(
+                      'No API key found.\nPlease provide one using "--dart-define=API_KEY=<your_key>".',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.grey),
+                    ),
                   ),
                 ),
-                const SizedBox.square(dimension: 5),
-                InkWell(
-                  onTap: !_loading
-                      ? () async {
-                          // _sendImagePrompt(_textController.text);
-                          if (!isImageSelected) {
-                            pickImageFromGallery();
-                          } else {
-                            setState(() {
-                              isImageSelected = false;
-                            });
-                          }
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 18),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                offset: const Offset(0, -0.5),
+                blurRadius: 6,
+              ),
+            ],
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  autofocus: true,
+                  focusNode: _textFieldFocus,
+                  controller: _textController,
+                  onSubmitted: _sendChatMessage,
+                  decoration: textFieldDecoration,
+                ),
+              ),
+              const SizedBox(width: 8),
+              InkWell(
+                borderRadius: BorderRadius.circular(10),
+                onTap: !_loading
+                    ? () async {
+                        if (!isImageSelected) {
+                          pickImageFromGallery();
+                        } else {
+                          setState(() => isImageSelected = false);
                         }
-                      : null,
+                      }
+                    : null,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: isImageSelected
+                        ? colorScheme.primary.withOpacity(0.15)
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: isImageSelected
                       ? Container(
-                          width: 30,
-                          height: 30,
+                          width: 34,
+                          height: 34,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 1),
                             borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: colorScheme.primary),
                           ),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(
-                                8), // Match the container's borderRadius
-                            child: Image.file(
-                              imageFile!,
-                              fit: BoxFit.cover,
-                            ),
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.file(imageFile!, fit: BoxFit.cover),
                           ),
                         )
-                      : Icon(
-                          Icons.image,
-                          size: 30,
-                          color: _loading
-                              ? Theme.of(context).colorScheme.secondary
-                              : Theme.of(context).colorScheme.primary,
-                        ),
+                      : Icon(Icons.image_rounded,
+                          size: 30, color: colorScheme.primary),
                 ),
-                if (!_loading)
-                  InkWell(
-                    onTap: () {
-                      _sendChatMessage(_textController.text);
-                    },
-                    child: Stack(
-                      children: [
-                        Icon(
-                          Icons.send,
-                          size: 30,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        Positioned(
-                            right: 3,
-                            bottom: 0,
+              ),
+              const SizedBox(width: 10),
+              _loading
+                  ? const SizedBox(
+                      width: 26,
+                      height: 26,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () => _sendChatMessage(_textController.text),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Icon(Icons.send_rounded,
+                              size: 30, color: colorScheme.primary),
+                          Positioned(
+                            right: -3,
+                            bottom: -3,
                             child: Container(
                               height: 15,
                               width: 15,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle, color: Colors.red),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.red,
+                              ),
                               child: Center(
                                 child: Text(
                                   isImageSelected ? '5' : '1',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10,
-                                      height: 1),
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 9),
                                 ),
                               ),
-                            ))
-                      ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  )
-                // IconButton(
-                //   onPressed: () async {
-                //     _sendChatMessage(_textController.text);
-                //   },
-                //   icon: Icon(
-                //     Icons.send,
-                //     size: 30,
-                //     color: Theme.of(context).colorScheme.primary,
-                //   ),
-                // )
-                else
-                  const CircularProgressIndicator(),
-              ],
-            ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildDefaultPrompts() {
     List<String> randomPrompts = aichatcontroller.randomPrompts;
@@ -673,7 +676,7 @@ class _ChatWidgetState extends State<ChatWidget> {
 }
 
 class MessageWidget extends GetView<AichatController> {
-  MessageWidget({
+  const MessageWidget({
     super.key,
     this.image,
     this.text,

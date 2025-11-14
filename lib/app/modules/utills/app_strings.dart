@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class AppStrings {
   //original Andriod

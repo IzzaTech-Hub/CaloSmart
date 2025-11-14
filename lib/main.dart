@@ -1,4 +1,4 @@
-import 'package:api_key_pool/api_key_pool.dart';
+// import 'package:api_key_pool/api_key_pool.dart';
 import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/notificationservice/local_notification_service.dart';
 import 'package:calories_detector/app/premium/premium.dart';
@@ -59,27 +59,33 @@ void main() async {
   // DatabaseHelper().deleteDatabaseFile;
   // DatabaseHelper2().deleteDatabaseFile;
   // print('1');
-  await RemoteConfigService().initialize();
-  // print('1.5');
+  print('🟢 Starting RemoteConfigService');
+await RemoteConfigService().initialize();
+print('✅ RemoteConfigService done');
 
-  await StreakManager.initializeStreak();
-  // print('2');
-  await DatabaseHelper().database;
-  // print('3');
-  await DatabaseHelper2().database;
-  // print('4');
-  // await TrailbaseHelper.instance.database;
-  // print('5');
-  // print('6');
-  await Premium.instance.initialize();
-  // print('7');
-  AppLovinProvider.instance.init();
+print('🟢 Starting StreakManager');
+await StreakManager.initializeStreak();
+print('✅ StreakManager done');
 
-  runApp(
-    MyApp(),
+print('🟢 Starting DatabaseHelper');
+await DatabaseHelper().database;
+print('✅ DatabaseHelper done');
 
-    // const MaterialApp(home: SplashView()),
-  );
+print('🟢 Starting DatabaseHelper2');
+await DatabaseHelper2().database;
+print('✅ DatabaseHelper2 done');
+
+print('🟢 Starting Premium');
+await Premium.instance.initialize();
+print('✅ Premium done');
+
+print('🟢 Starting AppLovin');
+AppLovinProvider.instance.init();
+print('✅ AppLovin done');
+
+print('🚀 Running app now');
+runApp(MyApp());
+
 }
 
 @pragma('vm:entry-point')

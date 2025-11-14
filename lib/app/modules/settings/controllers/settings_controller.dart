@@ -1,5 +1,4 @@
 import 'package:calories_detector/app/modules/utills/remoteConfigVariables.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:in_app_review/in_app_review.dart';

@@ -1,13 +1,10 @@
 import 'dart:convert';
-import 'dart:math';
 import 'dart:developer' as dp;
 
 import 'package:calories_detector/app/modules/utills/remoteConfigVariables.dart';
 import 'package:calories_detector/app/premium/premium.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:flutter/foundation.dart';
 
-import 'package:get/get.dart';
 
 class RemoteConfigService {
   static final RemoteConfigService _instance = RemoteConfigService._internal();

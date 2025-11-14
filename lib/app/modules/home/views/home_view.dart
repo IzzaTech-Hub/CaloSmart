@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:calories_detector/app/data/food_item.dart';
 import 'package:calories_detector/app/modules/navbar/controllers/navbar_controller.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
@@ -100,15 +98,15 @@ class HomeView extends GetView<HomeController> {
                                                           caloriesProgress!
                                                               .value <
                                                       0
-                                                  ? 16
-                                                  : 25,
+                                                  ? 14
+                                                  : 20,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         if (caloriestarget!.value -
                                                 caloriesProgress!.value >
                                             0)
                                           Text(
-                                            'Remaining',
+                                            'Remainig',
                                             style: TextStyle(
                                                 color: Colors.black38),
                                           )
@@ -137,7 +135,7 @@ class HomeView extends GetView<HomeController> {
                                               fontSize: 20),
                                           minFontSize: 8,
                                           maxLines: 1,
-                                          maxFontSize: 30,
+                                          maxFontSize: 28,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         SizedBox()
@@ -153,8 +151,8 @@ class HomeView extends GetView<HomeController> {
                                       children: [
                                         SizedBox(
                                             // color: Colors.black,
-                                            height: 30,
-                                            width: 30,
+                                            height: 35,
+                                            width: 35,
                                             child: Image.asset(
                                               AppImages.iconCalories,
                                               color: Colors.green,
@@ -165,8 +163,11 @@ class HomeView extends GetView<HomeController> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              ' Food',
-                                              style: TextStyle(height: 1),
+                                              'Food',
+                                              style: TextStyle(
+                                                height: 1,
+                                                fontStyle: FontStyle.italic,
+                                              ),
                                             ),
                                             Row(
                                               crossAxisAlignment:
@@ -175,20 +176,27 @@ class HomeView extends GetView<HomeController> {
                                                 Text(
                                                   '$caloriesProgress',
                                                   style: TextStyle(
-                                                      fontSize: 18, height: 1),
+                                                    fontSize: 14,
+                                                    height: 1,
+                                                    fontStyle: FontStyle.italic,
+                                                  ),
                                                 ),
                                                 Text(
                                                   '/$caloriestarget',
                                                   style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.black38,
+                                                      fontSize: 10,
+                                                      color: Colors.black45,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                       height: 1),
                                                 ),
                                                 Text(
                                                   ' Kcal',
                                                   style: TextStyle(
-                                                      fontSize: 8,
-                                                      color: Colors.black26,
+                                                      fontSize: 9,
+                                                      color: Colors.black38,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                       height: 1),
                                                 ),
                                               ],
@@ -206,11 +214,12 @@ class HomeView extends GetView<HomeController> {
                                       children: [
                                         SizedBox(
                                             // color: Colors.black,
-                                            height: 30,
-                                            width: 30,
+                                            height: 35,
+                                            width: 35,
                                             child: Image.asset(
                                               AppImages.iconWater,
-                                              color: Colors.blue,
+                                              color: const Color.fromARGB(
+                                                  255, 93, 199, 248),
                                             )),
                                         Column(
                                           // mainAxisAlignment: MainAxisAlignment.start,
@@ -218,8 +227,11 @@ class HomeView extends GetView<HomeController> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              ' Water',
-                                              style: TextStyle(height: 1),
+                                              'Water',
+                                              style: TextStyle(
+                                                height: 1,
+                                                fontStyle: FontStyle.italic,
+                                              ),
                                             ),
                                             Row(
                                               crossAxisAlignment:
@@ -228,20 +240,27 @@ class HomeView extends GetView<HomeController> {
                                                 Text(
                                                   '${(waterProgress!.value % 1 == 0 ? waterProgress!.value.toInt() : waterProgress!.value.toStringAsFixed(1))}',
                                                   style: TextStyle(
-                                                      fontSize: 18, height: 1),
+                                                      fontStyle:
+                                                          FontStyle.italic,
+                                                      fontSize: 14,
+                                                      height: 1),
                                                 ),
                                                 Text(
                                                   '/$watertarget',
                                                   style: TextStyle(
-                                                      fontSize: 12,
+                                                      fontSize: 10,
                                                       color: Colors.black38,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                       height: 1),
                                                 ),
                                                 Text(
                                                   ' Glass',
                                                   style: TextStyle(
-                                                      fontSize: 8,
-                                                      color: Colors.black26,
+                                                      fontSize: 9,
+                                                      color: Colors.black38,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                       height: 1),
                                                 ),
                                               ],
@@ -259,8 +278,8 @@ class HomeView extends GetView<HomeController> {
                                       children: [
                                         SizedBox(
                                             // color: Colors.black,
-                                            height: 30,
-                                            width: 30,
+                                            height: 35,
+                                            width: 35,
                                             child: Image.asset(
                                               AppImages.iconExercise,
                                               color: Colors.red,
@@ -271,8 +290,11 @@ class HomeView extends GetView<HomeController> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              ' Exercise',
-                                              style: TextStyle(height: 1),
+                                              'Exercise',
+                                              style: TextStyle(
+                                                height: 1,
+                                                fontStyle: FontStyle.italic,
+                                              ),
                                             ),
                                             Row(
                                               crossAxisAlignment:
@@ -281,20 +303,27 @@ class HomeView extends GetView<HomeController> {
                                                 Text(
                                                   '${(exerciseProgress!.value % 1 == 0 ? exerciseProgress!.value.toInt() : exerciseProgress!.value.toStringAsFixed(1))}',
                                                   style: TextStyle(
-                                                      fontSize: 18, height: 1),
+                                                      fontStyle:
+                                                          FontStyle.italic,
+                                                      fontSize: 14,
+                                                      height: 1),
                                                 ),
                                                 Text(
                                                   '/${(exercisetarget!.value % 1 == 0 ? exercisetarget!.value.toInt() : exercisetarget!.value.toStringAsFixed(1))}',
                                                   style: TextStyle(
-                                                      fontSize: 12,
+                                                      fontSize: 10,
+                                                      fontStyle:
+                                                          FontStyle.italic,
                                                       color: Colors.black38,
                                                       height: 1),
                                                 ),
                                                 Text(
                                                   ' hrs',
                                                   style: TextStyle(
-                                                      fontSize: 8,
-                                                      color: Colors.black26,
+                                                      fontSize: 9,
+                                                      fontStyle:
+                                                          FontStyle.italic,
+                                                      color: Colors.black38,
                                                       height: 1),
                                                 ),
                                               ],
@@ -391,44 +420,64 @@ class HomeView extends GetView<HomeController> {
         Stack(
           alignment: Alignment.center,
           children: [
-            Image.asset(img, width: (SizeConfig.screenWidth * 0.85) / 3),
+            // 🔹 Soft shadow added around the image
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color:
+                        clr.withOpacity(0.15), // same color tone, subtle glow
+                    blurRadius: 25, // softness of the shadow
+                    spreadRadius: 2, // how far it spreads
+                    offset: const Offset(0, 10), // slight downward shift
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  img,
+                  width: (SizeConfig.screenWidth * 0.85) / 3,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+
             SizedBox(
-              // color: Colors.amber,
-              // height: 51,
               width: (SizeConfig.screenWidth * 0.5) / 3,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text(name),
                   Text(
                     ' $value/$target',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
-                      // fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13,
                     ),
                   ),
-
+                  const SizedBox(height: 6),
                   Row(
                     children: [
                       Expanded(
                         child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(20), // Round the edges
+                          borderRadius: BorderRadius.circular(20),
                           child: SizedBox(
-                            height: 10, // Adjust the height of the progress bar
+                            height: 10,
                             child: LinearProgressIndicator(
                               value: progress.value,
                               backgroundColor: Colors.black12,
-                              // backgroundColor: Colors.black12,
                               valueColor: AlwaysStoppedAnimation<Color>(
-                                  progress.value < 0.3
-                                      ? Colors.red
-                                      : (progress.value < 0.5
-                                          ? Colors.orange
-                                          : (progress.value < 0.8
-                                              ? Colors.amber
-                                              : Colors.green))),
+                                progress.value < 0.3
+                                    ? Colors.red
+                                    : (progress.value < 0.5
+                                        ? Colors.orange
+                                        : (progress.value < 0.8
+                                            ? Colors.amber
+                                            : Colors.green)),
+                              ),
                             ),
                           ),
                         ),
@@ -436,13 +485,12 @@ class HomeView extends GetView<HomeController> {
                       SizedBox(width: SizeConfig.screenWidth * 0.02),
                     ],
                   ),
-                  Text('')
-                  // Text('$value/$target')
+                  const Text(''),
                 ],
               ),
             ),
           ],
-        ),
+        )
       ],
     );
   }
@@ -533,37 +581,56 @@ dialogueforfood(BuildContext context) {
     builder: (BuildContext context) {
       return Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15), // Rounded corners
+          borderRadius: BorderRadius.circular(18),
         ),
+        elevation: 10,
+        backgroundColor: Colors.transparent,
         child: Container(
           decoration: BoxDecoration(
-            gradient: AppThemeColors.buttonColor,
-            borderRadius: BorderRadius.circular(15), // Keep gradient rounded
+            gradient: AppThemeColors.knowledgeGradient,
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.25),
+                blurRadius: 15,
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'Select an Option',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white, // Make title stand out on gradient
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    letterSpacing: 0.5,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black38,
+                        offset: Offset(0, 1),
+                        blurRadius: 2,
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 12),
                 Text(
                   'Would you like to enter data manually or scan an item?',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    height: 1.6,
                   ),
                 ),
-                SizedBox(height: 25),
+                const SizedBox(height: 28),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -576,7 +643,7 @@ dialogueforfood(BuildContext context) {
                         } else {
                           Get.toNamed(Routes.STREAK);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                               content: Text("Not enough Apples."),
                               duration: Duration(seconds: 3),
                             ),
@@ -585,35 +652,49 @@ dialogueforfood(BuildContext context) {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 18),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(12),
                         ),
+                        elevation: 4,
                       ),
                       child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('Manual Data',
-                              style: TextStyle(color: Colors.black)),
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Image.asset(
-                                AppImages.apple2,
-                                height: 35,
-                                color: Colors.red,
-                              ),
-                              Text(
-                                '${PremiumTheme.manualEntryPrice}',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 12),
-                              )
-                            ],
+                          Flexible(
+                            child:
+                                // const Text(
+                                //   'Manual Data',
+                                //   style: TextStyle(
+                                //     color: Colors.black,
+                                //     fontWeight: FontWeight.w600,
+                                //     fontSize: 0,
+                                //   ),
+                                // ),
+                                // const SizedBox(width: 60),
+                                Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Image.asset(
+                                  AppImages.manual,
+                                  height: 30,
+                                  width: 30,
+                                  color: Colors.red,
+                                ),
+                                // Text(
+                                //   '${PremiumTheme.manualEntryPrice}',
+                                //   style: const TextStyle(
+                                //       color: Colors.white,
+                                //       fontSize: 11,
+                                //       fontWeight: FontWeight.bold),
+                                // )
+                              ],
+                            ),
                           )
                         ],
                       ),
                     ),
-                    SizedBox(),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
@@ -623,7 +704,7 @@ dialogueforfood(BuildContext context) {
                         } else {
                           Get.toNamed(Routes.STREAK);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                               content: Text("Not enough Apples."),
                               duration: Duration(seconds: 3),
                             ),
@@ -632,30 +713,42 @@ dialogueforfood(BuildContext context) {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 18),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(12),
                         ),
+                        elevation: 4,
                       ),
                       child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('Scan', style: TextStyle(color: Colors.black)),
+                          const Text(
+                            'Scan',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
                           Stack(
                             alignment: Alignment.center,
                             children: [
                               Image.asset(
                                 AppImages.apple2,
-                                height: 35,
+                                height: 30,
                                 color: Colors.red,
                               ),
                               Text(
                                 '${PremiumTheme.scanPrice}',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 12),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold),
                               )
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -946,7 +1039,7 @@ void dialogueforwater(BuildContext context, {int? sg}) {
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            gradient: AppThemeColors.buttonColor,
+            gradient: AppThemeColors.knowledgeGradient,
 
             // color: Colors.white,
           ),
@@ -971,18 +1064,28 @@ void dialogueforwater(BuildContext context, {int? sg}) {
                   runSpacing: 10,
                   alignment: WrapAlignment.center,
                   children: List.generate(
-                    5, // Number of glasses to display
+                    6, // Number of glasses to display
                     (index) => GestureDetector(
                       onTap: () {
                         selectedGlasses.value = index + 1; // Update selection
                       },
-                      child: Image.asset(
-                        index < selectedGlasses.value
-                            ? AppImages.filledGlass
-                            : AppImages.emptyGlass,
-                        width: 50,
-                        height: 50,
-                      ),
+                      child: index < selectedGlasses.value
+    ? Image.asset(
+        AppImages.filledGlass,
+        width: 50,
+        height: 50,
+      )
+    : ColorFiltered(
+        colorFilter: ColorFilter.mode(
+          Colors.white.withOpacity(0.35), // reduce opacity effect
+          BlendMode.modulate,
+        ),
+        child: Image.asset(
+          AppImages.emptyGlass,
+          width: 50,
+          height: 50,
+        ),
+      ),
                     ),
                   ),
                 ),
@@ -1024,113 +1127,189 @@ void dialogueforwater(BuildContext context, {int? sg}) {
 
 dialogueforexercise(BuildContext context, {int? mins}) {
   showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      // Initial value for the exercise time in minutes
-      RxInt selectedMinutes =
-          ((mins ?? 1) + 1).obs; // Initially set to 1 minute
+  context: context,
+  builder: (BuildContext context) {
+    RxInt selectedMinutes = ((mins ?? 1) + 1).obs;
 
-      return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15), // Rounded corners
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: AppThemeColors.buttonColor,
-            borderRadius: BorderRadius.circular(15), // Keep gradient rounded
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 24),
+      backgroundColor: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              AppThemeColors.onPrimary1.withOpacity(0.95),
+              const Color.fromARGB(255, 86, 248, 53).withOpacity(0.9),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Enter Exercise Time',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white, // Make title stand out on gradient
-                  ),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 12,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(22.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Header with subtle divider
+              Text(
+                'Set Exercise Duration',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                  letterSpacing: 0.5,
                 ),
-                SizedBox(height: 15),
+              ),
+              const SizedBox(height: 6),
+              Container(
+                height: 2,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
 
-                // Row for number picker for exercise time in minutes
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    // Number picker for exercise time in minutes
-                    Column(
-                      children: [
-                        Text(
-                          "Minutes",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                        Container(
-                          height: 50,
-                          width: 110,
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.white, // Add white background
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Center(
-                            child: Obx(
-                              () => NumberPicker(
-                                minValue: 1,
-                                maxValue:
-                                    121, // Setting a range from 1 to 120 minutes
-                                value: selectedMinutes
-                                    .value, // Set initial value to 1
-                                onChanged: (newValue) {
-                                  selectedMinutes.value = newValue;
-                                },
-                                itemHeight: 40,
-                                textStyle: TextStyle(color: Colors.black),
-                                selectedTextStyle: TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    top: BorderSide(
-                                        color: Colors.grey, width: 1.5),
-                                    bottom: BorderSide(
-                                        color: Colors.grey, width: 1.5),
-                                  ),
-                                ), // Add borders to center the picker value
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+              const SizedBox(height: 25),
+
+              // Time selector
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
-                SizedBox(height: 25),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Select Minutes",
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Obx(
+                      () => NumberPicker(
+                        minValue: 1,
+                        maxValue: 120,
+                        value: selectedMinutes.value,
+                        onChanged: (newValue) =>
+                            selectedMinutes.value = newValue,
+                        itemHeight: 40,
+                        textStyle: const TextStyle(
+                          color: Colors.black54,
+                          fontSize: 12,
+                        ),
+                        selectedTextStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top:
+                                BorderSide(color: Colors.grey.shade300, width: 1),
+                            bottom:
+                                BorderSide(color: Colors.grey.shade300, width: 1),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
-                // Submit button to confirm the input
-                ElevatedButton.icon(
-                  onPressed: () {
-                    int exerciseTimeInMinutes = selectedMinutes.value;
+              const SizedBox(height: 30),
 
-                    Navigator.of(context).pop(exerciseTimeInMinutes);
-                    toDay!.AddExercise((exerciseTimeInMinutes - 1) / 60);
-                    HomeController().updatehomedata();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+              // Buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  // Cancel
+                  OutlinedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Colors.white),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 22),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Row(
+                          children: const [
+                            Icon(Icons.close_rounded,
+                                color: Colors.white, size: 20),
+                            SizedBox(width: 6),
+                            Text(
+                              'Cancel',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),),]
                     ),
                   ),
-                  icon: Icon(Icons.check, color: AppThemeColors.onPrimary1),
-                  label: Text('Submit', style: TextStyle(color: Colors.black)),
-                ),
-              ],
-            ),
+
+                  // Submit
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      int exerciseTimeInMinutes = selectedMinutes.value;
+                      Navigator.of(context).pop(exerciseTimeInMinutes);
+                      toDay!.AddExercise((exerciseTimeInMinutes - 1) / 60);
+                      HomeController().updatehomedata();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 24),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      elevation: 4,
+                    ),
+                    icon: Icon(
+                      Icons.check_circle_rounded,
+                      color: AppThemeColors.onPrimary1,
+                    ),
+                    label: Text(
+                      'Confirm',
+                      style: TextStyle(
+                        color: AppThemeColors.onPrimary1,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
-      );
-    },
-  );
+      ),
+    );
+  },
+);
 }

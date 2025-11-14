@@ -1,4 +1,4 @@
-import 'package:api_key_pool/api_key_pool.dart';
+// import 'package:api_key_pool/api_key_pool.dart';
 import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:calories_detector/app/modules/liquidloading/views/liquidloading_view.dart';
 import 'package:calories_detector/app/modules/navbar/controllers/navbar_controller.dart';
@@ -213,6 +213,7 @@ class ResponseScreenController extends GetxController {
       model: RCVariables.GemeniAiModel.value,
       // model: 'gemini-1.5-flash',
       apiKey: ApiKeyPool.getKey(),
+      // apiKey:'',
       // apiKey: RCVariables.GemeniAPIKey.value,
       generationConfig: GenerationConfig(
         temperature: 1,

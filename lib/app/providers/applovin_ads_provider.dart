@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 import 'dart:developer' as developer;
 
@@ -125,7 +124,7 @@ class AppLovinProvider {
         interstitialLoadState = AdLoadState.loaded;
 
         // Interstitial ad is ready to be shown. AppLovinMAX.isInterstitialAdReady(_interstitial_ad_unit_id) will now return 'true'
-        print('Interstitial ad loaded from ' + ad.networkName);
+        print('Interstitial ad loaded from ${ad.networkName}');
         // showInterstitial(() {});
         // Reset retry attempt
         interstitialRetryAttempt = 0;
@@ -138,11 +137,7 @@ class AppLovinProvider {
         interstitialRetryAttempt = interstitialRetryAttempt + 1;
 
         int retryDelay = pow(2, min(6, interstitialRetryAttempt)).toInt();
-        print('Interstitial ad failed to load with code ' +
-            error.code.toString() +
-            ' - retrying in ' +
-            retryDelay.toString() +
-            's');
+        print('Interstitial ad failed to load with code ${error.code} - retrying in ${retryDelay}s');
 
         Future.delayed(Duration(milliseconds: retryDelay * 1000), () {
           AppLovinMAX.loadInterstitial(_interstitial_ad_unit_id);
@@ -159,10 +154,7 @@ class AppLovinProvider {
       },
       onAdDisplayFailedCallback: (ad, error) {
         interstitialLoadState = AdLoadState.notLoaded;
-        print('Interstitial ad failed to display with code ' +
-            error.code.toString() +
-            ' and message ' +
-            error.message);
+        print('Interstitial ad failed to display with code ${error.code} and message ${error.message}');
       },
       onAdClickedCallback: (ad) {
         print('Interstitial ad clicked');
@@ -180,13 +172,10 @@ class AppLovinProvider {
 
     /// Banner Ad Listeners
     AppLovinMAX.setBannerListener(AdViewAdListener(onAdLoadedCallback: (ad) {
-      print('Banner ad loaded from ' + ad.networkName);
+      print('Banner ad loaded from ${ad.networkName}');
       AppLovinMAX.showBanner(AppStrings.MAX_BANNER_ID);
     }, onAdLoadFailedCallback: (adUnitId, error) {
-      print('Banner ad failed to load with error code ' +
-          error.code.toString() +
-          ' and message: ' +
-          error.message);
+      print('Banner ad failed to load with error code ${error.code} and message: ${error.message}');
     }, onAdClickedCallback: (ad) {
       print('Banner ad clicked');
     }, onAdExpandedCallback: (ad) {
@@ -197,12 +186,9 @@ class AppLovinProvider {
 
     /// MREC Ad Listeners
     AppLovinMAX.setMRecListener(AdViewAdListener(onAdLoadedCallback: (ad) {
-      print('MREC ad loaded from ' + ad.networkName);
+      print('MREC ad loaded from ${ad.networkName}');
     }, onAdLoadFailedCallback: (adUnitId, error) {
-      print('MREC ad failed to load with error code ' +
-          error.code.toString() +
-          ' and message: ' +
-          error.message);
+      print('MREC ad failed to load with error code ${error.code} and message: ${error.message}');
     }, onAdClickedCallback: (ad) {
       print('MREC ad clicked');
     }, onAdExpandedCallback: (ad) {
@@ -228,8 +214,9 @@ class AppLovinProvider {
 
   Future<void> showAppOpenIfReady() async {
     return;
-    if (RevenueCatService().currentEntitlement.value == Entitlement.paid)
+    if (RevenueCatService().currentEntitlement.value == Entitlement.paid) {
       return;
+    }
     print("ShowAPPOpen Called..");
     if (!isInitialized.value) {
       return;
@@ -287,7 +274,7 @@ class AppLovinProvider {
         interstitialLoadState = AdLoadState.loaded;
 
         // Interstitial ad is ready to be shown. AppLovinMAX.isInterstitialAdReady(_interstitial_ad_unit_id) will now return 'true'
-        print('Interstitial ad loaded from ' + ad.networkName);
+        print('Interstitial ad loaded from ${ad.networkName}');
 
         // Reset retry attempt
         interstitialRetryAttempt = 0;
@@ -300,11 +287,7 @@ class AppLovinProvider {
         interstitialRetryAttempt = interstitialRetryAttempt + 1;
 
         int retryDelay = pow(2, min(6, interstitialRetryAttempt)).toInt();
-        print('Interstitial ad failed to load with code ' +
-            error.code.toString() +
-            ' - retrying in ' +
-            retryDelay.toString() +
-            's');
+        print('Interstitial ad failed to load with code ${error.code} - retrying in ${retryDelay}s');
 
         Future.delayed(Duration(milliseconds: retryDelay * 1000), () {
           AppLovinMAX.loadInterstitial(_interstitial_ad_unit_id);
@@ -323,10 +306,7 @@ class AppLovinProvider {
       },
       onAdDisplayFailedCallback: (ad, error) {
         interstitialLoadState = AdLoadState.notLoaded;
-        print('Interstitial ad failed to display with code ' +
-            error.code.toString() +
-            ' and message ' +
-            error.message);
+        print('Interstitial ad failed to display with code ${error.code} and message ${error.message}');
       },
       onAdClickedCallback: (ad) {
         print('Interstitial ad clicked');
@@ -418,16 +398,17 @@ class AppLovinProvider {
   }
 
   void showAppLovinConsentFlow() async {
-    if (kDebugMode)
+    if (kDebugMode) {
       AppLovinMAX.setConsentFlowDebugUserGeography(
           ConsentFlowUserGeography.gdpr);
+    }
     MaxCMPError? error = await AppLovinMAX.showCmpForExistingUser();
 
     if (error == null) {
       developer.log("The CMP alert was shown successfully");
       // The CMP alert was shown successfully.
     } else {
-      developer.log("CMP Error: ${error}");
+      developer.log("CMP Error: $error");
     }
   }
 
@@ -446,12 +427,9 @@ class AppLovinProvider {
                     adSource: ad.networkName,
                     value: ad.revenue,
                   );
-                  print('banner widget ad loaded from ' + ad.networkName);
+                  print('banner widget ad loaded from ${ad.networkName}');
                 }, onAdLoadFailedCallback: (adUnitId, error) {
-                  print('banner widget ad failed to load with error code ' +
-                      error.code.toString() +
-                      ' and message: ' +
-                      error.message);
+                  print('banner widget ad failed to load with error code ${error.code} and message: ${error.message}');
                 }, onAdClickedCallback: (ad) {
                   print('banner widget ad clicked');
                 }, onAdExpandedCallback: (ad) {
@@ -476,12 +454,9 @@ class AppLovinProvider {
                     adSource: ad.networkName,
                     value: ad.revenue,
                   );
-                  print('mrec widget ad loaded from ' + ad.networkName);
+                  print('mrec widget ad loaded from ${ad.networkName}');
                 }, onAdLoadFailedCallback: (adUnitId, error) {
-                  print('mrec widget ad failed to load with error code ' +
-                      error.code.toString() +
-                      ' and message: ' +
-                      error.message);
+                  print('mrec widget ad failed to load with error code ${error.code} and message: ${error.message}');
                 }, onAdClickedCallback: (ad) {
                   print('mrec widget ad clicked');
                 }, onAdExpandedCallback: (ad) {

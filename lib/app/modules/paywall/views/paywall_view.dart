@@ -1,5 +1,4 @@
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
-import 'package:calories_detector/app/modules/utills/app_colors.dart';
 import 'package:calories_detector/app/modules/utills/app_images.dart';
 import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/app/services/revenuecat_service.dart';
@@ -113,7 +112,7 @@ class PaywallView extends GetView<PaywallController> {
                 textAlign: TextAlign.center,
               ),
             ),
-            Container(
+            SizedBox(
               // color: Colors.amber,
               width: SizeConfig.screenWidth,
               height: SizeConfig.screenHeight * 0.34,

@@ -1,4 +1,3 @@
-import 'package:calories_detector/app/modules/ResponseScreen/controllers/response_screen_controller.dart';
 import 'package:calories_detector/app/modules/history_response/controllers/history_response_controller.dart';
 import 'package:calories_detector/app/modules/utills/Themes/current_theme.dart';
 import 'package:flutter/material.dart';

@@ -84,7 +84,7 @@ class PremiumTheme {
   static List<int> paidTokens = [20, 25, 30, 35, 40, 45, 50];
 
   static var scanPrice = 5;
-  static var manualEntryPrice = 1;
+  static var manualEntryPrice = 0;
   static var alternatePrice = 3;
   static var comparisonPrice = 5;
   static var welcomeReward = 30;

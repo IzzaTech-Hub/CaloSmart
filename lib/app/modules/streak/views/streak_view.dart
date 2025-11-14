@@ -5,7 +5,6 @@ import 'package:calories_detector/app/premium/premium.dart';
 import 'package:calories_detector/app/providers/applovin_ads_provider.dart';
 import 'package:calories_detector/app/routes/app_pages.dart';
 import 'package:calories_detector/sizeConfig.dart';
-import 'package:path/path.dart';
 import '../controllers/streak_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -67,14 +66,14 @@ class StreakView extends GetView<StreakController> {
 }
 
 Container StreakCount(
-  ScrollController _scrollController,
+  ScrollController scrollController,
 ) {
   StreakController controller = StreakController();
   return Container(
     height: 44,
     margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
     child: ListView.builder(
-      controller: _scrollController, // Assign scroll controller
+      controller: scrollController, // Assign scroll controller
       scrollDirection: Axis.horizontal,
       itemCount: controller.totalDays + 2, // Add extra items for spacing
       itemBuilder: (context, index) {
@@ -614,7 +613,7 @@ Padding StreakRewardView() {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
+              SizedBox(
                   // color: Colors.blue,
                   width: SizeConfig.screenWidth * 0.3,
                   child: Center(
@@ -655,7 +654,7 @@ Padding StreakRewardView() {
                   ),
                 ],
               ),
-              Container(
+              SizedBox(
                   // color: Colors.blue,
                   width: SizeConfig.screenWidth * 0.3,
                   child: Center(

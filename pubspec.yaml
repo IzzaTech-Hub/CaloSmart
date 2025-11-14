@@ -32,7 +32,7 @@ dependencies:
     sdk: flutter
   api_key_pool:
     git:
-      url: https://github.com/IzzaTech-Hub/Api-Keys-Config-Package.git
+      url: https://github.com/Muazzam01/Api-Keys-Config-Package.git
   firebase_core: ^3.12.1
   cloud_firestore: ^5.6.5
   intl: ^0.20.2
@@ -40,38 +40,39 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  get: ^4.6.6
-  image_picker: ^1.1.2
-  permission_handler: ^11.3.1
-  google_generative_ai: ^0.4.6
+  get: ^4.7.2
+  image_picker: ^1.2.0
+  permission_handler: ^12.0.1
+  google_generative_ai: ^0.4.7
   # get_cli: ^1.8.1  //! Dont need to add this here
-  fl_chart: ^0.69.0
+  fl_chart: ^1.1.1
   sqflite: ^2.3.3+1
-  path: ^1.9.0
-  shared_preferences: ^2.3.2
+  path: ^1.9.1
+  shared_preferences: ^2.5.3
   # intl: ^0.19.0
   numberpicker: ^2.1.2
   firebase_remote_config: ^5.1.2
   # firebase_core: ^3.5.0
   firebase_analytics: ^11.3.2
   firebase_messaging: ^15.1.2
-  flutter_local_notifications: ^17.2.2
-  flutter_svg: ^2.0.10+1
-  camera: ^0.11.0+2
+  flutter_local_notifications: ^18.0.0
+  flutter_svg: ^2.2.2
+  camera: ^0.11.3
   image: ^4.2.0
   path_provider: ^2.1.4
   google_fonts: ^6.2.1
   shimmer: ^3.0.0
+  animate_do: ^4.2.0
   auto_size_text: ^3.0.0
-  share_plus: ^10.0.3
+  share_plus: ^12.0.1
   # webview_flutter: ^4.10.0
-  url_launcher: ^6.3.1
-  applovin_max: ^4.0.2
+  url_launcher: ^6.3.2
+  applovin_max: ^4.6.0
   # flutter_web_browser: ^0.17.1
   # in_app_review: ^2.0.9
   # grouped_list: ^6.0.0
   # launch_review: ^3.0.1
-  purchases_flutter: ^8.2.1
+  purchases_flutter: ^9.9.4
   flutter_easyloading: ^3.0.5
   # flutter_keyboard_visibility: ^6.0.0
   # markdown_widget: ^2.3.2+6
@@ -83,7 +84,7 @@ dependencies:
   # awesome_dialog: ^3.2.1
   # chat_gpt_sdk: ^3.1.3
   # cloud_firestore: ^5.5.0
-  flutter_markdown: ^0.7.4+3
+  flutter_markdown: ^0.7.7+1
   # cloud_firestore: ^5.6.0
   in_app_purchase: ^3.2.3
 
@@ -168,6 +169,8 @@ flutter:
     - assets/images/compandalt.png
     - assets/images/bodyshape.png
     - assets/images/stomach.png
+    - assets/images/write.png
+    - assets/images/scanning.png
     - assets/images/heartshape.png
     - assets/images/brainshape.png
     - assets/images/iconcarbs.png

@@ -1,17 +1,12 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:api_key_pool/api_key_pool.dart';
+// import 'package:api_key_pool/api_key_pool.dart';
 import 'package:calories_detector/app/data/Data_Base.dart';
 import 'package:calories_detector/app/data/day_base.dart';
 import 'package:calories_detector/app/data/food_item.dart';
-import 'package:calories_detector/app/modules/ResponseScreen/controllers/response_screen_controller.dart';
-import 'package:calories_detector/app/modules/ResponseScreen/views/response_screen_view.dart';
-import 'package:calories_detector/app/modules/aichat/views/aichat_view.dart';
 import 'package:calories_detector/app/modules/home/controllers/history_show_controller.dart';
-import 'package:calories_detector/app/modules/home/controllers/home_controller.dart';
 import 'package:calories_detector/app/modules/home/views/history_show.dart';
 import 'package:calories_detector/app/modules/home/views/home_view.dart';
 import 'package:calories_detector/app/modules/liquidloading/views/liquidloading_view.dart';
@@ -241,6 +236,7 @@ class NavbarController extends GetxController {
     final model = GenerativeModel(
       // model: 'gemini-1.5-flash',
       model: RCVariables.GemeniAiModel.value,
+      // apiKey: '',
       apiKey: ApiKeyPool.getKey(),
       // apiKey: RCVariables.GemeniAPIKey.value,
       generationConfig: GenerationConfig(
@@ -661,7 +657,7 @@ class NavbarController extends GetxController {
       } catch (e) {
         // Close the loading dialog
         Get.back();
-        print('${e.toString()}');
+        print(e.toString());
         // Handle the error
         Get.snackbar(
           'Error',
